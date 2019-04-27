@@ -1,0 +1,14 @@
+addons:
+ apt:
+  packages:
+   enchant
+language: python
+sudo: false
+cache: pip
+python:
+ - "3.6"
+ - "3.5"
+ - "3.4"
+ - "2.7"
+install: pip install tox-travis
+script: tox
