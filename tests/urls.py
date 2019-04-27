@@ -2,12 +2,9 @@ from django.conf.urls import url
 from django.http import HttpResponse
 
 
-def view(request):
-    """
-    A minimal view for use in testing.
-
-    """
-    return HttpResponse("Content.")
+def echo(request):
+    lines = [f"method: {request.method}", f"user: {request.user}"]
+    return HttpResponse("\n".join(lines))
 
 
-urlpatterns = [url(r"^view$", view, name="view")]
+urlpatterns = [url(r"^echo$", echo, name="echo")]

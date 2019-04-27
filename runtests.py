@@ -13,11 +13,9 @@ Adapted from James Bennett's https://github.com/ubernostrum/pwned-passwords-djan
 import os
 import sys
 
-
 # Make sure the app is (at least temporarily) on the import path.
 APP_DIR = os.path.abspath(os.path.dirname(__file__))
 sys.path.insert(0, APP_DIR)
-
 
 # Technically, django-marina does not require any of these
 # settings; it doesn't even need to be in INSTALLED_APPS in order to
@@ -28,12 +26,20 @@ sys.path.insert(0, APP_DIR)
 # is provided for MIDDLEWARE, and the Django test runner needs your
 # app to be in INSTALLED_APPS in order to work.
 SETTINGS_DICT = {
-    "INSTALLED_APPS": ("marina",),
+    "INSTALLED_APPS": (
+        "django.contrib.contenttypes",
+        "django.contrib.auth",
+        "django.contrib.sessions",
+        "marina",
+    ),
     "ROOT_URLCONF": "tests.urls",
     "DATABASES": {
         "default": {"ENGINE": "django.db.backends.sqlite3", "NAME": ":memory:"}
     },
-    "MIDDLEWARE": (),
+    "MIDDLEWARE": (
+        "django.contrib.sessions.middleware.SessionMiddleware",
+        "django.contrib.auth.middleware.AuthenticationMiddleware",
+    ),
 }
 
 
