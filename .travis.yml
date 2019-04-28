@@ -1,14 +1,15 @@
-addons:
- apt:
-  packages:
-   enchant
-language: python
 sudo: false
-cache: pip
+dist: xenial
+language: python
 python:
  - "3.6"
  - "3.5"
  - "3.4"
  - "2.7"
+cache: pip
+addons:
+ apt:
+  packages:
+   enchant
 install: pip install tox-travis
 script: tox
