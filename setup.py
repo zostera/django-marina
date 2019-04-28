@@ -15,7 +15,7 @@ setup(
     packages=find_packages("src"),
     package_dir={"": "src"},
     classifiers=[
-        "Development Status :: 5 - Production/Stable",
+        "Development Status :: 3 - Alpha",
         "Environment :: Web Environment",
         "Framework :: Django",
         "Framework :: Django :: 2.0",
@@ -34,4 +34,5 @@ setup(
     ],
     python_requires=">=3.4",
     install_requires=["Django>=2,<3.0"],
+    test_suite="runtests",
 )
