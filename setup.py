@@ -2,11 +2,20 @@ import os
 
 from setuptools import find_packages, setup
 
+import re
+
+VERSIONFILE = "src/marina/_version.py"
+VSRE = r"^__version__ = ['\"]([^'\"]*)['\"]"
+
+try:
+    __version__ = re.search(VSRE, open(VERSIONFILE, "rt").read(), re.M).group(1)
+except:  # noqa
+    raise RuntimeError("Unable to find version string in %s." % (VERSIONFILE,))
 
 setup(
     name="django-marina",
     zip_safe=False,  # eggs are the devil.
-    version="0.0.1",
+    version=__version__,
     description="Reusable Django extensions by Zostera.",
     long_description=open(os.path.join(os.path.dirname(__file__), "README.rst")).read(),
     author="Dylan Verheul",
