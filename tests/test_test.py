@@ -5,7 +5,7 @@ from django.urls import reverse
 from model_mommy import mommy
 
 from marina.test.clients import ClientWithFetch
-
+from marina.test.testcases import BaseViewsTestCase
 
 User = get_user_model()
 
@@ -57,3 +57,66 @@ class ClientWithFetchTestCase(TestCase):
         client = ClientWithFetch()
         with self.assertRaises(ValueError):
             client.fetch(self.echo_url, method="FOO", user=None)
+
+
+class BaseViewsTestCaseTestCase(BaseViewsTestCase):
+    @classmethod
+    def setUpTestData(cls):
+        super().setUpTestData()
+        cls.echo_url = reverse("echo")
+        cls.user = mommy.make(User)
+        cls.anonymous = AnonymousUser()
+        cls.superuser = mommy.make(User, is_superuser=True)
+        cls.url_public = reverse("echo")
+        cls.url_authenticated = reverse("logged_in_only")
+        cls.url_superuser = reverse("superuser_only")
+
+    def test_assertLoginNotRequired(self):
+        self.assertLoginNotRequired(url=self.url_public)
+        with self.assertRaises(AssertionError):
+            self.assertLoginNotRequired(url=self.url_authenticated)
+        with self.assertRaises(AssertionError):
+            self.assertLoginNotRequired(url=self.url_superuser)
+
+    def test_assertLoginRequired(self):
+        with self.assertRaises(AssertionError):
+            self.assertLoginRequired(url=self.url_public)
+        self.assertLoginRequired(url=self.url_authenticated)
+        self.assertLoginRequired(url=self.url_superuser)
+
+    def test_assertAllowed(self):
+        self.assertAllowed(url=self.url_public, user=None)
+        self.assertAllowed(url=self.url_public, user=self.user)
+        self.assertAllowed(url=self.url_public, user=self.superuser)
+
+        with self.assertRaises(AssertionError):
+            self.assertAllowed(url=self.url_authenticated, user=None)
+        self.assertAllowed(url=self.url_authenticated, user=self.user)
+        self.assertAllowed(url=self.url_authenticated, user=self.superuser)
+
+        with self.assertRaises(AssertionError):
+            self.assertAllowed(url=self.url_superuser, user=None)
+        with self.assertRaises(AssertionError):
+            self.assertAllowed(url=self.url_superuser, user=self.user)
+        self.assertAllowed(url=self.url_superuser, user=self.superuser)
+
+    def test_assertForbidden(self):
+        with self.assertRaises(AssertionError):
+            self.assertForbidden(url=self.url_public, user=None)
+        with self.assertRaises(AssertionError):
+            self.assertForbidden(url=self.url_public, user=self.user)
+        with self.assertRaises(AssertionError):
+            self.assertForbidden(url=self.url_public, user=self.superuser)
+
+        with self.assertRaises(AssertionError):
+            # This will raise Redirect, not Forbidden
+            self.assertForbidden(url=self.url_authenticated, user=None)
+        with self.assertRaises(AssertionError):
+            self.assertForbidden(url=self.url_authenticated, user=self.user)
+        with self.assertRaises(AssertionError):
+            self.assertForbidden(url=self.url_authenticated, user=self.superuser)
+
+        self.assertForbidden(url=self.url_superuser, user=None)
+        self.assertForbidden(url=self.url_superuser, user=self.user)
+        with self.assertRaises(AssertionError):
+            self.assertForbidden(url=self.url_superuser, user=self.superuser)
