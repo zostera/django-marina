@@ -47,7 +47,7 @@ tox: clean-tox
 	tox
 
 coverage: lint
-	coverage run --source chartit runtests.py demoproject
+	coverage run --source src runtests.py demoproject
 	coverage report -m
 
 coverage-html: coverage
