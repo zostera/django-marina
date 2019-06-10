@@ -7,7 +7,6 @@ from model_mommy import mommy
 from marina.test.clients import ClientWithFetch
 from marina.test.test_cases import BaseViewsTestCase
 
-
 User = get_user_model()
 
 
@@ -71,6 +70,7 @@ class BaseViewsTestCaseTestCase(BaseViewsTestCase):
         cls.url_public = reverse("echo")
         cls.url_authenticated = reverse("logged_in_only")
         cls.url_superuser = reverse("superuser_only")
+        cls.url_not_found = "i-do-not-exist"
 
     def test_assertLoginNotRequired(self):
         self.assertLoginNotRequired(url=self.url_public)
@@ -121,3 +121,8 @@ class BaseViewsTestCaseTestCase(BaseViewsTestCase):
         self.assertForbidden(url=self.url_superuser, user=self.user)
         with self.assertRaises(AssertionError):
             self.assertForbidden(url=self.url_superuser, user=self.superuser)
+
+    def test_assertNotFound(self):
+        self.assertNotFound(url=self.url_not_found, user=None)
+        self.assertNotFound(url=self.url_not_found, user=self.user)
+        self.assertNotFound(url=self.url_not_found, user=self.superuser)
