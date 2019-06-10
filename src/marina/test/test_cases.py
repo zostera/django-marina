@@ -53,39 +53,6 @@ class BaseViewsTestCase(TestCase):
             f"response should either be redirect ({self.HTTP_REDIRECT}) or return forbidden ({self.HTTP_FORBIDDEN})",
         )
 
-    def assertResponseStatusCode(self, response, status_code):
-        """
-        Assert that response has specified status.
-
-        :param response: HttpResponse
-        :param status: Required status
-        """
-        self.assertEqual(response.status_code, status_code)
-
-    def assertResponseOk(self, response):
-        """
-        Assert that response has status HTTP_OK.
-
-        :param response: HttpResponse
-        """
-        self.assertResponseStatusCode(response, self.HTTP_OK)
-
-    def assertResponseForbidden(self, response):
-        """
-        Assert that response has status HTTP_FORBIDDEN.
-
-        :param response: HttpResponse
-        """
-        self.assertResponseStatusCode(response, self.HTTP_FORBIDDEN)
-
-    def assertResponseNotFound(self, response):
-        """
-        Assert that response has status HTTP_NOT_FOUND.
-
-        :param response: HttpResponse
-        """
-        self.assertResponseStatusCode(response, self.HTTP_NOT_FOUND)
-
     def assertStatusCode(self, url, user, status_code, **kwargs):
         """
         Logout, fetch response for url, assert that response has specified status.
@@ -99,7 +66,7 @@ class BaseViewsTestCase(TestCase):
         """
         client = self.client_class()
         response = client.fetch(url, user=user, **kwargs)
-        self.assertResponseStatusCode(response, status_code)
+        self.assertEqual(response.status_code, status_code)
 
     def assertAllowed(self, url, user, **kwargs):
         """
