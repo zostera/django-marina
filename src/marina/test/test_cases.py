@@ -1,40 +1,10 @@
-from datetime import date
-
 from django.contrib.auth import get_user_model
-from django.contrib.auth.models import AnonymousUser
-from django.core.exceptions import ValidationError
-from django.test import Client, TestCase
-from django.urls import reverse
+from django.test import TestCase
+
+from marina.test.clients import ClientWithFetch
 
 
 User = get_user_model()
-
-
-
-
-class ClientWithFetch(Client):
-    """Client that implements a shortcut `fetch`."""
-
-    def fetch(self, url, user, method="GET", **kwargs):
-        """
-        Login user or logout if user is None, fetch response for url and return it.
-
-        :param url: Url to fetch
-        :param user: User to login (None for logout)
-        :param method: GET or POST
-        :param kwargs: kwargs for fetching response
-        :return: HttpResponse
-        """
-        self.logout()
-        if user:
-            self.force_login(user)
-        if method == "GET":
-            response = self.get(url, **kwargs)
-        elif method == "POST":
-            response = self.post(url, **kwargs)
-        else:
-            raise ValueError(f"Method should be GET or POST, not '{method}'.")
-        return response
 
 
 class BaseViewsTestCase(TestCase):
@@ -58,7 +28,11 @@ class BaseViewsTestCase(TestCase):
         """
         client = self.client_class()
         response = client.fetch(url, user=None, **kwargs)
-        self.assertEqual(response.status_code, self.HTTP_OK, f"response should be status ok ({self.HTTP_OK})")
+        self.assertEqual(
+            response.status_code,
+            self.HTTP_OK,
+            f"response should be status ok ({self.HTTP_OK})",
+        )
 
     def assertLoginRequired(self, url, **kwargs):
         """

@@ -5,7 +5,8 @@ from django.urls import reverse
 from model_mommy import mommy
 
 from marina.test.clients import ClientWithFetch
-from marina.test.testcases import BaseViewsTestCase
+from marina.test.test_cases import BaseViewsTestCase
+
 
 User = get_user_model()
 
