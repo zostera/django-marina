@@ -17,11 +17,12 @@ class ClientWithFetch(Client):
         :return: HttpResponse
         """
         self.logout()
+        method_lower = f"{method}".lower()
         if user:
             self.force_login(user)
-        if method == "GET":
+        if method_lower == "get":
             response = self.get(url, **kwargs)
-        elif method == "POST":
+        elif method_lower == "post":
             response = self.post(url, **kwargs)
         else:
             raise ValueError(f"Method should be GET or POST, not '{method}'.")
