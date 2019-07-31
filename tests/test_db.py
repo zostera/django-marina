@@ -1,22 +1,26 @@
-from django.contrib.auth import get_user_model
-from django.contrib.auth.models import AnonymousUser
-from django.db import models
+from django.core.exceptions import PermissionDenied
 from django.test import TestCase
-from django.urls import reverse
-from model_mommy import mommy
 
-from marina.db.models import ProtectedModelMixin
-from marina.test.clients import ClientWithFetch
-from marina.test.test_cases import BaseViewsTestCase
-
-
-class ProtectedModel(ProtectedModelMixin, models.Model):
-    name = models.CharField(max_length=10)
+from .models import ProtectedModel
 
 
 class ProtectedModelMixinTestCase(TestCase):
+    def test_delete_protected(self):
+        protected = ProtectedModel(name="protected")
+        protected.save()
+        self.assertIsNotNone(ProtectedModel.objects.filter(pk=protected.pk).first())
+        with self.assertRaises(PermissionDenied):
+            protected.delete()
 
-    def test_assertNotFound(self):
-        self.assertNotFound(url=self.url_not_found, user=None)
-        self.assertNotFound(url=self.url_not_found, user=self.user)
-        self.assertNotFound(url=self.url_not_found, user=self.superuser)
+    def test_delete_unprotected(self):
+        protected = ProtectedModel(name="protected", is_protected=False)
+        protected.save()
+        self.assertIsNotNone(ProtectedModel.objects.filter(pk=protected.pk).first())
+        protected.delete()
+        self.assertIsNone(ProtectedModel.objects.filter(pk=protected.pk).first())
+
+    def test_get_protected_against_delete_message(self):
+        protected = ProtectedModel(name="protected")
+        protected.save()
+        message = protected.get_protected_against_deletion_message()
+        self.assertEqual(message, "This object is protected against deletion.")

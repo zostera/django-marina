@@ -31,6 +31,7 @@ SETTINGS_DICT = {
         "django.contrib.auth",
         "django.contrib.sessions",
         "marina",
+        "tests",
     ),
     "ROOT_URLCONF": "tests.urls",
     "DATABASES": {
