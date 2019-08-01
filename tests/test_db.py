@@ -1,6 +1,8 @@
 from django.core.exceptions import PermissionDenied
 from django.test import TestCase
 
+from marina.db.settings import DisableMigrations
+
 from .models import ProtectedModel
 
 
@@ -24,3 +26,10 @@ class ProtectedModelMixinTestCase(TestCase):
         protected.save()
         message = protected.get_protected_against_deletion_message()
         self.assertEqual(message, "This object is protected against deletion.")
+
+
+class DisableMigrationsTestCase(TestCase):
+    def test_disable_migrations(self):
+        instance = DisableMigrations()
+        self.assertTrue("anything" in instance)
+        self.assertIsNone(instance["anything"])
