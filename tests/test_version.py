@@ -1,9 +1,12 @@
-from unittest import TestCase
-
-from marina import __version__
+from django.test import TestCase
 
 
-class VersionTestCase(TestCase):
-    def test_version_is_valid(self):
-        version_parts = __version__.split(".")
-        self.assertEqual(len(version_parts), 3)
+class VersionTest(TestCase):
+    """Test presence of package version."""
+
+    def test_version(self):
+        import django_marina
+
+        version = django_marina.__version__
+        version_parts = version.split(".")
+        self.assertTrue(len(version_parts) >= 3)

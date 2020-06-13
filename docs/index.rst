@@ -1,4 +1,10 @@
-django-marina |release|
-=======================
+Welcome to django-marina's documentation!
+=========================================
 
-A collection of reusable Django extensions.
+Contents:
+
+.. toctree::
+   :maxdepth: 2
+
+   test
+   changelog

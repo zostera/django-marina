@@ -13,9 +13,7 @@ class ProtectedModelMixin:
     """
 
     # Default message shown to user if object is protected against deletion.
-    protected_against_deletion_message = gettext_lazy(
-        "This object is protected against deletion."
-    )
+    protected_against_deletion_message = gettext_lazy("This object is protected against deletion.")
 
     @property
     def is_protected_against_deletion(self):

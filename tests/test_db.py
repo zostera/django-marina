@@ -1,7 +1,7 @@
 from django.core.exceptions import PermissionDenied
 from django.test import TestCase
 
-from marina.db.settings import DisableMigrations
+from django_marina.db.migrations import DisableMigrations
 
 from .models import ProtectedModel
 

@@ -1,6 +1,6 @@
 from django.db import models
 
-from marina.db.models import ProtectedModelMixin
+from django_marina.db.models import ProtectedModelMixin
 
 
 class ProtectedModel(ProtectedModelMixin, models.Model):
