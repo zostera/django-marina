@@ -5,6 +5,6 @@
 [![Latest PyPI version](https://img.shields.io/pypi/v/django-marina.svg)](https://pypi.python.org/pypi/django-marina)
 [![Any color you like](https://img.shields.io/badge/code%20style-black-000000.svg)](https://github.com/ambv/black)
 
-Django extensions by Zostera. Use at your own leisure and peril.
+Django extensions by Zostera.
 
 Documentation is available at <https://django-marina.readthedocs.io/>.
