@@ -6,5 +6,6 @@ Contents:
 .. toctree::
    :maxdepth: 2
 
+   db
    test
    changelog
