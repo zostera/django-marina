@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "django-marina"
-version = "1.0.0"
+version = "1.1.0"
 description = "Django extensions by Zostera"
 homepage = "https://github.com/zostera/django-marina"
 repository = "https://github.com/zostera/django-marina"
