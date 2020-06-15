@@ -11,6 +11,8 @@ class DisableMigrations(object):
 
     .. code-block:: python
 
+      from django_marina.db import DisableMigrations
+
       if some_condition:
           MIGRATION_MODULES = DisableMigrations()
 

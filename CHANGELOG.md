@@ -8,8 +8,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unreleased]
 
 ### Changed
-- Default branch of repository renamed `main`, update related files. 
+- Default branch of repository renamed `main`, related files have been updated.
 - Update documentation and Sphinx configuration.
+- Simplify imports and add tests. 
 
 ## [1.0.0] - [2020-06-14]
 
