@@ -15,7 +15,6 @@ class DisableMigrations(object):
 
       if some_condition:
           MIGRATION_MODULES = DisableMigrations()
-
     """
 
     # Based on: https://simpleisbetterthancomplex.com/tips/2016/08/19/django-tip-12-disabling-migrations-to-speed-up-unit-tests.html  # NOQA
