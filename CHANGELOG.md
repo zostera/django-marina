@@ -8,7 +8,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unreleased]
 
 ### Changed
-## Default branch of repository renamed `main`, related files have bene updated. 
+- Default branch of repository renamed `main`, related files have been updated.
+- Simplify imports and add tests. 
 
 ### Added
 - Use [poetry](https://python-poetry.org) for managing dependencies and packaging.

@@ -1,7 +1,7 @@
 from django.contrib.auth.models import User
 from django.urls import reverse
 
-from django_marina.test.test_cases import ExtendedTestCase
+from django_marina.test import ExtendedTestCase
 
 
 class ExtendedTestCaseTestCase(ExtendedTestCase):
