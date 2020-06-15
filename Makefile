@@ -29,15 +29,15 @@ ifeq ($(shell git status --porcelain),)
 	@echo "Working directory is clean."
 else
 	@echo "Error - working directory is dirty. Commit those changes!";
-	exit 1;
+	@exit 1;
 endif
 
 branch:
-ifeq ($(shell git rev-parse --abbrev-ref HEAD),master)
-	@echo "On branch master."
+ifeq ($(shell git rev-parse --abbrev-ref HEAD),main)
+	@echo "On branch main."
 else
-	echo "Error - Not on branch master!"
-	exit 1;
+	@echo "Error - Not on branch main!"
+	@exit 1;
 endif
 
 build: docs
