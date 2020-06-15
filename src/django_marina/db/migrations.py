@@ -10,7 +10,8 @@ class DisableMigrations(object):
     In your `settings_test.py` you can set MIGRATION_MODULES, for example:
 
     ```python
-    # Disable migrations
+    from django_marina.db import DisableMigrations
+    
     if some_condition:
         MIGRATION_MODULES = DisableMigrations()
     ```
