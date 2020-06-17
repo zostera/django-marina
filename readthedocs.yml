@@ -1,5 +1,10 @@
-build:
-  image: latest
+version: 2
+
 python:
-  version: 3.6
-  pip_install: true
+  version: 3.7
+  install:
+    - method: pip
+      path: .
+      extra_requirements:
+        - docs
+
