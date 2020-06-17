@@ -6,8 +6,9 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
-
 ### Changed
+- Fix documentation on ReadTheDocs.
+- Fix coveralls shield in README.
 - Default branch of repository renamed `main`, related files have been updated.
 - Update documentation and Sphinx configuration.
 - Simplify imports and add tests. 
