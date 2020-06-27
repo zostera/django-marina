@@ -4,28 +4,45 @@ from django.utils.translation import gettext_lazy
 
 class ProtectedModelMixin:
     """
-    Add a method to disable the delete method of an instance.
+    Add checks to update and delete methods of an instance.
 
-    Override method `is_protected_against_deletion` to indicate that a delete should not be possible. Use case is
-    when deletion may be allowed to a user (superuser, admin or otherwise), but cannot be executed because of
-    objects that depend on this instance. In such a case, the foreign key relation to the model might benefit from
-    `on_delete=models.PROTECT`.
+    The use case is to protect against changes when update or delete is allowed for a user (superuser, admin or
+    otherwise), but should not be executed because of objects that depend on this instance. In such a case, the foreign
+    key relation to the model might benefit from `on_delete=models.PROTECT`.
     """
 
-    # Default message shown to user if object is protected against deletion.
-    protected_against_deletion_message = gettext_lazy("This object is protected against deletion.")
+    # Default message shown to user when object has update protection.
+    update_protection_message = gettext_lazy("This object has update protection.")
+
+    # Default message shown to user when object has delete protection.
+    delete_protection_message = gettext_lazy("This object has delete protection.")
 
     @property
-    def is_protected_against_deletion(self):
-        """Return whether or not this object is protected against deletion."""
-        return True
+    def has_update_protection(self):
+        """Return whether this object has update protection."""
+        return False
 
-    def get_protected_against_deletion_message(self):
-        """Return message shown to user if object is protected against deletion."""
-        return self.protected_against_deletion_message
+    def get_update_protection_message(self):
+        """Return message shown to user when object has update protection."""
+        return self.update_protection_message
+
+    def update(self, *args, **kwargs):
+        """Update the instance, unless it has update protection."""
+        if self.has_update_protection:
+            raise PermissionDenied(self.get_update_protection_message())
+        return super().update(*args, **kwargs)
+
+    @property
+    def has_delete_protection(self):
+        """Return whether this object has delete protection."""
+        return False
+
+    def get_delete_protection_message(self):
+        """Return message shown to user when object has delete protection."""
+        return self.delete_protection_message
 
     def delete(self, *args, **kwargs):
-        """Delete the instance, unless it is protected against deletion."""
-        if not self.is_protected_against_deletion:
-            return super().delete(*args, **kwargs)
-        raise PermissionDenied(self.get_protected_against_deletion_message())
+        """Delete the instance, unless it has delete protection."""
+        if self.has_delete_protection:
+            raise PermissionDenied(self.get_delete_protection_message())
+        return super().delete(*args, **kwargs)
