@@ -12,4 +12,3 @@ class ProtectedModel(ProtectedModelMixin, models.Model):
         if self.is_delete_protected:
             return True
         return super().has_delete_protection
-

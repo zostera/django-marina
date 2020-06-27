@@ -7,7 +7,7 @@ test:
 	python manage.py test
 
 coverage:
-	coverage run manage.py test
+	coverage run --source=${PROJECT_DIR} manage.py test
 	coverage report
 
 tox:
