@@ -42,7 +42,7 @@ class ProtectedModelMixin:
         return self.delete_protection_message
 
     def delete(self, *args, **kwargs):
-        """Delete the instance, unless it has delete protection."""
+        """Delete the instance, unlessit has delete protection."""
         if self.has_delete_protection:
             raise PermissionDenied(self.get_delete_protection_message())
         return super().delete(*args, **kwargs)
