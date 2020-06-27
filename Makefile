@@ -1,9 +1,12 @@
-.PHONY: test tox reformat lint docs porcelain branch build publish
+.PHONY: test coverage tox reformat lint docs porcelain branch build publish
 
 PROJECT_DIR=src/django_marina
 PYTHON_SOURCES=${PROJECT_DIR} tests *.py
 
 test:
+	python manage.py test
+
+coverage:
 	coverage run manage.py test
 	coverage report
 
