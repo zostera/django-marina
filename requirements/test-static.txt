@@ -1,0 +1,6 @@
+black
+isort
+autoflake
+flake8
+docformatter
+pydocstyle

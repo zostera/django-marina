@@ -1,0 +1,6 @@
+-r test.txt
+-r test-static.txt
+-r docs.txt
+coverage
+tox
+django
