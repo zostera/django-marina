@@ -1,7 +1,11 @@
-.PHONY: test coverage tox reformat lint docs porcelain branch build publish
+.PHONY: develop test coverage tox reformat lint docs porcelain branch build publish
 
 PROJECT_DIR=src/django_marina
 PYTHON_SOURCES=${PROJECT_DIR} tests *.py
+
+develop:
+	pip install -U -r requirements/dev.txt
+	pip install .
 
 test:
 	python manage.py test
@@ -44,7 +48,8 @@ else
 endif
 
 build: docs
-	poetry build
+	pip wheel . -w dist
 
-publish: porcelain branch build
-	poetry publish
+#publish: porcelain branch build
+publish: build
+	twine upload --repository-url https://test.pypi.org/legacy/ dist/*

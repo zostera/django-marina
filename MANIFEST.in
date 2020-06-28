@@ -1,0 +1,7 @@
+include LICENSE
+include MANIFEST.in
+recursive-include docs *
+include tox.ini
+include manage.py
+graft src
+graft tests
