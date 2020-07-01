@@ -7,6 +7,7 @@ test:
 	python manage.py test
 
 coverage:
+	coverage erase
 	coverage run --source=${PROJECT_DIR} manage.py test
 	coverage report
 
