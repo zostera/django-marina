@@ -14,8 +14,6 @@ install: pip install tox-travis coveralls
 script:
   - tox
 
-jobs:
-  include:
-    - stage: coveralls
-      script: coveralls
-      python: "3.8"
+after_success:
+  - coverage combine
+  - coveralls

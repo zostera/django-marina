@@ -4,7 +4,7 @@ PROJECT_DIR=src/django_marina
 PYTHON_SOURCES=${PROJECT_DIR} tests *.py
 
 develop:
-	pip install -U -r requirements/dev.txt
+	pip install -U pip -r requirements/dev.txt
 	pip install .
 
 test:
