@@ -17,5 +17,7 @@ script:
 jobs:
   include:
     - stage: coveralls
-      script: coveralls
+      script:
+        - poetry run coverage combine
+        - poetry run coveralls
       python: "3.8"
