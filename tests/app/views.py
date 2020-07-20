@@ -6,7 +6,9 @@ from django.views import View
 
 class HomeView(View):
     def get(self, *args, **kwargs):
-        return HttpResponse("<html><head><title>Hi</title></head><body><h1 class='title'>Hi</h1></body></html>")
+        return HttpResponse(
+            "<html><head><title>Hello World!</title></head><body><h1 class='title'>Hello World!</h1></body></html>"
+        )
 
 
 class LoginRequiredView(LoginRequiredMixin, HomeView):

@@ -116,8 +116,16 @@ class ExtendedTestCase(TestCase):
 
         text_repr = f"{soup_args} {soup_kwargs}"
 
+        # Extract string kwarg for selectors since soup does not implement it
+        string = soup_kwargs.pop("string", None) if soup_method == "select" else None
+
         method = getattr(response.soup, soup_method)
         results = method(*soup_args, **soup_kwargs)
+
+        # Search with string kwarg for selectors, by applying it to found tags
+        if string is not None:
+            results = [result for result in results if result.find(string=string)]
+
         real_count = len(results)
 
         if count == 0:  # No results should be found.
@@ -132,7 +140,11 @@ class ExtendedTestCase(TestCase):
             )
 
     def assertContainsTag(self, response, name=None, count=None, status_code=200, msg_prefix="", **kwargs):
-        """Assert that tag can be found in response, using BeautifulSoup find notation."""
+        """
+        Assert that tag can be found in response, using BeautifulSoup find notation.
+
+        Documentation on tag finding: https://www.crummy.com/software/BeautifulSoup/bs4/doc/#kinds-of-filters
+        """
         self._assert_soup(
             response,
             soup_method="find_all",
@@ -144,7 +156,11 @@ class ExtendedTestCase(TestCase):
         )
 
     def assertNotContainsTag(self, response, name=None, status_code=200, msg_prefix="", **kwargs):
-        """Assert that tag cannot be found in response, using BeautifulSoup find notation."""
+        """
+        Assert that tag cannot be found in response, using BeautifulSoup find notation.
+
+        See `assertContainsTag` for documentation.
+        """
         self._assert_soup(
             response,
             soup_method="find_all",
@@ -156,7 +172,15 @@ class ExtendedTestCase(TestCase):
         )
 
     def assertContainsSelector(self, response, selector, count=None, status_code=200, msg_prefix="", **kwargs):
-        """Assert that CSS selector can be found in response."""
+        """
+        Assert that CSS selector can be found in response.
+
+        Documentation on CSS selectors:
+        https://www.crummy.com/software/BeautifulSoup/bs4/doc/#css-selectors
+
+        To search within the found selectors, you can optionally provide a `string` argument. This will filter
+        the found tags. See https://www.crummy.com/software/BeautifulSoup/bs4/doc/#the-string-argument
+        """
         self._assert_soup(
             response,
             soup_method="select",

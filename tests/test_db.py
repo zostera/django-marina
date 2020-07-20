@@ -1,5 +1,6 @@
 from django.core.exceptions import PermissionDenied
 from django.test import TestCase
+
 from django_marina.db import DisableMigrations
 
 from .models import ProtectedModel

@@ -1,5 +1,8 @@
+import re
+
 from django.contrib.auth.models import User
 from django.urls import reverse
+
 from django_marina.test import ExtendedTestCase
 
 
@@ -106,3 +109,17 @@ class ExtendedTestCaseTestCase(ExtendedTestCase):
         self.assertNotContainsSelector(response, "body h1 a")
         with self.assertRaises(AssertionError):
             self.assertNotContainsSelector(response, "body h1")
+
+    def test_assert_tag_with_string(self):
+        response = self.client.get(self.url_access_all)
+        self.assertNotContainsTag(response, "h1", string="Goodbye World!")
+        self.assertContainsTag(response, "h1", string="Hello World!")
+        self.assertNotContainsTag(response, "h1", string="Hello")
+        self.assertContainsTag(response, "h1", string=re.compile("Hello"))
+
+    def test_assert_selector_with_string(self):
+        response = self.client.get(self.url_access_all)
+        self.assertNotContainsSelector(response, "h1", string="Goodbye World!")
+        self.assertContainsSelector(response, "h1", string="Hello World!")
+        self.assertNotContainsSelector(response, "h1", string="Hello")
+        self.assertContainsSelector(response, "h1", string=re.compile("Hello"))
