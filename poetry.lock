@@ -696,10 +696,10 @@ docs = ["sphinx", "jaraco.packaging (>=3.2)", "rst.linker (>=1.9)"]
 testing = ["jaraco.itertools", "func-timeout"]
 
 [extras]
-docs = ["sphinx", "m2r"]
+docs = ["sphinx", "sphinx_rtd_theme", "m2r"]
 
 [metadata]
-content-hash = "3a82f568049c8e22c8a8fc495db8dc8d7a2189d0b2af20afc78f8b555754775a"
+content-hash = "eb2bfc22f45359896b1443a9ef74bca82cc91769e89d1a520a04446c3e8f1f73"
 python-versions = "^3.6"
 
 [metadata.files]

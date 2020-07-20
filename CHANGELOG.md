@@ -9,6 +9,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Changed
 - Add string argument to assertContainsSelector and assertNotContainsSelector in ExtendedTestCase.
 - Add documentation on ExtendedTestCase.
+### Fixed
+- Package sphinx_rtd_theme is now properly installed as a `docs` extra.
 
 ## [1.2.0] - 2020-07-05
 ### Changed
