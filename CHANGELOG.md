@@ -1,24 +1,24 @@
 # Changelog
 
-All notable changes to this project will be documented in this file.
+## 1.4.0 - In development
 
-The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
-and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
+- Reformat CHANGELOG.
+- Add Python 3.9 to test matrix.
+- Update Django 3.1 to non-development version in test matrix.
 
-## [1.3.0] - 2020-07-20
-### Changed
+## 1.3.0 - 2020-07-20
+
 - Add string argument to assertContainsSelector and assertNotContainsSelector in ExtendedTestCase.
 - Add documentation on ExtendedTestCase.
-### Fixed
 - Package sphinx_rtd_theme is now properly installed as a `docs` extra.
 
-## [1.2.0] - 2020-07-05
-### Changed
+## 1.2.0 - 2020-07-05
+
 - Add Django 3.1 to test matrix.
 - Fix coveralls.
 
-## [1.1.0] - 2020-06-17
-### Changed
+## 1.1.0 - 2020-06-17
+
 - Fix documentation on ReadTheDocs.
 - Fix coveralls shield in README.
 - Default branch of repository renamed `main`, related files have been updated.
@@ -26,20 +26,17 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Simplify imports and add tests. 
 - Update tox configuration.
 
-## [1.0.0] - 2020-06-14
+## 1.0.0 - 2020-06-14
 
-### Added
 - Use [poetry](https://python-poetry.org) for managing dependencies and packaging.
 - Extra test functions with `django_marina.test.clients.ExtendedClient` and `django_marina.test.test_cases.ExtendedTestCase`.
 - Generic way to protect model instances against deletion using `django_marina.db.models.ProtectedModelMixin`.
 - Skip migrations (useful in tests) with `django_marina.db.migrations.NoMigrations`.
 
-## [0.0.2] - 2019-06-10
+## 0.0.2 - 2019-06-10
 
-### Summary
 - Not meant for public release.
 
-## [0.0.1] - 2019-04-28
+## 0.0.1 - 2019-04-28
 
-### Summary
 - Not meant for public release.
