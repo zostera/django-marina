@@ -22,6 +22,7 @@ reformat:
 	black .
 
 lint:
+	black . --check
 	flake8 ${PYTHON_SOURCES}
 	pydocstyle --add-ignore=D1,D202,D301,D413 ${PYTHON_SOURCES}
 
