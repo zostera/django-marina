@@ -62,3 +62,5 @@ jobs:
             pip install coverage
       - name: Combine coverage
         run: coverage combine
+      - name: Combine report
+        run: coverage report
