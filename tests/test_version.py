@@ -10,3 +10,10 @@ class VersionTest(TestCase):
         version = django_marina.__version__
         version_parts = version.split(".")
         self.assertTrue(len(version_parts) >= 3)
+
+    def test_version_fail(self):
+        import django_marina
+
+        version = django_marina.__version__
+        version_parts = version.split(".")
+        self.assertFalse(len(version_parts) >= 3)
