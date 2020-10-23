@@ -5,7 +5,7 @@ on: [push]
 jobs:
 
   test:
-    name: "Python ${{ matrix.python-version }}"
+    name: Python ${{ matrix.python-version }}
     runs-on: ubuntu-latest
     strategy:
       max-parallel: 5
@@ -56,4 +56,4 @@ jobs:
         uses: actions/upload-artifact@v2
         with:
           name: coverage${{ matrix.python-version }}
-          path: ~/.coverage*
+          path: .coverage*
