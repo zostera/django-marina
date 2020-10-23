@@ -61,6 +61,6 @@ jobs:
           python -m pip install --upgrade pip
           pip install coverage
       - name: Combine coverage
-        run: coverage combine
+        run: python coverage combine
       - name: Combine report
-        run: coverage report
+        run: python coverage report
