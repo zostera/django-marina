@@ -65,6 +65,8 @@ jobs:
     steps:
       - name: Download artifacts
         uses: actions/download-artifact@v2
+        with:
+          path: .
       - name: Set up Python 3.8
         uses: actions/setup-python@v2
         with:
