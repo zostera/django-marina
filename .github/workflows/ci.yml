@@ -55,4 +55,5 @@ jobs:
       - name: "Combine coverage"
         run: |
           set -xe
-          python -m coverage combine
+          poetry run coverage combine
+          poetry run coverage report
