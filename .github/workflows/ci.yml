@@ -59,25 +59,12 @@ jobs:
           path: .coverage*
 
   finish:
-    name: Coverage
+    name: Coverage and coveralls
+    needs: test
     runs-on: ubuntu-latest
     steps:
       - name: Download artifacts
         uses: actions/download-artifact@v2
-        with:
-          name: coverage3.6
-      - name: Download artifacts
-        uses: actions/download-artifact@v2
-        with:
-          name: coverage3.7
-      - name: Download artifacts
-        uses: actions/download-artifact@v2
-        with:
-          name: coverage3.8
-      - name: Download artifacts
-        uses: actions/download-artifact@v2
-        with:
-          name: coverage3.9
       - name: Set up Python 3.8
         uses: actions/setup-python@v2
         with:
