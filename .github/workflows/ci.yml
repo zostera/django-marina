@@ -52,8 +52,8 @@ jobs:
       - name: Test with tox
         run: tox
 
-      - name: "Combine coverage"
-        run: |
-          set -xe
-          poetry run coverage combine
-          poetry run coverage report
+      - name: Upload coverage
+        uses: actions/upload-artifact@v2
+        with:
+          name: coverage${{ matrix.python-version }}
+          path: ~/.coverage*
