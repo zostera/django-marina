@@ -52,15 +52,7 @@ jobs:
       - name: Test with tox
         run: tox
 
-  finish:
-    needs: test
-    runs-on: ubuntu-latest
-    steps:
-      - name: Install coverage
-        run: |
-          python -m pip install --upgrade pip
-          pip install coverage
-      - name: Combine coverage
-        run: python coverage combine
-      - name: Combine report
-        run: python coverage report
+      - name: "Combine coverage"
+          run: |
+            set -xe
+            python -m coverage combine
