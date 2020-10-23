@@ -1,6 +1,10 @@
 # django-marina
 
-[![image](https://travis-ci.org/zostera/django-marina.svg?branch=main)](https://travis-ci.org/zostera/django-marina)
+.. image:: https://github.com/zostera/django-marina/workflows/CI/badge.svg?branch=main
+     :target: https://github.com/YOU/YOUR-PROJECT/actions?workflow=CI
+     :alt: CI Status
+     
+[![image](https://github.com/zostera/django-marina/workflows/CI/badge.svg?branch=main)](https://github.com/zostera/django-marina/actions?workflow=CI)
 [![image](https://coveralls.io/repos/github/zostera/django-marina/badge.svg?branch=main)](https://coveralls.io/github/zostera/django-marina?branch=main)
 [![Latest PyPI version](https://img.shields.io/pypi/v/django-marina.svg)](https://pypi.python.org/pypi/django-marina)
 [![Any color you like](https://img.shields.io/badge/code%20style-black-000000.svg)](https://github.com/ambv/black)
