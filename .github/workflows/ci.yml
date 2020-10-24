@@ -52,11 +52,20 @@ jobs:
       - name: Test with tox
         run: tox
 
-      - name: Upload coverage
-        uses: actions/upload-artifact@v2
+#      - name: Upload coverage
+#        uses: actions/upload-artifact@v2
+#        with:
+#          name: coverage${{ matrix.python-version }}
+#          path: .coverage*
+      - name: Combine
+        run: coverage combine
+
+      - name: Coveralls Parallel
+        uses: coverallsapp/github-action@master
         with:
-          name: coverage${{ matrix.python-version }}
-          path: .coverage*
+          github-token: ${{ secrets.github_token }}
+          flag-name: run-${{ matrix.test_number }}
+          parallel: true
 
   finish:
     name: Coverage and coveralls
@@ -79,5 +88,8 @@ jobs:
         run: |
           python -m coverage combine coverage3.6/ coverage3.7/ coverage3.8/ coverage3.9/
           python -m coverage report
-      - name: Coveralls
-        run: coveralls
+      - name: Coveralls Finished
+        uses: coverallsapp/github-action@master
+        with:
+          github-token: ${{ secrets.github_token }}
+          parallel-finished: true
