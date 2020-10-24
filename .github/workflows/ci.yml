@@ -40,12 +40,17 @@ jobs:
           poetry config virtualenvs.in-project false
           poetry config virtualenvs.path ~/.virtualenvs
 
+      - name: Install pip, tox, tox-gh-actions
+        run: |
+          python -m pip install --upgrade pip
+          pip install tox tox-gh-actions
+
       - name: Install Dependencies
         run: poetry install
         if: steps.cache.outputs.cache-hit != 'true'
 
       - name: Test with tox
-        run: tox -e py
+        run: tox
 
       - name: Combine
         run: poetry run coverage combine
