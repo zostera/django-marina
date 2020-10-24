@@ -58,7 +58,7 @@ jobs:
 #          name: coverage${{ matrix.python-version }}
 #          path: .coverage*
       - name: Combine
-        run: coverage combine
+        run: poetry run coverage combine
 
       - name: Coveralls Parallel
         uses: coverallsapp/github-action@master
