@@ -53,8 +53,6 @@ jobs:
       - name: Download coverage1
         uses: actions/download-artifact@v2
 
-      - name: Run coverage
-        run: |
-          coverage combine coverage*/.coverage*
-          coverage report --fail-under=100
-          coverage xml
+      - run: coverage combine coverage*/.coverage*
+      - run: coverage report --fail-under=100
+      - run: coverage xml
