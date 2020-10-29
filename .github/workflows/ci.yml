@@ -53,4 +53,4 @@ jobs:
         run: tox -e py
 
       - name: Combine
-        run: poetry run coverage combine
+        run: python -m coverage combine
