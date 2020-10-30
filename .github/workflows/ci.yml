@@ -38,19 +38,24 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - uses: actions/checkout@v2
-      - env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - name: Checkout code
+        uses: actions/checkout@v2
+
       - name: Set up Python 3.8
         uses: actions/setup-python@v2
         with:
           python-version: 3.8
 
       - run: pip install -U pip
-      - run: pip install -U poetry tox coverage coveralls
+      - run: pip install -U poetry tox coverage
 
       - name: Download coverage
         uses: actions/download-artifact@v2
 
-      - run: coverage combine coverage*/.coverage*
-      - run: python -m coveralls
+      - name: Combine coverage
+        run: coverage combine coverage*/.coverage*
+
+      - name: Coveralls
+        uses: coverallsapp/github-action@master
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
