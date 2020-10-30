@@ -45,10 +45,10 @@ jobs:
           python-version: 3.8
 
       - run: pip install -U pip
-      - run: pip install -U poetry tox coverage
+      - run: pip install -U poetry tox coverage coveralls
 
       - name: Download coverage
         uses: actions/download-artifact@v2
 
       - run: coverage combine coverage*/.coverage*
-      - run: coverage xml
+      - run: python -m coveralls
