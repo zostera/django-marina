@@ -27,9 +27,6 @@ jobs:
       - name: Test with tox
         run: tox -e py
 
-      - name: Combine coverage
-        run: python -m coverage combine
-
       - name: Upload coverage
         uses: actions/upload-artifact@v2
         with:
@@ -49,8 +46,9 @@ jobs:
 
       - run: pip install -U pip
       - run: pip install -U poetry tox coverage
+      - run: poetry install
 
-      - name: Download coverage1
+      - name: Download coverage
         uses: actions/download-artifact@v2
 
       - run: coverage combine coverage*/.coverage*
