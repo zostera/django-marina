@@ -47,6 +47,8 @@ jobs:
       - run: pip install -U pip
       - run: pip install -U poetry tox coverage
       - run: poetry install
+      - run: find . -name "*.pyc" -exec rm -rf {} \;
+      - run: coverage erase
 
       - name: Download coverage
         uses: actions/download-artifact@v2
