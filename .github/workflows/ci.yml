@@ -33,6 +33,12 @@ jobs:
       - name: Coverage report
         run: coverage report
 
+      - name: Upload coveralls
+        env:
+          COVERALLS_PARALLEL: true
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: coveralls
+
 #  coverage:
 #    needs: test
 #    runs-on: ubuntu-latest
