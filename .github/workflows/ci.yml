@@ -55,8 +55,8 @@ jobs:
       - name: Coverage combine
         run: coverage combine coverage*/.coverage*
 
-      - name: Coverage report
-        run: coverage report
+#      - name: Coverage report
+#        run: coverage report
 
       - name: Coveralls
         env:
