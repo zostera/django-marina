@@ -27,38 +27,38 @@ jobs:
       - name: Test with tox
         run: tox -e py
 
-      - name: Upload coverage
-        uses: actions/upload-artifact@v2
-        with:
-          name: coverage${{ matrix.group }}
-          path: .coverage*
-
-  coverage:
-    needs: test
-    runs-on: ubuntu-latest
-
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v2
-
-      - name: Set up Python 3.8
-        uses: actions/setup-python@v2
-        with:
-          python-version: 3.8
-
-      - run: pip install -U pip
-      - run: pip install -U poetry tox coverage coveralls
-
-      - name: Download coverage
-        uses: actions/download-artifact@v2
-
       - name: Coverage combine
-        run: coverage combine coverage*/.coverage*
+        run: coverage combine
 
-#      - name: Coverage report
-#        run: coverage report
+      - name: Coverage report
+        run: coverage report
 
-      - name: Coveralls
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: python -m coveralls
+#  coverage:
+#    needs: test
+#    runs-on: ubuntu-latest
+#
+#    steps:
+#      - name: Checkout code
+#        uses: actions/checkout@v2
+#
+#      - name: Set up Python 3.8
+#        uses: actions/setup-python@v2
+#        with:
+#          python-version: 3.8
+#
+#      - run: pip install -U pip
+#      - run: pip install -U poetry tox coverage coveralls
+#
+#      - name: Download coverage
+#        uses: actions/download-artifact@v2
+#
+#      - name: Coverage combine
+#        run: coverage combine coverage*/.coverage*
+#
+##      - name: Coverage report
+##        run: coverage report
+#
+#      - name: Coveralls
+#        env:
+#          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+#        run: python -m coveralls
