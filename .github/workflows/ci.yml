@@ -22,7 +22,7 @@ jobs:
           python-version: ${{ matrix.python-version }}
 
       - run: pip install -U pip
-      - run: pip install -U poetry tox coverage
+      - run: pip install -U poetry tox coverage coveralls
 
       - name: Test with tox
         run: tox -e py
