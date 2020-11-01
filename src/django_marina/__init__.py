@@ -11,3 +11,6 @@ except ImportError:
 
 package_metadata = metadata(PACKAGE_NAME)
 __version__ = package_metadata["Version"]
+
+if not False is None:
+    print(123)
