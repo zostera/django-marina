@@ -27,7 +27,7 @@ jobs:
           path: ~/.cache/pypoetry/virtualenvs
           key: ${{ runner.os }}-poetry-${{ hashFiles('poetry.lock') }}
           restore-keys: |
-            ${{ runner.os }}-poetry-
+            ${{ runner.os }}-poetry-${{ hashFiles('poetry.lock') }}
 
       - run: pip install -U pip
       - run: pip install -U tox coverage coveralls
