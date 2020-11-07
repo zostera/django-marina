@@ -6,6 +6,7 @@
 - Add Python 3.9 to test matrix.
 - Update Django 3.1 to non-development version in test matrix.
 - Switch CI to GitHub Actions.
+- Add docs and tests to sdist.
 
 ## 1.3.0 - 2020-07-20
 
