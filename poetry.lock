@@ -685,12 +685,12 @@ docs = ["sphinx", "jaraco.packaging (>=3.2)", "rst.linker (>=1.9)"]
 testing = ["pytest (>=3.5,!=3.7.3)", "pytest-checkdocs (>=1.2.3)", "pytest-flake8", "pytest-cov", "jaraco.test (>=3.2.0)", "jaraco.itertools", "func-timeout", "pytest-black (>=0.3.7)", "pytest-mypy"]
 
 [extras]
-docs = ["sphinx", "sphinx_rtd_theme"]
+docs = ["sphinx", "sphinx_rtd_theme", "m2r2"]
 
 [metadata]
 lock-version = "1.1"
 python-versions = "^3.6"
-content-hash = "9ac32f6fbadb3e1f5d576f42177288ae4513426b12d0ca5bf8d7bd3e8fa2a689"
+content-hash = "75f71ff953973cefa4f4ec47583e06f403ef39353ec74dc6b04f9bfcb18f759b"
 
 [metadata.files]
 alabaster = [
