@@ -1,6 +1,10 @@
 # Changelog
 
-## 1.4.0 - In development
+## 1.4.1 - 2020-11-07
+
+- Fix CHANGELOG.
+
+## 1.4.0 - 2020-11-07
 
 - Reformat CHANGELOG.
 - Add Python 3.9 to test matrix.
