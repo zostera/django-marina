@@ -1,14 +1,10 @@
-.PHONY: test coverage tox reformat lint docs porcelain branch build publish
+.PHONY: test tox reformat lint docs porcelain branch build publish
 
 PROJECT_DIR=src/django_marina
 PYTHON_SOURCES=${PROJECT_DIR} tests *.py
 
 test:
-	python manage.py test
-
-coverage:
-	coverage erase
-	coverage run --source=${PROJECT_DIR} manage.py test
+	coverage run manage.py test
 	coverage report
 
 tox:
@@ -45,7 +41,8 @@ else
 endif
 
 build: docs
-	poetry build
+	rm -rf build
+	python setup.py sdist bdist_wheel
 
 publish: porcelain branch build
-	poetry publish
+	twine upload dist/*
