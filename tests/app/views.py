@@ -1,6 +1,8 @@
+from django.contrib import messages
 from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMixin
 from django.http import HttpResponse
 from django.utils.html import format_html
+from django.utils.safestring import mark_safe
 from django.views import View
 
 
@@ -32,3 +34,11 @@ class EchoView(View):
 
     def post(self, *args, **kwargs):
         return self._response(data=self.request.POST)
+
+
+class MessageView(View):
+    def get(self, *args, **kwargs):
+        message = self.request.GET.get("message", "")
+        if message:
+            messages.add_message(self.request, messages.INFO, message)
+        return HttpResponse(mark_safe("<html><head><title>Message</title></head><body>Message</body></html>"))

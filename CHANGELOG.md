@@ -2,7 +2,7 @@
 
 ## 2.1.0 - In development
 
-- Add tests for messages.
+- Add `ExtendedTestCase.assertHasMessage` to test messages in response.
 
 ## 2.0.0 - 2020-11-07
 

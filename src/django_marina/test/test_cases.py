@@ -1,3 +1,4 @@
+from django.contrib.messages import get_messages
 from django.test import TestCase
 
 from .clients import ExtendedClient
@@ -99,6 +100,15 @@ class ExtendedTestCase(TestCase):
         """
         response = self._response(path, user=user, **kwargs)
         self.assertEqual(response.status_code, self.HTTP_NOT_FOUND)
+
+    def assertHasMessage(self, response, message):
+        """
+        Assert that response has given message.
+
+        :param response: Response object
+        :param message: Full text of message to check for
+        """
+        self.assertIn(message, [m.message for m in get_messages(response.wsgi_request)])
 
     def _assert_soup(self, response, soup_method, soup_args, soup_kwargs, status_code, count, msg_prefix):
         """Handle assertions that use BeautifulSoup, with interface similar to assertContains and assertNotContains."""
