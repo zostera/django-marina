@@ -1,10 +1,12 @@
 # Changelog
 
-## 2.1.0 - In development
+## 2.1.0 - 2021-04-13
 
 - Add `ExtendedTestCase.assertHasMessage` to test messages in response.
+- Fix bug in ProtectedModelMixin.
+- Add tests.
 
-## 2.0.0 - 2020-11-07
+## 2.0.0 - 2021-04-09
 
 - Add Dependabot.
 - Revert to setuptools for packaging.
