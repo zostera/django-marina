@@ -123,3 +123,18 @@ class ExtendedTestCaseTestCase(ExtendedTestCase):
         self.assertContainsSelector(response, "h1", string="Hello World!")
         self.assertNotContainsSelector(response, "h1", string="Hello")
         self.assertContainsSelector(response, "h1", string=re.compile("Hello"))
+
+
+class MessagesTestCase(ExtendedTestCase):
+    def test_assert_has_message(self):
+        url = reverse("message")
+        response = self.client.get(url)
+        message = "I have a message for you."
+        partial_message = "message for you"
+        self.assertIn(partial_message, message)
+        with self.assertRaises(AssertionError):
+            self.assertHasMessage(response, message)
+        response = self.client.get(url, data={"message": message})
+        self.assertHasMessage(response, message)
+        with self.assertRaises(AssertionError):
+            self.assertHasMessage(response, partial_message)

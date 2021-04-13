@@ -1,5 +1,9 @@
 # Changelog
 
+## 2.1.0 - In development
+
+- Add `ExtendedTestCase.assertHasMessage` to test messages in response.
+
 ## 2.0.0 - 2020-11-07
 
 - Add Dependabot.
