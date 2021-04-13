@@ -1,5 +1,9 @@
 # Changelog
 
+## 2.1.1 - In development
+
+- Improve Makefile build and publish commands.
+
 ## 2.1.0 - 2021-04-13
 
 - Add `ExtendedTestCase.assertHasMessage` to test messages in response.

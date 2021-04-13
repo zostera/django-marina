@@ -41,8 +41,9 @@ else
 endif
 
 build: docs
-	rm -rf build
+	rm -rf build dist *.egg-info
 	python setup.py sdist bdist_wheel
 
 publish: porcelain branch build
 	twine upload dist/*
+	rm -rf build dist *.egg-info
