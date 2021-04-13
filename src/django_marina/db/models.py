@@ -26,11 +26,11 @@ class ProtectedModelMixin:
         """Return message shown to user when object has update protection."""
         return self.update_protection_message
 
-    def update(self, *args, **kwargs):
-        """Update the instance, unless it has update protection."""
-        if self.has_update_protection:
+    def save(self, *args, **kwargs):
+        """Save the instance, unless it has a primary key and update protection."""
+        if self.pk and self.has_update_protection:
             raise PermissionDenied(self.get_update_protection_message())
-        return super().update(*args, **kwargs)
+        return super().save(*args, **kwargs)
 
     @property
     def has_delete_protection(self):
