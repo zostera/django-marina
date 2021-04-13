@@ -148,7 +148,7 @@ class MessagesTestCase(ExtendedTestCase):
         response = self.client.get(url)
         with self.assertRaises(AssertionError):
             self.assertHasMessage(response, message)
-        
+
         response = self.client.get(url, data={"message": message})
         self.assertHasMessage(response, message)
         with self.assertRaises(AssertionError):
