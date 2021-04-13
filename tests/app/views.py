@@ -5,10 +5,13 @@ from django.views import View
 
 
 class HomeView(View):
+    html = "<html><head><title>Hello World!</title></head><body><h1 class='title'>Hello World!</h1></body></html>"
+
     def get(self, *args, **kwargs):
-        return HttpResponse(
-            "<html><head><title>Hello World!</title></head><body><h1 class='title'>Hello World!</h1></body></html>"
-        )
+        return HttpResponse(self.html)
+
+    def post(self, *args, **kwargs):
+        return HttpResponse(self.html)
 
 
 class LoginRequiredView(LoginRequiredMixin, HomeView):
