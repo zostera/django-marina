@@ -102,9 +102,6 @@ class ExtendedTestCase(TestCase):
 
     def _assert_soup(self, response, soup_method, soup_args, soup_kwargs, status_code, count, msg_prefix):
         """Handle assertions that use BeautifulSoup, with interface similar to assertContains and assertNotContains."""
-        if hasattr(response, "render") and callable(response.render) and not response.is_rendered:
-            response.render()
-
         if msg_prefix:
             msg_prefix = f"{msg_prefix}: "
 
