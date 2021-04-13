@@ -141,13 +141,14 @@ class ExtendedTestCaseTestCase(ExtendedTestCase):
 
 class MessagesTestCase(ExtendedTestCase):
     def test_assert_has_message(self):
-        url = reverse("message")
-        response = self.client.get(url)
         message = "I have a message for you."
         partial_message = "message for you"
-        self.assertIn(partial_message, message)
+        url = reverse("message")
+
+        response = self.client.get(url)
         with self.assertRaises(AssertionError):
             self.assertHasMessage(response, message)
+        
         response = self.client.get(url, data={"message": message})
         self.assertHasMessage(response, message)
         with self.assertRaises(AssertionError):
