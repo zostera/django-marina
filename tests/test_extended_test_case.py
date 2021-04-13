@@ -36,6 +36,12 @@ class ExtendedTestCaseTestCase(ExtendedTestCase):
         with self.assertRaises(AssertionError):
             self.assertLoginNotRequired(self.url_access_authenticated)
 
+    def test_methods(self):
+        self.assertAllowed(self.url_access_all, user=None, method="get")
+        self.assertAllowed(self.url_access_all, user=None, method="post")
+        with self.assertRaises(AssertionError):
+            self.assertAllowed(self.url_access_all, user=None, method="illegal")
+
     def test_assert_allowed(self):
         self.assertAllowed(self.url_access_all, user=None)
         self.assertAllowed(self.url_access_all, user=self.user)
@@ -98,9 +104,17 @@ class ExtendedTestCaseTestCase(ExtendedTestCase):
         with self.assertRaises(AssertionError):
             self.assertNotContainsTag(response, "h1")
 
+    def test_soup_message_prefix(self):
+        response = self.client.get(self.url_access_all)
+        with self.assertRaises(AssertionError):
+            self.assertContainsSelector(response, "body h1 a", msg_prefix="MSG-PREFIX")
+
     def test_assert_contains_selector(self):
         response = self.client.get(self.url_access_all)
         self.assertContainsSelector(response, "body h1")
+        self.assertContainsSelector(response, "body h1", count=1)
+        with self.assertRaises(AssertionError):
+            self.assertContainsSelector(response, "body h1", count=2)
         with self.assertRaises(AssertionError):
             self.assertContainsSelector(response, "body h1 a")
 

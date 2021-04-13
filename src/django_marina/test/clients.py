@@ -5,6 +5,8 @@ from django.utils.functional import SimpleLazyObject
 
 def _get_soup(response):
     """Return soup for response."""
+    if hasattr(response, "render") and callable(response.render) and not response.is_rendered:
+        response.render()
     return BeautifulSoup(response.content, "html.parser")
 
 
