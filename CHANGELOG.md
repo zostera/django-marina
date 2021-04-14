@@ -2,6 +2,7 @@
 
 ## 2.1.1 - In development
 
+- Add `get_changedfields` and `has_changed_fields` to `ProtectedModelMixin`.
 - Improve Makefile build and publish commands.
 
 ## 2.1.0 - 2021-04-13
