@@ -18,6 +18,7 @@ INSTALLED_APPS = (
 )
 
 ROOT_URLCONF = "tests.app.urls"
+LOGIN_URL = "login"
 
 MIDDLEWARE = (
     "django.contrib.sessions.middleware.SessionMiddleware",
