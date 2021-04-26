@@ -37,24 +37,16 @@ class ExtendedClient(Client):
         else:
             self.logout()
 
-    def get(self, *args, **kwargs):
+    def generic(self, *args, **kwargs):
         """
-        Force given user to login, then perform GET request and return response.
+        Force given user to login, then fetch request and return response.
+
+        This adds the optional keyword argument `user` to all methods that end up calling `generic`, including
+        `get()` and `post()`.
 
         When no `user` is provided, or `user` is set to `ExtendedClient.USER_IGNORE`, no special action is taken.
         When `user` is `None`, the request will be performed on an anonymous request (user logged out).
         When `user` is provided and not `None`, the request will be performed with that user logged in.
         """
         self.force_login(kwargs.pop("user", self.USER_IGNORE))
-        return super().get(*args, **kwargs)
-
-    def post(self, *args, **kwargs):
-        """
-        Force given user to login, then perform POST request and return response.
-
-        When no `user` is provided, this works like the default `post()` method.
-        When `user` is `None`, the request will be performed on an anonymous request (user logged out).
-        When `user` is provided and not `None`, the request will be performed with that user logged in.
-        """
-        self.force_login(kwargs.pop("user", self.USER_IGNORE))
-        return super().post(*args, **kwargs)
+        return super().generic(*args, **kwargs)
