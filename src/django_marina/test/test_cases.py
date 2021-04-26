@@ -150,7 +150,8 @@ class ExtendedTestCase(TestCase):
         self.assertEqual(
             response.status_code,
             status_code,
-            f"{msg_prefix}Couldn't retrieve content: Response code was {response.status_code} (expected {status_code}).",
+            f"{msg_prefix}Couldn't retrieve content: "
+            f"Response code was {response.status_code} (expected {status_code}).",
         )
 
         text_repr = f"{soup_args} {soup_kwargs}"
