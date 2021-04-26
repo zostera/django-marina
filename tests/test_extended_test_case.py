@@ -30,6 +30,8 @@ class ExtendedTestCaseTestCase(ExtendedTestCase):
         self.assertLoginRequired(self.url_access_authenticated)
         with self.assertRaises(AssertionError):
             self.assertLoginRequired(self.url_access_all)
+        with self.assertRaises(AssertionError):
+            self.assertLoginRequired(reverse("redirect-root"))
 
     def test_assert_login_not_required(self):
         self.assertLoginNotRequired(reverse("home"))

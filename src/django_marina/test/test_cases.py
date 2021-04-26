@@ -1,7 +1,30 @@
+from django.contrib.auth.views import redirect_to_login
 from django.contrib.messages import get_messages
 from django.test import TestCase
 
 from .clients import ExtendedClient
+
+
+def _login_url(next):
+    """Return login url that Django uses in its redirect to login."""
+    redirect_response = redirect_to_login(next)
+    return redirect_response["Location"]
+
+
+def _text_list(lst):
+    """Return text value of a list."""
+    strings = [f"{item}" for item in lst]
+    return " or ".join([", ".join(strings[:-1])] + strings[-1:])
+
+
+def _list(value):
+    """Return value if value is a list, otherwise a list with value as its single item."""
+    if not isinstance(value, str):
+        try:
+            return list(value)
+        except TypeError:
+            pass
+    return [value]
 
 
 class ExtendedTestCase(TestCase):
@@ -23,8 +46,22 @@ class ExtendedTestCase(TestCase):
         elif method == "post":
             response = client.post(path, user=user, **kwargs)
         else:
-            raise AssertionError(f"Illegal value {method} for method, expected GET or POST")
+            raise AssertionError(f"Invalid method {method} (expected GET or POST).")
         return response
+
+    def assertResponseStatusCode(self, response, status_code, msg_prefix=None):
+        """
+        Assert that response has given status code.
+
+        :param response: HttpResponse
+        :param status_code: int or list
+        """
+        status_codes = _list(status_code)
+        self.assertIn(
+            response.status_code,
+            status_codes,
+            f"{msg_prefix or ''}Invalid response code {response.status_code} (expected {_text_list(status_codes)}).",
+        )
 
     def assertResponseOk(self, response):
         """
@@ -32,25 +69,20 @@ class ExtendedTestCase(TestCase):
 
         :param response: HttpResponse
         """
-        self.assertEqual(response.status_code, self.HTTP_OK, f"Response code should be HTTP_OK ({self.HTTP_OK})")
+        self.assertResponseStatusCode(response, self.HTTP_OK)
 
     def assertLoginRequired(self, path, **kwargs):
         """
-        Make request while not logged in, assert that response has status HTTP_FORBIDDEN or HTTP_REDIRECTS.
+        Make request while not logged in, assert that response has status HTTP_FORBIDDEN or redirects to login page.
 
         :param path: Path for request
         :param kwargs: Kwargs for request
         """
         response = self._response(path, user=None, **kwargs)
-        # TODO: Check for proper redirection to login view
-        self.assertIn(
-            response.status_code,
-            (self.HTTP_REDIRECT, self.HTTP_FORBIDDEN),
-            (
-                f"Response code should either be HTTP_REDIRECT ({self.HTTP_REDIRECT}) "
-                f"or HTTP_FORBIDDEN ({self.HTTP_FORBIDDEN})"
-            ),
-        )
+        if response.status_code == self.HTTP_REDIRECT:
+            self.assertRedirects(response, _login_url(path))
+        else:
+            self.assertResponseStatusCode(response, self.HTTP_FORBIDDEN)
 
     def assertLoginNotRequired(self, path, **kwargs):
         """
@@ -86,7 +118,7 @@ class ExtendedTestCase(TestCase):
         :param kwargs: Kwargs for request
         """
         response = self._response(path, user=user, **kwargs)
-        self.assertEqual(response.status_code, self.HTTP_FORBIDDEN)
+        self.assertResponseStatusCode(response, self.HTTP_FORBIDDEN)
 
     def assertNotFound(self, path, user, **kwargs):
         """
@@ -99,7 +131,7 @@ class ExtendedTestCase(TestCase):
         :param kwargs: Kwargs for request
         """
         response = self._response(path, user=user, **kwargs)
-        self.assertEqual(response.status_code, self.HTTP_NOT_FOUND)
+        self.assertResponseStatusCode(response, self.HTTP_NOT_FOUND)
 
     def assertHasMessage(self, response, message):
         """
@@ -118,7 +150,8 @@ class ExtendedTestCase(TestCase):
         self.assertEqual(
             response.status_code,
             status_code,
-            f"{msg_prefix}Couldn't retrieve content: Response code was {response.status_code} (expected {status_code})",
+            f"{msg_prefix}Couldn't retrieve content: "
+            f"Response code was {response.status_code} (expected {status_code}).",
         )
 
         text_repr = f"{soup_args} {soup_kwargs}"
@@ -135,11 +168,11 @@ class ExtendedTestCase(TestCase):
 
         real_count = len(results)
 
-        if count == 0:  # No results should be found.
+        if count == 0:
             self.assertEqual(real_count, 0, f"{msg_prefix}Response should not contain {text_repr}")
-        elif count is None:  # At least one result should be found.
+        elif count is None:
             self.assertTrue(real_count != 0, f"{msg_prefix}Couldn't find {text_repr} in response")
-        else:  # Exactly this number of results should be found.
+        else:
             self.assertEqual(
                 real_count,
                 count,
