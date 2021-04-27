@@ -11,22 +11,6 @@ def _login_url(next):
     return redirect_response["Location"]
 
 
-def _text_list(lst):
-    """Return text value of a list."""
-    strings = [f"{item}" for item in lst]
-    return " or ".join([", ".join(strings[:-1])] + strings[-1:])
-
-
-def _list(value):
-    """Return value if value is a list, otherwise a list with value as its single item."""
-    if not isinstance(value, str):
-        try:
-            return list(value)
-        except TypeError:
-            pass
-    return [value]
-
-
 class ExtendedTestCase(TestCase):
     """TestCase with a extended client and extra features for asserting response content."""
 
@@ -54,13 +38,13 @@ class ExtendedTestCase(TestCase):
         Assert that response has given status code.
 
         :param response: HttpResponse
-        :param status_code: int or list
+        :param status_code: int
+        :param msg_prefix: str
         """
-        status_codes = _list(status_code)
-        self.assertIn(
+        self.assertEqual(
             response.status_code,
-            status_codes,
-            f"{msg_prefix or ''}Invalid response code {response.status_code} (expected {_text_list(status_codes)}).",
+            status_code,
+            f"{msg_prefix or ''}Invalid response code {response.status_code} (expected {status_code}).",
         )
 
     def assertResponseOk(self, response):
