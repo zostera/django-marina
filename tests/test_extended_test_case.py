@@ -19,6 +19,14 @@ class ExtendedTestCaseTestCase(ExtendedTestCase):
         cls.superuser = User(username="superuser", is_superuser=True)
         cls.superuser.save()
 
+    def test_assert_response_status_code(self):
+        response = self.client.get(self.url_access_all)
+        self.assertResponseStatusCode(response, 200)
+        with self.assertRaises(AssertionError):
+            self.assertResponseStatusCode(response, "200")
+        with self.assertRaises(AssertionError):
+            self.assertResponseStatusCode(response, [200, 201])
+
     def test_assert_response_ok(self):
         response = self.client.get(self.url_access_all)
         self.assertResponseOk(response)
