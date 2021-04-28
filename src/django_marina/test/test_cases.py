@@ -1,4 +1,3 @@
-from django.contrib.auth.views import redirect_to_login
 from django.contrib.messages import get_messages
 from django.test import TestCase
 
@@ -7,6 +6,7 @@ from .clients import ExtendedClient
 
 def _login_url(next):
     """Return login url that Django uses in its redirect to login."""
+    from django.contrib.auth.views import redirect_to_login
     redirect_response = redirect_to_login(next)
     return redirect_response["Location"]
 
