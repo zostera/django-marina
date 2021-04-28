@@ -1,6 +1,6 @@
 # Changelog
 
-## 2.1.1 - In development
+## 2.2.0 - 2021-04-28
 
 - Make `assertLoginRequired` test for redirect to `LOGIN_URL`.
 - Improve Makefile build and publish commands.
