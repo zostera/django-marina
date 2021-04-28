@@ -13,7 +13,7 @@ README = (HERE / "README.md").read_text()
 setup(
     name="django-marina",
     zip_safe=False,
-    version="2.1.1dev",
+    version="2.2.0",
     description="Django extensions by Zostera",
     long_description=README,
     long_description_content_type="text/markdown",
