@@ -1,5 +1,9 @@
 # Changelog
 
+## In development
+
+- Allow `assertAllowed`, `assertForbidden`, `assertNotFound` to test for multiple users in a single call.
+
 ## 2.2.0 - 2021-04-28
 
 - Make `assertLoginRequired` test for redirect to `LOGIN_URL`.
