@@ -215,8 +215,7 @@ class ExtendedTestCase(TestCase):
         """
         Assert that CSS selector can be found in response.
 
-        Documentation on CSS selectors:
-        https://www.crummy.com/software/BeautifulSoup/bs4/doc/#css-selectors
+        Documentation on CSS selectors: https://www.crummy.com/software/BeautifulSoup/bs4/doc/#css-selectors
 
         To search within the found selectors, you can optionally provide a `string` argument. This will filter
         the found tags. See https://www.crummy.com/software/BeautifulSoup/bs4/doc/#the-string-argument
