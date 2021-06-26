@@ -7,8 +7,15 @@ from .clients import ExtendedClient
 def _login_url(next):
     """Return login url that Django uses in its redirect to login."""
     from django.contrib.auth.views import redirect_to_login
+
     redirect_response = redirect_to_login(next)
     return redirect_response["Location"]
+
+
+def _msg_prefix_add(msg_prefix, value):
+    """Return msg_prefix with added value."""
+    msg_prefix = f"{msg_prefix}: " if msg_prefix else ""
+    return f"{msg_prefix}{value}"
 
 
 class ExtendedTestCase(TestCase):
@@ -44,7 +51,7 @@ class ExtendedTestCase(TestCase):
         self.assertEqual(
             response.status_code,
             status_code,
-            f"{msg_prefix or ''}Invalid response code {response.status_code} (expected {status_code}).",
+            _msg_prefix_add(msg_prefix, "Invalid response code {response.status_code} (expected {status_code})."),
         )
 
     def assertResponseOk(self, response):
@@ -68,6 +75,19 @@ class ExtendedTestCase(TestCase):
         else:
             self.assertResponseStatusCode(response, self.HTTP_FORBIDDEN)
 
+    def _assertStatusCode(self, path, user, status_code, msg_prefix=None, **kwargs):
+        """
+        Make request, assert that response has given status code.
+
+        :param path: Path for request
+        :param user: User for request
+        :param kwargs: Kwargs for request
+        """
+        users = user if isinstance(user, (list, tuple)) else [user]
+        for user in users:
+            response = self._response(path, user=user, **kwargs)
+            self.assertResponseStatusCode(response, status_code, _msg_prefix_add(msg_prefix, user))
+
     def assertLoginNotRequired(self, path, **kwargs):
         """
         Make request while not logged in, assert that response has status HTTP_OK.
@@ -75,47 +95,43 @@ class ExtendedTestCase(TestCase):
         :param path: Path for request
         :param kwargs: Kwargs for request
         """
-        response = self._response(path, user=None, **kwargs)
-        self.assertResponseOk(response)
+        self._assertStatusCode(path, user=None, status_code=self.HTTP_OK, **kwargs)
 
     def assertAllowed(self, path, user, **kwargs):
         """
         Make request, assert that response has status HTTP_OK.
 
-        Note that we use our own client so there are no side effects.
+        If `user` contains a list of users, the assertion will be made for every user in that list.
 
         :param path: Path for request
-        :param user: User for request
+        :param user: User or list of users for request
         :param kwargs: Kwargs for request
         """
-        response = self._response(path, user=user, **kwargs)
-        self.assertResponseOk(response)
+        self._assertStatusCode(path, user=user, status_code=self.HTTP_OK, **kwargs)
 
     def assertForbidden(self, path, user, **kwargs):
         """
         Make request, assert that response has status HTTP_FORBIDDEN.
 
-        Note that we use our own client so there are no side effects.
+        If `user` contains a list of users, the assertion will be made for every user in that list.
 
         :param path: Path for request
-        :param user: User for request
+        :param user: User or list of users for request
         :param kwargs: Kwargs for request
         """
-        response = self._response(path, user=user, **kwargs)
-        self.assertResponseStatusCode(response, self.HTTP_FORBIDDEN)
+        self._assertStatusCode(path, user=user, status_code=self.HTTP_FORBIDDEN, **kwargs)
 
     def assertNotFound(self, path, user, **kwargs):
         """
         Make request, assert that response has status HTTP_FORBIDDEN.
 
-        Note that we use our own client so there are no side effects.
+        If `user` contains a list of users, the assertion will be made for every user in that list.
 
         :param path: Path for request
-        :param user: User for request
+        :param user: User or list of users for request
         :param kwargs: Kwargs for request
         """
-        response = self._response(path, user=user, **kwargs)
-        self.assertResponseStatusCode(response, self.HTTP_NOT_FOUND)
+        self._assertStatusCode(path, user=user, status_code=self.HTTP_NOT_FOUND, **kwargs)
 
     def assertHasMessage(self, response, message):
         """
@@ -128,14 +144,14 @@ class ExtendedTestCase(TestCase):
 
     def _assert_soup(self, response, soup_method, soup_args, soup_kwargs, status_code, count, msg_prefix):
         """Handle assertions that use BeautifulSoup, with interface similar to assertContains and assertNotContains."""
-        if msg_prefix:
-            msg_prefix = f"{msg_prefix}: "
 
         self.assertEqual(
             response.status_code,
             status_code,
-            f"{msg_prefix}Couldn't retrieve content: "
-            f"Response code was {response.status_code} (expected {status_code}).",
+            _msg_prefix_add(
+                msg_prefix,
+                f"Couldn't retrieve content: Response code was {response.status_code} (expected {status_code}).",
+            ),
         )
 
         text_repr = f"{soup_args} {soup_kwargs}"
@@ -199,8 +215,7 @@ class ExtendedTestCase(TestCase):
         """
         Assert that CSS selector can be found in response.
 
-        Documentation on CSS selectors:
-        https://www.crummy.com/software/BeautifulSoup/bs4/doc/#css-selectors
+        Documentation on CSS selectors: https://www.crummy.com/software/BeautifulSoup/bs4/doc/#css-selectors
 
         To search within the found selectors, you can optionally provide a `string` argument. This will filter
         the found tags. See https://www.crummy.com/software/BeautifulSoup/bs4/doc/#the-string-argument

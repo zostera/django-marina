@@ -56,17 +56,23 @@ class ExtendedTestCaseTestCase(ExtendedTestCase):
         self.assertAllowed(self.url_access_all, user=None)
         self.assertAllowed(self.url_access_all, user=self.user)
         self.assertAllowed(self.url_access_all, user=self.superuser)
+        self.assertAllowed(self.url_access_all, user=[None, self.user, self.superuser])
 
         self.assertAllowed(self.url_access_authenticated, user=self.user)
         self.assertAllowed(self.url_access_authenticated, user=self.superuser)
         with self.assertRaises(AssertionError):
             self.assertAllowed(self.url_access_authenticated, user=None)
+        self.assertAllowed(self.url_access_all, user=[self.user, self.superuser])
 
         self.assertAllowed(self.url_access_superuser, user=self.superuser)
         with self.assertRaises(AssertionError):
             self.assertAllowed(self.url_access_superuser, user=None)
         with self.assertRaises(AssertionError):
             self.assertAllowed(self.url_access_superuser, user=self.user)
+
+        self.assertAllowed(self.url_access_superuser, user=[self.superuser])
+        with self.assertRaises(AssertionError):
+            self.assertAllowed(self.url_access_superuser, user=[None, self.user, self.superuser])
 
     def test_assert_forbidden(self):
         with self.assertRaises(AssertionError):
@@ -95,6 +101,8 @@ class ExtendedTestCaseTestCase(ExtendedTestCase):
         self.assertNotFound(self.url_does_not_exist, user=None)
         self.assertNotFound(self.url_does_not_exist, user=self.user)
         self.assertNotFound(self.url_does_not_exist, user=self.superuser)
+        self.assertNotFound(self.url_does_not_exist, user=[None, self.user, self.superuser])
+
         with self.assertRaises(AssertionError):
             self.assertNotFound(self.url_access_all, user=None)
         with self.assertRaises(AssertionError):
