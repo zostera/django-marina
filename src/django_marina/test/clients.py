@@ -30,23 +30,22 @@ class ExtendedClient(Client):
         When `user` is `None`, this will force a logout.
         In all other cases, `user` will be logged in.
         """
-        if user == self.USER_IGNORE:
-            return
-        if user:
-            super().force_login(user, backend)
-        else:
-            self.logout()
+        if user != self.USER_IGNORE:
+            if user is None:
+                self.logout()
+            else:
+                super().force_login(user, backend)
 
-    def generic(self, *args, **kwargs):
+    def generic(self, *args, user=USER_IGNORE, **kwargs):
         """
         Force given user to login, then fetch request and return response.
 
-        This adds the optional keyword argument `user` to all methods that end up calling `generic`, including
+        This adds the keyword argument `user` to all methods that end up calling `generic`, including
         `get()` and `post()`.
 
-        When no `user` is provided, or `user` is set to `ExtendedClient.USER_IGNORE`, no special action is taken.
+        When no `user` is set to `ExtendedClient.USER_IGNORE` (default), no special action is taken.
         When `user` is `None`, the request will be performed on an anonymous request (user logged out).
         When `user` is provided and not `None`, the request will be performed with that user logged in.
         """
-        self.force_login(kwargs.pop("user", self.USER_IGNORE))
+        self.force_login(user)
         return super().generic(*args, **kwargs)
