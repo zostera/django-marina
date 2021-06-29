@@ -142,6 +142,21 @@ class ExtendedTestCase(TestCase):
         """
         self.assertIn(message, [m.message for m in get_messages(response.wsgi_request)])
 
+    def _get_soup_num_results(self, response, soup_method, soup_args, soup_kwargs):
+        """Get number of results in response for BeautifulSoup query."""
+
+        # Extract string kwarg for selectors since soup does not implement it
+        string = soup_kwargs.pop("string", None) if soup_method == "select" else None
+
+        method = getattr(response.soup, soup_method)
+        results = method(*soup_args, **soup_kwargs)
+
+        # Search with string kwarg for selectors, by applying it to found tags
+        if string is not None:
+            results = [result for result in results if result.find(string=string)]
+
+        return len(results)
+
     def _assert_soup(self, response, soup_method, soup_args, soup_kwargs, status_code, count, msg_prefix):
         """Handle assertions that use BeautifulSoup, with interface similar to assertContains and assertNotContains."""
 
@@ -154,29 +169,20 @@ class ExtendedTestCase(TestCase):
             ),
         )
 
-        text_repr = f"{soup_args} {soup_kwargs}"
-
-        # Extract string kwarg for selectors since soup does not implement it
-        string = soup_kwargs.pop("string", None) if soup_method == "select" else None
-
-        method = getattr(response.soup, soup_method)
-        results = method(*soup_args, **soup_kwargs)
-
-        # Search with string kwarg for selectors, by applying it to found tags
-        if string is not None:
-            results = [result for result in results if result.find(string=string)]
-
-        real_count = len(results)
+        soup_query = f"{soup_args} {soup_kwargs}"
+        num_results = self._get_soup_num_results(response, soup_method, soup_args, soup_kwargs)
 
         if count == 0:
-            self.assertEqual(real_count, 0, f"{msg_prefix}Response should not contain {text_repr}")
+            self.assertEqual(num_results, 0, _msg_prefix_add(msg_prefix, f"Response should not contain {soup_query}"))
         elif count is None:
-            self.assertTrue(real_count != 0, f"{msg_prefix}Couldn't find {text_repr} in response")
+            self.assertTrue(num_results != 0, _msg_prefix_add(msg_prefix, f"Couldn't find {soup_query} in response"))
         else:
             self.assertEqual(
-                real_count,
+                num_results,
                 count,
-                f"{msg_prefix}Found {real_count} instances of {text_repr} in response (expected {count})",
+                _msg_prefix_add(
+                    msg_prefix, f"Found {num_results} instances of {soup_query} in response (expected {count})"
+                ),
             )
 
     def assertContainsTag(self, response, name=None, count=None, status_code=200, msg_prefix="", **kwargs):
