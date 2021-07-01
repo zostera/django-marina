@@ -1,8 +1,9 @@
 # Changelog
 
-## In development
+## 2.3.0 - 2021-07-01
 
 - Allow `assertAllowed`, `assertForbidden`, `assertNotFound` to test for multiple users in a single call.
+- Only allow user None to trigger logout. 
 
 ## 2.2.0 - 2021-04-28
 
