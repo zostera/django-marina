@@ -1,5 +1,9 @@
 # Changelog
 
+## Development
+
+- Remove `pur` from developer requirements.
+
 ## 2.3.0 - 2021-07-01
 
 - Allow `assertAllowed`, `assertForbidden`, `assertNotFound` to test for multiple users in a single call.
