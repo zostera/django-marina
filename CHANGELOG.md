@@ -1,5 +1,9 @@
 # Changelog
 
+## In development
+
+- Add option to store test media in temp folder (#140).
+
 ## 24.2 (2024-04-16)
 
 - Reinstate setuptools_scm for build (#441).
