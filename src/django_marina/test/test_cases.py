@@ -51,7 +51,7 @@ class ExtendedTestCase(TestCase):
         self.assertEqual(
             response.status_code,
             status_code,
-            _msg_prefix_add(msg_prefix, "Invalid response code {response.status_code} (expected {status_code})."),
+            _msg_prefix_add(msg_prefix, f"Invalid response code {response.status_code} (expected {status_code})."),
         )
 
     def assertResponseOk(self, response):

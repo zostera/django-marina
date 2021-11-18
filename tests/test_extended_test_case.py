@@ -27,6 +27,11 @@ class ExtendedTestCaseTestCase(ExtendedTestCase):
         with self.assertRaises(AssertionError):
             self.assertResponseStatusCode(response, [200, 201])
 
+    def test_assert_response_status_code_message(self):
+        response = self.client.get(self.url_access_all)
+        with self.assertRaisesMessage(AssertionError, "Invalid response code 200 (expected 100)."):
+            self.assertResponseStatusCode(response, 100)
+
     def test_assert_response_ok(self):
         response = self.client.get(self.url_access_all)
         self.assertResponseOk(response)
