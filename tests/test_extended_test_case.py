@@ -88,8 +88,9 @@ class ExtendedTestCaseTestCase(ExtendedTestCase):
             self.assertForbidden(self.url_access_all, user=self.superuser)
 
         with self.assertRaises(AssertionError):
-            # Be careful with assertForbidden and user=None, if login is required you may get either
-            # HTTP_FORBIDDEN or HTTP_REDIRECT. In this test, we will get HTTP_REDIRECT.
+            # Be careful with assertForbidden and user=None.
+            # If login is required, the response returned may have a forbidden or redirect status code.
+            # In this test, we will get a redirect code.
             self.assertForbidden(self.url_access_authenticated, user=None)
         with self.assertRaises(AssertionError):
             self.assertForbidden(self.url_access_authenticated, user=self.user)

@@ -1,3 +1,5 @@
+from http import HTTPStatus
+
 from django.contrib.messages import get_messages
 from django.test import TestCase
 
@@ -20,11 +22,6 @@ def _msg_prefix_add(msg_prefix, value):
 
 class ExtendedTestCase(TestCase):
     """TestCase with a extended client and extra features for asserting response content."""
-
-    HTTP_REDIRECT = 302
-    HTTP_OK = 200
-    HTTP_FORBIDDEN = 403
-    HTTP_NOT_FOUND = 404
 
     client_class = ExtendedClient
 
@@ -56,24 +53,24 @@ class ExtendedTestCase(TestCase):
 
     def assertResponseOk(self, response):
         """
-        Assert that response has status HTTP_OK.
+        Assert that response has status code OK.
 
         :param response: HttpResponse
         """
-        self.assertResponseStatusCode(response, self.HTTP_OK)
+        self.assertResponseStatusCode(response, HTTPStatus.OK)
 
     def assertLoginRequired(self, path, **kwargs):
         """
-        Make request while not logged in, assert that response has status HTTP_FORBIDDEN or redirects to login page.
+        Make request while not logged in, assert that response has status code Forbidden or redirects to login page.
 
         :param path: Path for request
         :param kwargs: Kwargs for request
         """
         response = self._response(path, user=None, **kwargs)
-        if response.status_code == self.HTTP_REDIRECT:
+        if response.status_code == HTTPStatus.FOUND:
             self.assertRedirects(response, _login_url(path))
         else:
-            self.assertResponseStatusCode(response, self.HTTP_FORBIDDEN)
+            self.assertResponseStatusCode(response, HTTPStatus.FORBIDDEN)
 
     def _assertStatusCode(self, path, user, status_code, msg_prefix=None, **kwargs):
         """
@@ -90,16 +87,16 @@ class ExtendedTestCase(TestCase):
 
     def assertLoginNotRequired(self, path, **kwargs):
         """
-        Make request while not logged in, assert that response has status HTTP_OK.
+        Make request while not logged in, assert that response has status code OK.
 
         :param path: Path for request
         :param kwargs: Kwargs for request
         """
-        self._assertStatusCode(path, user=None, status_code=self.HTTP_OK, **kwargs)
+        self._assertStatusCode(path, user=None, status_code=HTTPStatus.OK, **kwargs)
 
     def assertAllowed(self, path, user, **kwargs):
         """
-        Make request, assert that response has status HTTP_OK.
+        Make request, assert that response has status code OK.
 
         If `user` contains a list of users, the assertion will be made for every user in that list.
 
@@ -107,11 +104,11 @@ class ExtendedTestCase(TestCase):
         :param user: User or list of users for request
         :param kwargs: Kwargs for request
         """
-        self._assertStatusCode(path, user=user, status_code=self.HTTP_OK, **kwargs)
+        self._assertStatusCode(path, user=user, status_code=HTTPStatus.OK, **kwargs)
 
     def assertForbidden(self, path, user, **kwargs):
         """
-        Make request, assert that response has status HTTP_FORBIDDEN.
+        Make request, assert that response has status code Forbidden.
 
         If `user` contains a list of users, the assertion will be made for every user in that list.
 
@@ -119,11 +116,11 @@ class ExtendedTestCase(TestCase):
         :param user: User or list of users for request
         :param kwargs: Kwargs for request
         """
-        self._assertStatusCode(path, user=user, status_code=self.HTTP_FORBIDDEN, **kwargs)
+        self._assertStatusCode(path, user=user, status_code=HTTPStatus.FORBIDDEN, **kwargs)
 
     def assertNotFound(self, path, user, **kwargs):
         """
-        Make request, assert that response has status HTTP_FORBIDDEN.
+        Make request, assert that response has status code Not Found.
 
         If `user` contains a list of users, the assertion will be made for every user in that list.
 
@@ -131,7 +128,7 @@ class ExtendedTestCase(TestCase):
         :param user: User or list of users for request
         :param kwargs: Kwargs for request
         """
-        self._assertStatusCode(path, user=user, status_code=self.HTTP_NOT_FOUND, **kwargs)
+        self._assertStatusCode(path, user=user, status_code=HTTPStatus.NOT_FOUND, **kwargs)
 
     def assertHasMessage(self, response, message):
         """

@@ -1,5 +1,9 @@
 # Changelog
 
+## In development
+
+- Use Python's `http` module for status codes instead (#113).
+
 ## 21.1 (2021-11-18)
 
 - Switch to a CalVer YY.MINOR versioning scheme. MINOR is the number of the release in the given year. This is the first release in 2021 using this scheme, so its version is 21.1. The next version this year will be 21.2. The first version in 2022 will be 22.1.
