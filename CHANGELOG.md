@@ -1,6 +1,6 @@
 # Changelog
 
-## In development
+## 21.2 (2021-12-27)
 
 - Use Python's `http` module for status codes (#113).
 - Drop support for Django 3.1 (EOL).
