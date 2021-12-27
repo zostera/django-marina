@@ -2,7 +2,11 @@
 
 ## In development
 
-- Use Python's `http` module for status codes instead (#113).
+- Use Python's `http` module for status codes (#113).
+- Drop support for Django 4 (#398).
+- Drop support for Django 3.1 (EOL).
+- Drop support for Python 3.6 (EOL).
+- Fix CI.
 
 ## 21.1 (2021-11-18)
 

@@ -36,7 +36,7 @@ jobs:
     strategy:
       max-parallel: 5
       matrix:
-        python-version: [ "3.6", "3.7", "3.8", "3.9", "3.10" ]
+        python-version: [ "3.7", "3.8", "3.9", "3.10" ]
 
     steps:
       - name: Checkout code
@@ -55,7 +55,7 @@ jobs:
       - run: pip install -U tox coverage[toml] coveralls
 
       - name: Test with tox
-        run: tox -e py
+        run: tox
 
       - name: Coverage combine
         run: coverage combine
