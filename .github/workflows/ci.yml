@@ -34,9 +34,6 @@ jobs:
       - name: Coverage combine
         run: coverage combine
 
-      - name: Coverage report
-        run: coverage report
-
       - name: Upload coveralls
         env:
           COVERALLS_PARALLEL: true
