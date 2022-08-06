@@ -4,6 +4,7 @@
 
 - Drop support for Django 2.2 (EOL).
 - Add support for Django 4.1.
+
 ## 21.2 (2021-12-27)
 
 - Use Python's `http` module for status codes (#113).
