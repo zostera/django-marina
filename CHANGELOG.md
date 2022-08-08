@@ -1,5 +1,10 @@
 # Changelog
 
+## 22.1 (in development)
+
+- Drop support for Django 2.2 (EOL).
+- Add support for Django 4.1.
+
 ## 21.2 (2021-12-27)
 
 - Use Python's `http` module for status codes (#113).
@@ -17,7 +22,7 @@
 ## 2.3.0 (2021-07-01)
 
 - Allow `assertAllowed`, `assertForbidden`, `assertNotFound` to test for multiple users in a single call.
-- Only allow user None to trigger logout. 
+- Only allow user None to trigger logout.
 
 ## 2.2.0 (2021-04-28)
 
@@ -66,7 +71,7 @@
 - Fix coveralls shield in README.
 - Default branch of repository renamed `main`, related files have been updated.
 - Update documentation and Sphinx configuration.
-- Simplify imports and add tests. 
+- Simplify imports and add tests.
 - Update tox configuration.
 
 ## 1.0.0 (2020-06-14)
