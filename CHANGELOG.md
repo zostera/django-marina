@@ -1,8 +1,10 @@
 # Changelog
 
-## 23.1 (in development)
+## 23.1 (2023-04-14)
 
-- Remove coveralls service ().
+- Remove coveralls service (#328).
+- Update requirements (#327).
+- Add support for Python 3.11 and Django 4.2 (#328).
 
 ## 22.1 (2022-08-08)
 
