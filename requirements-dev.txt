@@ -1,15 +1,15 @@
 -r docs/requirements.txt
-django==4.1.4
-black==22.10.0
-isort==5.10.1
-flake8==4.0.1
-pydocstyle[toml]==6.1.1
-docformatter==1.5.0
-coverage==6.5.0
-autoflake==1.7.8
-tox==3.27.1
-wheel==0.38.4
-setuptools==63.4.3
+django==4.2
+black==23.3.0
+isort==5.12.0
+flake8==6.0.0
+pydocstyle[toml]==6.3.0
+docformatter==1.6.0
+coverage==7.2.3
+autoflake==2.0.2
+tox==4.4.12
+wheel==0.40.0
+setuptools==67.6.1
 twine==4.0.2
-pillow==9.3.0
+pillow==9.5.0
 check-manifest==0.49
