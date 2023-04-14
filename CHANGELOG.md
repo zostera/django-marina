@@ -1,5 +1,9 @@
 # Changelog
 
+## 23.1 (in development)
+
+- Remove coveralls service ().
+
 ## 22.1 (2022-08-08)
 
 - Drop support for Django 2.2 (EOL) (#220).
