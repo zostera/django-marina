@@ -1,5 +1,5 @@
-PROJECT_DIR=src/django_marina
-PYTHON_SOURCES=${PROJECT_DIR} tests *.py
+PROJECT_DIR := src/django_marina
+PYTHON_SOURCES := ${PROJECT_DIR} tests *.py
 
 .PHONY: test
 test:
@@ -48,7 +48,7 @@ endif
 .PHONY: build
 build: docs
 	rm -rf build dist *.egg-info
-	python setup.py sdist bdist_wheel
+	python -m build .
 
 .PHONY: publish
 publish: porcelain branch build
