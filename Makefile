@@ -1,6 +1,7 @@
-VERSION := $(shell python -c 'from setuptools.config.setupcfg import read_configuration as c; print(c("setup.cfg")["metadata"]["version"])')
-PROJECT_DIR := src/django_marina
-PYTHON_SOURCES := ${PROJECT_DIR} tests *.py
+NAME:= $(shell python -c 'from setuptools.config.setupcfg import read_configuration as c; print(c("setup.cfg")["metadata"]["name"])')
+VERSION:= $(shell python -c 'from setuptools.config.setupcfg import read_configuration as c; print(c("setup.cfg")["metadata"]["version"])')
+PACKAGE_DIR:= src/$(subst -,_,$(NAME))
+SOURCE_FILES:= ${PACKAGE_DIR} tests *.py
 
 .PHONY: test
 test:
@@ -14,15 +15,15 @@ tox:
 
 .PHONY: reformat
 reformat:
-	autoflake -ir --remove-all-unused-imports ${PYTHON_SOURCES}
-	isort ${PYTHON_SOURCES}
-	docformatter -ir --pre-summary-newline --wrap-summaries=0 --wrap-descriptions=0 ${PYTHON_SOURCES}
+	autoflake -ir --remove-all-unused-imports ${SOURCE_FILES}
+	isort ${SOURCE_FILES}
+	docformatter -ir --pre-summary-newline --wrap-summaries=0 --wrap-descriptions=0 ${SOURCE_FILES}
 	black .
 
 .PHONY: lint
 lint:
-	flake8 ${PYTHON_SOURCES}
-	pydocstyle ${PYTHON_SOURCES}
+	flake8 ${SOURCE_FILES}
+	pydocstyle ${SOURCE_FILES}
 
 .PHONY: docs
 docs:
