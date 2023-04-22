@@ -1,5 +1,9 @@
 # Changelog
 
+## 23.2 (in development)
+
+- Replace m2r2 with sphinx-mdinclude (#).
+
 ## 23.1 (2023-04-14)
 
 - Remove coveralls service (#328).

@@ -141,7 +141,6 @@ class ExtendedTestCase(TestCase):
 
     def _get_soup_num_results(self, response, soup_method, soup_args, soup_kwargs):
         """Get number of results in response for BeautifulSoup query."""
-
         # Extract string kwarg for selectors since soup does not implement it
         string = soup_kwargs.pop("string", None) if soup_method == "select" else None
 
@@ -156,7 +155,6 @@ class ExtendedTestCase(TestCase):
 
     def _assert_soup(self, response, soup_method, soup_args, soup_kwargs, status_code, count, msg_prefix):
         """Handle assertions that use BeautifulSoup, with interface similar to assertContains and assertNotContains."""
-
         self.assertEqual(
             response.status_code,
             status_code,
