@@ -1,3 +1,4 @@
+VERSION := $(shell python -c 'from setuptools.config.setupcfg import read_configuration as c; print(c("setup.cfg")["metadata"]["version"])')
 PROJECT_DIR := src/django_marina
 PYTHON_SOURCES := ${PROJECT_DIR} tests *.py
 
@@ -54,6 +55,8 @@ build: docs
 publish: porcelain branch build
 	twine upload dist/*
 	rm -rf build dist *.egg-info
+	git tag -a v${VERSION} -m "Release ${VERSION}"
+	git push origin --tags
 
 .PHONY: check-description
 check-description:
