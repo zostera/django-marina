@@ -80,7 +80,7 @@ class ExtendedTestCase(TestCase):
         :param user: User for request
         :param kwargs: Kwargs for request
         """
-        users = user if isinstance(user, list | tuple) else [user]
+        users = user if isinstance(user, (list, tuple)) else [user]
         for user in users:
             response = self._response(path, user=user, **kwargs)
             self.assertResponseStatusCode(response, status_code, _msg_prefix_add(msg_prefix, user))
