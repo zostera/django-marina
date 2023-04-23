@@ -1,3 +1,6 @@
+[project]
+requires-python = ">=3.7"
+
 [build-system]
 requires = ["setuptools>=42", "wheel"]
 build-backend = "setuptools.build_meta"
@@ -36,3 +39,35 @@ src_paths = ["*.py", "django_marina", "tests"]
 # D301: Use r”“” if any backslashes in a docstring (unclear how else to handle backslashes in docstrings)
 # D413: Missing blank line after last section (play nice with docformatter)
 add_ignore = ["D1", "D202", "D301", "D413"]
+
+[tool.ruff]
+line-length = 120
+exclude = [
+    "dist",
+]
+select = [
+    "D",  # pydocstyle
+    "F",  # flake8
+    "I001",  # isort
+    "UP",  # "pyupgrade"
+]
+ignore = [
+    "D1",
+    "D202",
+    "D203",
+    "D212",
+    "D301",
+    "D413",
+]
+
+fix = false
+fixable = [
+    "I001",  # isort
+    "F401",  # flake8
+    "D",  # docformatter
+    "UP",  # pyupgrade
+]
+
+[tool.ruff.isort]
+known-first-party = ["django_marina"]
+known-third-party = ["django"]
