@@ -1,10 +1,15 @@
 # Changelog
 
+## 23.3 (in development)
+
+- Use ruff for linting and reformatting (#341).
+- Update Makefile and package configuration (#339, #340).
+
 ## 23.2 (2023-04-22)
 
 - Replace m2r2 with sphinx-mdinclude (#335).
 - Use setup.cfg instead of setup.py (#336).
-- Tag version when publishing a release ()#337.
+- Tag version when publishing a release (#337).
 
 ## 23.1 (2023-04-14)
 
