@@ -18,15 +18,14 @@ show_missing = true
 skip_covered = true
 
 [tool.ruff]
+src = ["src"]
 target-version = "py37"
 line-length = 120
-exclude = [
-    "dist",
-]
 select = [
     "D",     # pydocstyle
+    "E",     # pycodestyle
     "F",     # flake8
-    "I001",  # isort (sorting)
+    "I",     # isort (sorting)
     "UP",    # pyupgrade
 ]
 ignore = [
@@ -39,11 +38,14 @@ ignore = [
 fix = false
 fixable = [
     "I001",  # isort (sorting)
-    "F401",  # flake8 (unused imports)
+    "F",     # flake8
     "D",     # docformatter
     "UP",    # pyupgrade
 ]
+unfixable = [
+    "F8",    # names in flake8, such as defined but unused variables
+]
 
 [tool.ruff.isort]
-known-first-party = ["django_marina"]
+known-first-party = ["django_marina", "app"]
 known-third-party = ["django"]
