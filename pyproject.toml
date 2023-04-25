@@ -50,5 +50,5 @@ unfixable = [
 ]
 
 [tool.ruff.isort]
-known-first-party = ["django_marina"]
+known-first-party = ["django_marina", "app"]
 known-third-party = ["django"]
