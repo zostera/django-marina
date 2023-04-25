@@ -21,9 +21,6 @@ skip_covered = true
 src = ["src"]
 target-version = "py37"
 line-length = 120
-exclude = [
-    "dist",
-]
 select = [
     "D",     # pydocstyle
     "E",     # pycodestyle
