@@ -4,6 +4,7 @@
 
 - Use ruff for linting and reformatting (#341).
 - Update Makefile and package configuration (#339, #340).
+- Drop support for Django 4.0 (EOL) (#).
 
 ## 23.2 (2023-04-22)
 
