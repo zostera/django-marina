@@ -1,6 +1,6 @@
 # Changelog
 
-## 23.3 (in development)
+## 23.3 (2023-04-28)
 
 - Use ruff for linting and reformatting (#341).
 - Update Makefile and package configuration (#339, #340).
