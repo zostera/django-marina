@@ -8,3 +8,9 @@
 Django extensions by Zostera.
 
 Documentation is available at <https://django-marina.readthedocs.io/>.
+
+## Requirements
+
+This package requires a combination of Python and Django that is currently supported.
+
+See "Supported Versions" on https://www.djangoproject.com/download/.
