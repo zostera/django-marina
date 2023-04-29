@@ -39,6 +39,9 @@ dependencies = [
 
 [project.urls]
 Homepage = "https://github.com/zostera/django-marina"
+Documentation = "https://django-marina.readthedocs.io/"
+"Bug Tracker" = "https://github.com/zostera/django-marina/issues"
+Changelog = "https://github.com/zostera/django-marina/blob/main/CHANGELOG.md"
 
 [tool.hatch.build.targets.sdist]
 include = [
