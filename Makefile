@@ -47,8 +47,14 @@ build: docs
 
 .PHONY: publish
 publish: VERSION = $(shell hatch version)
+publish:
+ifeq ($(hatch version | sed -En "s/[a-z]//pg"),VERSION)
+	@echo "Version ${VERSION} looks OK."
+else
+	@echo "Version ${VERSION} doens't look like a production version."
+	@exit 1;
+endif
 publish: porcelain branch build
-	hatch publish
 
 .PHONY: check-description
 check-description:
