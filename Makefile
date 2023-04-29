@@ -61,14 +61,3 @@ publish: porcelain branch version build
 	hatch publish
 	git tag -a v${VERSION} -m "Release ${VERSION}"
 	git push origin --tags
-
-.PHONY: check-description
-check-description:
-	rm -rf build-check-description
-	pip wheel -w build-check-description --no-deps .
-	twine check build-check-description/*
-	rm -rf build-check-description
-
-.PHONY: check-manifest
-check-manifest:
-	check-manifest --verbose
