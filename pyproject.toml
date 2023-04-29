@@ -1,6 +1,48 @@
 [build-system]
-requires = ["setuptools>=61.0"]
-build-backend = "setuptools.build_meta"
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[project]
+name = "django-marina"
+version = "23.3dev"
+description = "Django extensions by Zostera"
+readme = "README.md"
+license = "BSD-3-Clause"
+requires-python = ">=3.7"
+authors = [
+    { name = "Dylan Verheul", email = "dylan@dyve.net" },
+]
+classifiers = [
+    "Development Status :: 5 - Production/Stable",
+    "Environment :: Web Environment",
+    "Framework :: Django",
+    "Framework :: Django :: 3.2",
+    "Framework :: Django :: 4.1",
+    "Framework :: Django :: 4.2",
+    "Intended Audience :: Developers",
+    "License :: OSI Approved :: BSD License",
+    "Operating System :: OS Independent",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.7",
+    "Programming Language :: Python :: 3.8",
+    "Programming Language :: Python :: 3.9",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Topic :: Software Development :: Libraries",
+    "Topic :: Utilities",
+]
+dependencies = [
+    "beautifulsoup4>=4.8.0",
+    "Django>=3.2",
+]
+
+[project.urls]
+Homepage = "https://github.com/zostera/django-marina"
+
+[tool.hatch.build.targets.sdist]
+include = [
+    "/src",
+]
 
 [tool.black]
 line-length = 120
@@ -49,3 +91,13 @@ unfixable = [
 [tool.ruff.isort]
 known-first-party = ["django_marina", "app"]
 known-third-party = ["django"]
+
+[tool.sphinx-pyproject]
+start_year = 2019
+author = "Dylan Verheul"
+extensions = [
+    "sphinx.ext.autodoc",
+    "sphinx.ext.viewcode",
+    "sphinx_mdinclude",
+]
+html_theme = "sphinx_rtd_theme"

@@ -42,16 +42,13 @@ endif
 
 .PHONY: build
 build: docs
-	rm -rf build dist *.egg-info
-	python -m build .
+	rm -rf build dist src/*.egg-info
+	hatch build
 
 .PHONY: publish
-publish: VERSION := $(shell python -c 'from setuptools.config.setupcfg import read_configuration as c; print(c("setup.cfg")["metadata"]["version"])')
+publish: VERSION = $(shell hatch version)
 publish: porcelain branch build
-	twine upload dist/*
-	rm -rf build dist *.egg-info
-	git tag -a v${VERSION} -m "Release ${VERSION}"
-	git push origin --tags
+	hatch publish
 
 .PHONY: check-description
 check-description:

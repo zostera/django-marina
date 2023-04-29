@@ -8,4 +8,5 @@ Contents:
 
    db
    test
+   contributing
    changelog

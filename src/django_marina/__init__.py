@@ -2,4 +2,7 @@ __all__ = [
     "__version__",
 ]
 
-__version__ = "23.3"
+
+import importlib.metadata
+
+__version__ = importlib.metadata.version(__package__ or __name__)
