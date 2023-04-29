@@ -1,22 +1,20 @@
+VERSION = $(shell hatch version)
+
 .PHONY: test
 test:
-	coverage run manage.py test
-	coverage report
+	hatch run test
 
-.PHONY: tox
+.PHONY: tests
 tox:
-	rm -rf .tox
-	tox
+	hatch run all:test
 
 .PHONY: reformat
 reformat:
-	ruff check . --fix
-	black .
+	hatch run lint:fmt
 
 .PHONY: lint
 lint:
-	ruff . --no-fix
-	black . --check
+	hatch run lint:style
 
 .PHONY: docs
 docs:
@@ -40,26 +38,22 @@ else
 	@exit 1;
 endif
 
+.PHONY: version
+version:
+ifeq ($(hatch version | sed -En "s/[a-z]//pg"),VERSION)
+	@echo "Version ${VERSION} looks OK."
+else
+	@echo "Version ${VERSION} doens't look like a production version."
+	@exit 1;
+endif
+
 .PHONY: build
 build: docs
-	rm -rf build dist *.egg-info
-	python -m build .
+	rm -rf build dist src/*.egg-info
+	hatch build
 
 .PHONY: publish
-publish: VERSION := $(shell python -c 'from setuptools.config.setupcfg import read_configuration as c; print(c("setup.cfg")["metadata"]["version"])')
-publish: porcelain branch build
-	twine upload dist/*
-	rm -rf build dist *.egg-info
+publish: porcelain branch version build
+	hatch publish
 	git tag -a v${VERSION} -m "Release ${VERSION}"
 	git push origin --tags
-
-.PHONY: check-description
-check-description:
-	rm -rf build-check-description
-	pip wheel -w build-check-description --no-deps .
-	twine check build-check-description/*
-	rm -rf build-check-description
-
-.PHONY: check-manifest
-check-manifest:
-	check-manifest --verbose

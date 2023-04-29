@@ -51,7 +51,7 @@ This section assumes you know about local Python versions and virtual environmen
 
 To clone the repository and install the requirements for local development:
 
-```shell-script
+```console
 git clone git://github.com/zostera/django-marina.git
 cd django-marina
 pip install -e .
@@ -62,7 +62,7 @@ pip install -U pip -r requirements-dev.txt
 
 You can run the example app:
 
-```shell-script
+```console
 cd example && python manage.py runserver
 ```
 
@@ -72,13 +72,13 @@ The test suite requires tox to be installed.
 
 To run the complete test suite:
 
-```shell-script
+```console
 make tox
 ```
 
 To run the tests in your current environment:
 
-```shell-script
+```console
 make test
 ```
 
