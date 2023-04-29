@@ -1,3 +1,5 @@
+VERSION = $(shell hatch version)
+
 .PHONY: test
 test:
 	coverage run manage.py test
@@ -40,21 +42,25 @@ else
 	@exit 1;
 endif
 
-.PHONY: build
-build: docs
-	rm -rf build dist src/*.egg-info
-	hatch build
-
-.PHONY: publish
-publish: VERSION = $(shell hatch version)
-publish:
+.PHONY: version
+version:
 ifeq ($(hatch version | sed -En "s/[a-z]//pg"),VERSION)
 	@echo "Version ${VERSION} looks OK."
 else
 	@echo "Version ${VERSION} doens't look like a production version."
 	@exit 1;
 endif
-publish: porcelain branch build
+
+.PHONY: build
+build: docs
+	rm -rf build dist src/*.egg-info
+	hatch build
+
+.PHONY: publish
+publish: porcelain branch version build
+	hatch publish
+	git tag -a v${VERSION} -m "Release ${VERSION}"
+	git push origin --tags
 
 .PHONY: check-description
 check-description:
