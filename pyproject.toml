@@ -1,95 +1,84 @@
 [build-system]
-requires = ["hatchling"]
 build-backend = "hatchling.build"
+requires = ["hatchling"]
 
 [project]
-name = "django-marina"
-version = "23.3dev"
-description = "Django extensions by Zostera"
-readme = "README.md"
-license = "BSD-3-Clause"
-requires-python = ">=3.7"
 authors = [
-    { name = "Dylan Verheul", email = "dylan@dyve.net" },
+  {name = "Dylan Verheul", email = "dylan@dyve.net"},
 ]
 classifiers = [
-    "Development Status :: 5 - Production/Stable",
-    "Environment :: Web Environment",
-    "Framework :: Django",
-    "Framework :: Django :: 3.2",
-    "Framework :: Django :: 4.1",
-    "Framework :: Django :: 4.2",
-    "Intended Audience :: Developers",
-    "License :: OSI Approved :: BSD License",
-    "Operating System :: OS Independent",
-    "Programming Language :: Python :: 3",
-    "Programming Language :: Python :: 3.7",
-    "Programming Language :: Python :: 3.8",
-    "Programming Language :: Python :: 3.9",
-    "Programming Language :: Python :: 3.10",
-    "Programming Language :: Python :: 3.11",
-    "Topic :: Software Development :: Libraries",
-    "Topic :: Utilities",
+  "Development Status :: 5 - Production/Stable",
+  "Environment :: Web Environment",
+  "Framework :: Django",
+  "Framework :: Django :: 3.2",
+  "Framework :: Django :: 4.1",
+  "Framework :: Django :: 4.2",
+  "Intended Audience :: Developers",
+  "License :: OSI Approved :: BSD License",
+  "Operating System :: OS Independent",
+  "Programming Language :: Python :: 3",
+  "Programming Language :: Python :: 3.7",
+  "Programming Language :: Python :: 3.8",
+  "Programming Language :: Python :: 3.9",
+  "Programming Language :: Python :: 3.10",
+  "Programming Language :: Python :: 3.11",
+  "Topic :: Software Development :: Libraries",
+  "Topic :: Utilities",
 ]
 dependencies = [
-    "beautifulsoup4>=4.8.0",
-    "Django>=3.2",
-    "importlib-metadata; python_version<'3.8'"
+  "beautifulsoup4>=4.8.0",
+  "Django>=3.2",
+  "importlib-metadata; python_version<'3.8'",
 ]
+description = "Django extensions by Zostera"
+license = "BSD-3-Clause"
+name = "django-marina"
+readme = "README.md"
+requires-python = ">=3.7"
+version = "23.3.dev0"
 
 [project.urls]
-Homepage = "https://github.com/zostera/django-marina"
-Documentation = "https://django-marina.readthedocs.io/"
-"Bug Tracker" = "https://github.com/zostera/django-marina/issues"
 Changelog = "https://github.com/zostera/django-marina/blob/main/CHANGELOG.md"
+Documentation = "https://django-marina.readthedocs.io/"
+Homepage = "https://github.com/zostera/django-marina"
+Issues = "https://github.com/zostera/django-marina/issues"
 
 [tool.hatch.build.targets.sdist]
 include = [
-    "/src",
+  "/src",
 ]
 
 [tool.black]
 line-length = 120
 target_version = ["py37", "py38", "py39", "py310", "py311"]
 
-[tool.coverage.run]
-branch = true
-source = ["django_marina"]
-
-[tool.coverage.paths]
-source = ["src", ".tox/*/site-packages"]
-
-[tool.coverage.report]
-show_missing = true
-skip_covered = true
-
 [tool.ruff]
-src = ["src"]
-target-version = "py37"
+ignore = [
+  "D1", # D1: Missing docstring error codes (because not every function and class has a docstring)
+  "D203", # D203: 1 blank line required before class docstring (conflicts with D211 and should be disabled, see https://github.com/PyCQA/pydocstyle/pull/91)
+  "D212", # D212: Multi-line docstring summary should start at the first line
+  "D301", # D301: Use r”“” if any backslashes in a docstring (unclear how else to handle backslashes in docstrings)
+]
 line-length = 120
 select = [
-    "D",     # pydocstyle
-    "E",     # pycodestyle
-    "F",     # flake8
-    "I",     # isort
-    "UP",    # pyupgrade
+  "D", # pydocstyle
+  "E", # pycodestyle
+  "F", # flake8
+  "I", # isort
+  "UP", # pyupgrade
 ]
-ignore = [
-    "D1",    # D1: Missing docstring error codes (because not every function and class has a docstring)
-    "D203",  # D203: 1 blank line required before class docstring (conflicts with D211 and should be disabled, see https://github.com/PyCQA/pydocstyle/pull/91)
-    "D212",  # D212: Multi-line docstring summary should start at the first line
-    "D301",  # D301: Use r”“” if any backslashes in a docstring (unclear how else to handle backslashes in docstrings)
-]
+src = ["src"]
+target-version = "py37"
 
 fix = false
 fixable = [
-    "I001",  # isort (sorting)
-    "F",     # flake8
-    "D",     # docformatter
-    "UP",    # pyupgrade
+  "I001", # isort (sorting)
+  "F", # flake8
+  "D", # docformatter
+  "UP", # pyupgrade
 ]
 unfixable = [
-    "F8",    # names in flake8, such as defined but unused variables
+  "F8", # names in flake8, such as defined but unused variables
 ]
 
 [tool.ruff.isort]
@@ -97,11 +86,56 @@ known-first-party = ["django_marina", "app"]
 known-third-party = ["django"]
 
 [tool.sphinx-pyproject]
-start_year = 2019
 author = "Dylan Verheul"
 extensions = [
-    "sphinx.ext.autodoc",
-    "sphinx.ext.viewcode",
-    "sphinx_mdinclude",
+  "sphinx.ext.autodoc",
+  "sphinx.ext.viewcode",
+  "sphinx_mdinclude",
 ]
 html_theme = "sphinx_rtd_theme"
+start_year = 2019
+
+[tool.hatch.envs.test]
+dependencies = [
+  "coverage[toml]",
+]
+matrix-name-format = "dj{value}"
+
+[tool.hatch.envs.test.scripts]
+test = "coverage run manage.py test"
+
+[[tool.hatch.envs.test.matrix]]
+django = ["3.2"]
+python = ["3.7"]
+
+[[tool.hatch.envs.test.matrix]]
+django = ["3.2", "4.1", "4.2"]
+python = ["3.8", "3.9"]
+
+[[tool.hatch.envs.test.matrix]]
+django = ["3.2", "4.1", "4.2", "main"]
+python = ["3.10"]
+
+[[tool.hatch.envs.test.matrix]]
+django = ["4.1", "4.2", "main"]
+python = ["3.11"]
+
+[tool.hatch.envs.test.overrides]
+matrix.django.dependencies = [
+  {value = "django~=3.2.0", if = ["3.2"]},
+  {value = "django~=4.0.0", if = ["4.0"]},
+  {value = "django~=4.1.0", if = ["4.1"]},
+  {value = "django @ git+https://github.com/django/django.git", if = ["main"]},
+]
+
+[tool.coverage.run]
+branch = true
+parallel = true
+source = ["src"]
+
+[tool.coverage.paths]
+package = ["src/django_marina", "*/django_marina/src/django_marina"]
+
+[tool.coverage.report]
+show_missing = true
+skip_covered = true

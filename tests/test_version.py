@@ -8,6 +8,5 @@ class VersionTest(TestCase):
         import django_marina
 
         version = django_marina.__version__
-        print(version)
         version_parts = version.split(".")
         self.assertTrue(len(version_parts) in (2, 3))

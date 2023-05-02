@@ -2,8 +2,7 @@ VERSION = $(shell hatch version)
 
 .PHONY: test
 test:
-	coverage run manage.py test
-	coverage report
+	python manage.py test
 
 .PHONY: tox
 tox:
