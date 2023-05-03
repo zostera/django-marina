@@ -42,10 +42,69 @@ Changelog = "https://github.com/zostera/django-marina/blob/main/CHANGELOG.md"
 Documentation = "https://django-marina.readthedocs.io/"
 Homepage = "https://github.com/zostera/django-marina"
 Issues = "https://github.com/zostera/django-marina/issues"
+Source = "https://github.com/zostera/django-marina"
 
-[tool.hatch.build.targets.sdist]
-include = [
-  "/src",
+[tool.hatch.envs.default]
+dependencies = [
+  "coverage[toml]>=6.5",
+]
+matrix-name-format = "dj{value}"
+
+[tool.hatch.envs.default.scripts]
+cov = [
+  "test-cov",
+  "cov-report",
+]
+cov-report = [
+  "- coverage combine",
+  "coverage report",
+]
+test = "python manage.py test {args:tests}"
+test-cov = "coverage run manage.py test {args:tests}"
+
+[[tool.hatch.envs.all.matrix]]
+django = ["3.2"]
+python = ["3.7"]
+
+[[tool.hatch.envs.all.matrix]]
+django = ["3.2", "4.1", "4.2"]
+python = ["3.8", "3.9"]
+
+[[tool.hatch.envs.all.matrix]]
+django = ["3.2", "4.1", "4.2", "main"]
+python = ["3.10"]
+
+[[tool.hatch.envs.all.matrix]]
+django = ["4.1", "4.2", "main"]
+python = ["3.11"]
+
+[tool.hatch.envs.all.overrides]
+matrix.django.dependencies = [
+  {value = "django~=3.2.0", if = ["3.2"]},
+  {value = "django~=4.0.0", if = ["4.0"]},
+  {value = "django~=4.1.0", if = ["4.1"]},
+  {value = "django @ git+https://github.com/django/django.git", if = ["main"]},
+]
+
+[tool.hatch.envs.lint]
+dependencies = [
+  "black>=23.1.0",
+  "ruff>=0.0.243",
+]
+detached = true
+
+[tool.hatch.envs.lint.scripts]
+all = [
+  "style",
+]
+fmt = [
+  "black {args:.}",
+  "ruff --fix {args:.}",
+  "style",
+]
+style = [
+  "ruff {args:.}",
+  "black --check --diff {args:.}",
 ]
 
 [tool.black]
@@ -53,6 +112,13 @@ line-length = 120
 target_version = ["py37", "py38", "py39", "py310", "py311"]
 
 [tool.ruff]
+fix = false
+fixable = [
+  "I001", # isort (sorting)
+  "F", # flake8
+  "D", # docformatter
+  "UP", # pyupgrade
+]
 ignore = [
   "D1", # D1: Missing docstring error codes (because not every function and class has a docstring)
   "D203", # D203: 1 blank line required before class docstring (conflicts with D211 and should be disabled, see https://github.com/PyCQA/pydocstyle/pull/91)
@@ -69,14 +135,6 @@ select = [
 ]
 src = ["src"]
 target-version = "py37"
-
-fix = false
-fixable = [
-  "I001", # isort (sorting)
-  "F", # flake8
-  "D", # docformatter
-  "UP", # pyupgrade
-]
 unfixable = [
   "F8", # names in flake8, such as defined but unused variables
 ]
@@ -95,46 +153,14 @@ extensions = [
 html_theme = "sphinx_rtd_theme"
 start_year = 2019
 
-[tool.hatch.envs.test]
-dependencies = [
-  "coverage[toml]",
-]
-matrix-name-format = "dj{value}"
-
-[tool.hatch.envs.test.scripts]
-test = "coverage run manage.py test"
-
-[[tool.hatch.envs.test.matrix]]
-django = ["3.2"]
-python = ["3.7"]
-
-[[tool.hatch.envs.test.matrix]]
-django = ["3.2", "4.1", "4.2"]
-python = ["3.8", "3.9"]
-
-[[tool.hatch.envs.test.matrix]]
-django = ["3.2", "4.1", "4.2", "main"]
-python = ["3.10"]
-
-[[tool.hatch.envs.test.matrix]]
-django = ["4.1", "4.2", "main"]
-python = ["3.11"]
-
-[tool.hatch.envs.test.overrides]
-matrix.django.dependencies = [
-  {value = "django~=3.2.0", if = ["3.2"]},
-  {value = "django~=4.0.0", if = ["4.0"]},
-  {value = "django~=4.1.0", if = ["4.1"]},
-  {value = "django @ git+https://github.com/django/django.git", if = ["main"]},
-]
-
 [tool.coverage.run]
 branch = true
 parallel = true
-source = ["src"]
+source = ["src", "tests"]
 
 [tool.coverage.paths]
 package = ["src/django_marina", "*/django_marina/src/django_marina"]
+tests = ["tests", "*/django_marina/tests"]
 
 [tool.coverage.report]
 show_missing = true
