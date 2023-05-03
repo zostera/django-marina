@@ -59,6 +59,7 @@ cov-report = [
   "- coverage combine",
   "coverage report",
 ]
+docs = "rm -rf docs/_build; cd docs && sphinx-build -b html -d _build/doctrees . _build/html"
 test = "python manage.py test {args:tests}"
 test-cov = "coverage run manage.py test {args:tests}"
 
@@ -85,6 +86,9 @@ matrix.django.dependencies = [
   {value = "django~=4.1.0", if = ["4.1"]},
   {value = "django @ git+https://github.com/django/django.git", if = ["main"]},
 ]
+
+[tool.hatch.envs.docs]
+dependecies = []
 
 [tool.hatch.envs.lint]
 dependencies = [

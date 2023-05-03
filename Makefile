@@ -2,22 +2,19 @@ VERSION = $(shell hatch version)
 
 .PHONY: test
 test:
-	python manage.py test
+	hatch run test
 
-.PHONY: tox
+.PHONY: tests
 tox:
-	rm -rf .tox
-	tox
+	hatch run all:test
 
 .PHONY: reformat
 reformat:
-	ruff check . --fix
-	black .
+	hatch run lint:fmt
 
 .PHONY: lint
 lint:
-	ruff . --no-fix
-	black . --check
+	hatch run lint:style
 
 .PHONY: docs
 docs:
