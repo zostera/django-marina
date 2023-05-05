@@ -1,13 +1,26 @@
+import importlib
 from datetime import datetime
 
-from sphinx_pyproject import SphinxConfig
+import tomllib
 
-config = SphinxConfig(globalns=globals())
+with open("../pyproject.toml", "rb") as f:
+    pyproject = tomllib.load(f)
 
-author = config["author"]
+project = pyproject["project"]["name"]
+project_with_underscores = project.replace("-", "_")
+module = importlib.import_module(f"{project_with_underscores}")
 
-start_year = config["start_year"]
+authors = ", ".join(author["name"] for author in pyproject["project"]["authors"])
+release = module.__version__
+version = ".".join(release.split(".")[:2])
 year = datetime.now().year
-if start_year != year:
-    year = f"{start_year}-{year}"
-copyright = f"{year} {author}"
+copyright = f"{year} {authors}"
+
+extensions = [
+    "sphinx.ext.autodoc",
+    "sphinx.ext.viewcode",
+    "sphinx_mdinclude",
+]
+pygments_style = "sphinx"
+htmlhelp_basename = f"{project}-doc"
+html_theme = "sphinx_rtd_theme"

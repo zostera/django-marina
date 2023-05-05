@@ -26,16 +26,17 @@ classifiers = [
   "Topic :: Utilities",
 ]
 dependencies = [
-  "beautifulsoup4>=4.8.0",
   "Django>=3.2",
-  "importlib-metadata; python_version<'3.8'",
+  "beautifulsoup4>=4.8.0",
 ]
 description = "Django extensions by Zostera"
+dynamic = [
+  "version",
+]
 license = "BSD-3-Clause"
 name = "django-marina"
 readme = "README.md"
 requires-python = ">=3.7"
-version = "23.3.dev0"
 
 [project.urls]
 Changelog = "https://github.com/zostera/django-marina/blob/main/CHANGELOG.md"
@@ -43,6 +44,9 @@ Documentation = "https://django-marina.readthedocs.io/"
 Homepage = "https://github.com/zostera/django-marina"
 Issues = "https://github.com/zostera/django-marina/issues"
 Source = "https://github.com/zostera/django-marina"
+
+[tool.hatch.version]
+path = "src/django_marina/__about__.py"
 
 [tool.hatch.envs.default]
 dependencies = [
@@ -59,7 +63,6 @@ cov-report = [
   "- coverage combine",
   "coverage report",
 ]
-docs = "rm -rf docs/_build; cd docs && sphinx-build -b html -d _build/doctrees . _build/html"
 test = "python manage.py test {args:tests}"
 test-cov = "coverage run manage.py test {args:tests}"
 
@@ -88,7 +91,15 @@ matrix.django.dependencies = [
 ]
 
 [tool.hatch.envs.docs]
-dependecies = []
+dependencies = [
+  "sphinx==6.2.1",
+  "sphinx_rtd_theme==1.2.0",
+  "sphinx-mdinclude==0.5.3",
+]
+python = "3.11"
+
+[tool.hatch.envs.docs.scripts]
+build = "rm -rf docs/_build; cd docs && sphinx-build -b html -d _build/doctrees . _build/html"
 
 [tool.hatch.envs.lint]
 dependencies = [
@@ -146,16 +157,6 @@ unfixable = [
 [tool.ruff.isort]
 known-first-party = ["django_marina", "app"]
 known-third-party = ["django"]
-
-[tool.sphinx-pyproject]
-author = "Dylan Verheul"
-extensions = [
-  "sphinx.ext.autodoc",
-  "sphinx.ext.viewcode",
-  "sphinx_mdinclude",
-]
-html_theme = "sphinx_rtd_theme"
-start_year = 2019
 
 [tool.coverage.run]
 branch = true
