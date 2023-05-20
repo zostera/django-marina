@@ -18,6 +18,7 @@ lint:
 
 .PHONY: docs
 docs:
+	rm -rf docs/_build
 	cd docs && sphinx-build -b html -d _build/doctrees . _build/html
 
 .PHONY: porcelain
