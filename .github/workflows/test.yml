@@ -31,7 +31,7 @@ jobs:
       run: pip install --upgrade pip hatch
 
     - name: Run tests
-      run: hatch run cov
+      run: hatch run test-cov
 
     - name: Send coverage to Coveralls (parallel)
       uses: coverallsapp/github-action@v1
