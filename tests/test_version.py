@@ -9,4 +9,4 @@ class VersionTest(TestCase):
 
         version = django_marina.__version__
         version_parts = version.split(".")
-        self.assertTrue(len(version_parts) == 2)
+        self.assertTrue(len(version_parts) in (2, 3))

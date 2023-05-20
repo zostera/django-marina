@@ -2,4 +2,4 @@ __all__ = [
     "__version__",
 ]
 
-__version__ = "23.3"
+from .__about__ import __version__
