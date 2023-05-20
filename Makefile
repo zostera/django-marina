@@ -39,22 +39,13 @@ else
 	@exit 1;
 endif
 
-.PHONY: version
-version:
-ifeq ($(hatch version | sed -En "s/[a-z]//pg"),VERSION)
-	@echo "Version ${VERSION} looks OK."
-else
-	@echo "Version ${VERSION} doens't look like a production version."
-	@exit 1;
-endif
-
 .PHONY: build
 build: docs
 	rm -rf build dist src/*.egg-info
 	hatch build
 
 .PHONY: publish
-publish: porcelain branch version build
+publish: porcelain branch build
 	hatch publish
 	git tag -a v${VERSION} -m "Release ${VERSION}"
 	git push origin --tags
