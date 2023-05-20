@@ -34,7 +34,7 @@ jobs:
       run: hatch run test-cov
 
     - name: Send coverage to Coveralls (parallel)
-      uses: coverallsapp/github-action@v1
+      uses: coverallsapp/github-action@v2
       with:
         parallel: true
         flag-name: run-$
@@ -48,6 +48,6 @@ jobs:
         if: ${{ needs.tests_matrix.result != 'success' }}
         run: exit 1
       - name: Close parallel build
-        uses: coverallsapp/github-action@v1
+        uses: coverallsapp/github-action@v2
         with:
           parallel-finished: true
