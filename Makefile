@@ -5,7 +5,7 @@ test:
 	hatch run test
 
 .PHONY: tests
-tox:
+tests:
 	hatch run all:test
 
 .PHONY: reformat
