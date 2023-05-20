@@ -28,19 +28,19 @@ jobs:
         python-version: ${{ matrix.python-version }}
 
     - name: Install latest pip and Hatch
-      run: pip install --upgrade pip hatch
+      run: pip install --upgrade pip hatch coveralls
 
     - name: Run tests
       run: hatch run test-cov
 
-    - name: Send coverage to Coveralls (parallel)
-      run: |
-        coverage combine
-        curl -sL https://coveralls.io/coveralls-linux.tar.gz | tar -xz && ./coveralls
+    - name: Coverage combine
+      run: coverage combine
+
+    - name: Upload coveralls (parallel)
       env:
-        COVERALLS_FLAG_NAME: ${{ matrix.python-version }}
-        COVERALLS_REPO_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         COVERALLS_PARALLEL: true
+      run: coveralls --service=github
 
   tests:
     if: ${{ always() }}
@@ -50,7 +50,3 @@ jobs:
       - name: Check tests matrix status
         if: ${{ needs.tests_matrix.result != 'success' }}
         run: exit 1
-      - name: Close parallel build
-        uses: coverallsapp/github-action@v2
-        with:
-          parallel-finished: true
