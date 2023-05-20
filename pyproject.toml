@@ -161,11 +161,10 @@ known-third-party = ["django"]
 [tool.coverage.run]
 branch = true
 parallel = true
-source = ["src", "tests"]
+source = ["src"]
 
 [tool.coverage.paths]
 package = ["src/django_marina", "*/django_marina/src/django_marina"]
-tests = ["tests", "*/django_marina/tests"]
 
 [tool.coverage.report]
 show_missing = true
