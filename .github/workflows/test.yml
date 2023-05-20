@@ -28,10 +28,19 @@ jobs:
         python-version: ${{ matrix.python-version }}
 
     - name: Install latest pip and Hatch
-      run: pip install --upgrade pip hatch
+      run: pip install --upgrade pip hatch coveralls
 
     - name: Run tests
-      run: hatch run cov
+      run: hatch run test-cov
+
+    - name: Coverage combine
+      run: coverage combine
+
+    - name: Upload coveralls (parallel)
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        COVERALLS_PARALLEL: true
+      run: coveralls --service=github
 
   tests:
     if: ${{ always() }}
@@ -41,3 +50,8 @@ jobs:
       - name: Check tests matrix status
         if: ${{ needs.tests_matrix.result != 'success' }}
         run: exit 1
+      - name: Close parallel build
+        uses: coverallsapp/github-action@v2
+        with:
+          parallel-finished: true
+          github-token: ${{ secrets.GITHUB_TOKEN }}
