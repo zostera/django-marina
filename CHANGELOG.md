@@ -1,5 +1,9 @@
 # Changelog
 
+## 23.4 (2023-05-20)
+
+- Switch build system to Hatch (#365).
+
 ## 23.3 (2023-04-28)
 
 - Use ruff for linting and reformatting (#341).
