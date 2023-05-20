@@ -33,6 +33,12 @@ jobs:
     - name: Run tests
       run: hatch run cov
 
+    - name: Send coverage to Coveralls (parallel)
+      uses: coverallsapp/github-action@v1
+      with:
+        parallel: true
+        flag-name: run-$
+
   tests:
     if: ${{ always() }}
     runs-on: ubuntu-latest
@@ -41,3 +47,7 @@ jobs:
       - name: Check tests matrix status
         if: ${{ needs.tests_matrix.result != 'success' }}
         run: exit 1
+      - name: Close parallel build
+        uses: coverallsapp/github-action@v1
+        with:
+          parallel-finished: true
