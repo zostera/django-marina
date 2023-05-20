@@ -50,3 +50,8 @@ jobs:
       - name: Check tests matrix status
         if: ${{ needs.tests_matrix.result != 'success' }}
         run: exit 1
+      - name: Close parallel build
+        uses: coverallsapp/github-action@v2
+        with:
+          parallel-finished: true
+          github-token: ${{ secrets.GITHUB_TOKEN }}
