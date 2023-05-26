@@ -12,7 +12,8 @@ env:
 
 jobs:
 
-  lint_docs_build:
+  static_tests:
+    name: Static Tests
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
@@ -61,14 +62,14 @@ jobs:
       run: coveralls --service=github
 
   tests:
-    if: ${{ always() }}
+    if: always()
     runs-on: ubuntu-latest
-    needs: [ tests_matrix, lint_docs_build ]
+    needs: [ static_tests, tests_matrix ]
     steps:
       - name: Check tests matrix status
-        if: ${{ needs.tests_matrix.result != 'success' }}
+        if: needs.tests_matrix.result != 'success'
         run: exit 1
-      - name: Close parallel build
+      - name: Finish parallel build
         uses: coverallsapp/github-action@v2
         with:
           parallel-finished: true
