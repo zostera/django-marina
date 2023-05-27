@@ -25,10 +25,7 @@ classifiers = [
   "Topic :: Software Development :: Libraries",
   "Topic :: Utilities",
 ]
-dependencies = [
-  "Django>=3.2",
-  "beautifulsoup4>=4.8.0",
-]
+dependencies = ["Django>=4.2.1", "beautifulsoup4>=4.12.2"]
 description = "Django extensions by Zostera"
 dynamic = [
   "version",
@@ -49,9 +46,7 @@ Source = "https://github.com/zostera/django-marina"
 path = "src/django_marina/__about__.py"
 
 [tool.hatch.envs.default]
-dependencies = [
-  "coverage[toml]>=6.5",
-]
+dependencies = ["coverage[toml]>=7.2.6"]
 matrix-name-format = "dj{value}"
 
 [tool.hatch.envs.default.scripts]
@@ -91,21 +86,14 @@ matrix.django.dependencies = [
 ]
 
 [tool.hatch.envs.docs]
-dependencies = [
-  "sphinx==6.2.1",
-  "sphinx_rtd_theme==1.2.0",
-  "sphinx-mdinclude==0.5.3",
-]
+dependencies = ["sphinx==7.0.1", "sphinx_rtd_theme==1.2.1", "sphinx-mdinclude==0.5.3"]
 python = "3.11"
 
 [tool.hatch.envs.docs.scripts]
 build = "rm -rf docs/_build; cd docs && sphinx-build -b html -d _build/doctrees . _build/html"
 
 [tool.hatch.envs.lint]
-dependencies = [
-  "black>=23.1.0",
-  "ruff>=0.0.243",
-]
+dependencies = ["black>=23.3.0", "ruff>=0.0.270"]
 detached = true
 
 [tool.hatch.envs.lint.scripts]
