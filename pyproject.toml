@@ -86,7 +86,7 @@ matrix.django.dependencies = [
 ]
 
 [tool.hatch.envs.docs]
-dependencies = ["sphinx==7.0.1", "sphinx_rtd_theme==1.2.1", "sphinx-mdinclude==0.5.3"]
+dependencies = ["sphinx==6.2.1", "sphinx_rtd_theme==1.2.1", "sphinx-mdinclude==0.5.3"]
 python = "3.11"
 
 [tool.hatch.envs.docs.scripts]
