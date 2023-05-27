@@ -50,7 +50,7 @@ path = "src/django_marina/__about__.py"
 
 [tool.hatch.envs.default]
 dependencies = [
-  "coverage[toml]>=6.5",
+  "coverage[toml]>=7.2.6",
 ]
 matrix-name-format = "dj{value}"
 
@@ -93,7 +93,7 @@ matrix.django.dependencies = [
 [tool.hatch.envs.docs]
 dependencies = [
   "sphinx==6.2.1",
-  "sphinx_rtd_theme==1.2.0",
+  "sphinx_rtd_theme==1.2.1",
   "sphinx-mdinclude==0.5.3",
 ]
 python = "3.11"
@@ -103,8 +103,8 @@ build = "rm -rf docs/_build; cd docs && sphinx-build -b html -d _build/doctrees 
 
 [tool.hatch.envs.lint]
 dependencies = [
-  "black>=23.1.0",
-  "ruff>=0.0.243",
+  "black>=23.3.0",
+  "ruff>=0.0.270",
 ]
 detached = true
 
