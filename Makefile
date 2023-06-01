@@ -1,4 +1,4 @@
-VERSION = $(shell hatch version)
+VERSION := $(shell hatch version)
 
 .PHONY: test
 test:
@@ -18,8 +18,7 @@ lint:
 
 .PHONY: docs
 docs:
-	rm -rf docs/_build
-	cd docs && sphinx-build -b html -d _build/doctrees . _build/html
+	hatch run docs:build
 
 .PHONY: porcelain
 porcelain:

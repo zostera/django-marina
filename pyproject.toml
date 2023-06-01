@@ -92,14 +92,19 @@ matrix.django.dependencies = [
 
 [tool.hatch.envs.docs]
 dependencies = [
-  "sphinx==6.2.1",
-  "sphinx_rtd_theme==1.2.1",
-  "sphinx-mdinclude==0.5.3",
+  "sphinx>=6.2.1,<7",
+  "sphinx_rtd_theme>=1.2.1",
+  "sphinx-mdinclude>=0.5.3",
 ]
 python = "3.11"
+template = "docs"
 
 [tool.hatch.envs.docs.scripts]
-build = "rm -rf docs/_build; cd docs && sphinx-build -b html -d _build/doctrees . _build/html"
+build = [
+  "clean",
+  "cd docs && sphinx-build -b html -d _build/doctrees . _build/html",
+]
+clean = "rm -rf docs/_build"
 
 [tool.hatch.envs.lint]
 dependencies = [
