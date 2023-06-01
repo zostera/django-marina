@@ -11,4 +11,4 @@ build:
   commands:
     - pip install -U pip hatch
     - hatch run docs:build
-    - mv docs/_build _readthedocs
+    - mv docs/_build $READTHEDOCS_OUTPUT
