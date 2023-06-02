@@ -21,6 +21,7 @@ extensions = [
     "sphinx.ext.viewcode",
     "sphinx_mdinclude",
 ]
-pygments_style = "sphinx"
+
 htmlhelp_basename = f"{project}-doc"
-html_theme = "sphinx_rtd_theme"
+html_theme = "furo"
+pygments_style = "sphinx"
