@@ -7,14 +7,19 @@ with open("../pyproject.toml", "rb") as f:
     pyproject = tomllib.load(f)
 
 project = pyproject["project"]["name"]
-project_with_underscores = project.replace("-", "_")
-module = importlib.import_module(f"{project_with_underscores}")
+conf = {"module": project.replace("-", "_")}
 
-authors = ", ".join(author["name"] for author in pyproject["project"]["authors"])
+try:
+    conf.update(pyproject["tool"]["sphinx"]["x-conf"])
+except KeyError:
+    pass
+
+module = importlib.import_module(conf["module"])
 release = module.__version__
 version = ".".join(release.split(".")[:2])
+author = ", ".join(author["name"] for author in pyproject["project"]["authors"])
 year = datetime.now().year
-copyright = f"{year} {authors}"
+copyright = f"{year}, {author}"
 
 extensions = [
     "sphinx.ext.autodoc",
