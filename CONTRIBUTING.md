@@ -45,6 +45,8 @@ Ready to contribute? Here\'s how to set up `django-marina` for local development
 
 You will need some knowledge of git, github, and Python/Django development. Using a Python virtual environment is advised.
 
+This project uses [Hatch](https://github.com/pypa/hatch) for environments and builds.
+
 ### Local installation
 
 This section assumes you know about local Python versions and virtual environments.
@@ -54,32 +56,22 @@ To clone the repository and install the requirements for local development:
 ```console
 git clone git://github.com/zostera/django-marina.git
 cd django-marina
+pip install -U pip hatch
 pip install -e .
-pip install -U pip -r requirements-dev.txt
-```
-
-### Running the example app
-
-You can run the example app:
-
-```console
-cd example && python manage.py runserver
 ```
 
 ### Running the tests
 
-The test suite requires tox to be installed.
-
-To run the complete test suite:
-
-```console
-make tox
-```
-
-To run the tests in your current environment:
+To run the tests:
 
 ```console
 make test
+```
+
+To run the tests on all supported Python/Django combinations:
+
+```console
+make tests
 ```
 
 ## Pull Request Guidelines
