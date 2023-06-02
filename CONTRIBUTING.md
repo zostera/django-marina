@@ -68,7 +68,7 @@ To run the tests:
 make test
 ```
 
-To run the tests on all Python/Django combinations:
+To run the tests on all supported Python/Django combinations:
 
 ```console
 make tests
