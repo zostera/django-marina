@@ -1,5 +1,14 @@
 # Changelog
 
+## 23.5 (2023-06-02)
+
+- Improve and fix CI on GitHub Axctions (#367, #374, #378).
+- Reinstate coveralls (#369).
+- Fix Read the Docs integration (#368).
+- Update Sphinx and switch to Furo theme (#373).
+- Remove references to tox and requirements (#383).
+- Requirements in pyproject.toml (#380).
+
 ## 23.4 (2023-05-20)
 
 - Switch build system to Hatch (#365).
