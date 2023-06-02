@@ -22,7 +22,7 @@ jobs:
         with:
           python-version: "3.11"
       - name: Install latest pip and Hatch
-        run: pip install --upgrade pip hatch -r requirements-dev.txt
+        run: pip install --upgrade pip hatch
       - name: Lint
         run: hatch run lint:all
       - name: Docs
@@ -46,7 +46,7 @@ jobs:
       with:
         python-version: ${{ matrix.python-version }}
 
-    - name: Install latest pip and Hatch
+    - name: Install latest pip, Hatch and coveralls
       run: pip install --upgrade pip hatch coveralls
 
     - name: Run tests
