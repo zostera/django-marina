@@ -2,7 +2,7 @@
 
 ## 23.5 (2023-06-02)
 
-- Improve and fix CI on GitHub Axctions (#367, #374, #378).
+- Improve and fix CI on GitHub Actions (#367, #374, #378).
 - Reinstate coveralls (#369).
 - Fix Read the Docs integration (#368).
 - Update Sphinx and switch to Furo theme (#373).
