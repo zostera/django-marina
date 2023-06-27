@@ -1,5 +1,9 @@
 # Changelog
 
+## 23.6 (in development)
+
+- Remove support for Python 3.8 (EOL) (#388).
+
 ## 23.5 (2023-06-02)
 
 - Improve and fix CI on GitHub Actions (#367, #374, #378).
