@@ -64,10 +64,10 @@ jobs:
   tests:
     if: always()
     runs-on: ubuntu-latest
-    needs: [ static_tests, tests_matrix ]
+    needs: [static_tests, tests_matrix]
     steps:
       - name: Check tests matrix status
-        if: needs.tests_matrix.result != "success"
+        if: needs.tests_matrix.result != 'success'
         run: exit 1
       - name: Finish parallel build
         uses: coverallsapp/github-action@v2
