@@ -3,6 +3,7 @@
 ## 23.6 (in development)
 
 - Remove support for Python 3.7 (EOL) (#388).
+- Add option to store test media in temp folder (#140).
 
 ## 23.5 (2023-06-02)
 
