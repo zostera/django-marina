@@ -2,7 +2,7 @@
 
 ## 23.6 (in development)
 
-- Use ruff instead of black for formatting ().
+- Use ruff instead of black for formatting (#392).
 - Remove support for Python 3.7 (EOL) (#388).
 
 ## 23.5 (2023-06-02)
