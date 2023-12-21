@@ -4,6 +4,7 @@
 
 - Use ruff instead of black for formatting (#392).
 - Remove support for Python 3.7 (EOL) (#388).
+- Revert packaging tools to setuptools, build, tox and twine ().
 
 ## 23.5 (2023-06-02)
 
