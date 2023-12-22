@@ -1,6 +1,6 @@
 # Changelog
 
-## 23.6 (in development)
+## 23.6 (2023-12-22)
 
 - Use ruff instead of black for formatting (#392).
 - Remove support for Python 3.7 (EOL) (#388).
