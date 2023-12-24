@@ -7,7 +7,7 @@ test:
 
 .PHONY: tests
 tests:
-	nox
+	tox
 
 .PHONY: reformat
 reformat:
