@@ -1,4 +1,4 @@
-VERSION := $(shell python -c "import django_marina;print(django_marina.__version__)")
+VERSION := $(shell sed -n 's/^ *version.*=.*"\([^"]*\)".*/\1/p' pyproject.toml)
 
 .PHONY: test
 test:
