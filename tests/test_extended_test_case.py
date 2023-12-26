@@ -177,3 +177,12 @@ class MessagesTestCase(ExtendedTestCase):
         self.assertHasMessage(response, message)
         with self.assertRaises(AssertionError):
             self.assertHasMessage(response, partial_message)
+
+
+class HtmlTestCase(ExtendedTestCase):
+    def test_assert_html_equal(self):
+        html1 = '<span aria-foo="bar">foo-bar</span>'
+        html2 = "<span>foo-bar</span>"
+        with self.assertRaises(AssertionError):
+            self.assertHTMLEqual(html1, html2)
+        self.assertHTMLEqual(html1, html2, ignore_attrs=["aria-foo"])
