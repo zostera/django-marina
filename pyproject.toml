@@ -1,6 +1,6 @@
 [build-system]
 build-backend = "setuptools.build_meta"
-requires = ["setuptools"]
+requires = ["setuptools>=64", "setuptools_scm>=8"]
 
 [project]
 authors = [
@@ -35,7 +35,7 @@ license = {file = "LICENSE"}
 name = "django-marina"
 readme = "README.md"
 requires-python = ">=3.8"
-version = "23.7.dev0"
+version = "23.7.dev1"
 
 [project.urls]
 Changelog = "https://github.com/zostera/django-marina/blob/main/CHANGELOG.md"
