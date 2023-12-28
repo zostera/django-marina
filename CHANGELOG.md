@@ -1,5 +1,9 @@
 # Changelog
 
+## 23.7 (2023-12-28)
+
+- Use setuptools-scm to build package (#402).
+
 ## 23.6 (2023-12-22)
 
 - Use ruff instead of black for formatting (#392).
