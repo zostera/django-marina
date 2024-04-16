@@ -3,6 +3,8 @@ from http import HTTPStatus
 from django.contrib.messages import get_messages
 from django.test import TestCase
 
+from django_marina.html import remove_attrs
+
 from .clients import ExtendedClient
 
 
@@ -48,7 +50,10 @@ class ExtendedTestCase(TestCase):
         self.assertEqual(
             response.status_code,
             status_code,
-            _msg_prefix_add(msg_prefix, f"Invalid response code {response.status_code} (expected {status_code})."),
+            _msg_prefix_add(
+                msg_prefix,
+                f"Invalid response code {response.status_code} (expected {status_code}).",
+            ),
         )
 
     def assertResponseOk(self, response):
@@ -153,7 +158,16 @@ class ExtendedTestCase(TestCase):
 
         return len(results)
 
-    def _assert_soup(self, response, soup_method, soup_args, soup_kwargs, status_code, count, msg_prefix):
+    def _assert_soup(
+        self,
+        response,
+        soup_method,
+        soup_args,
+        soup_kwargs,
+        status_code,
+        count,
+        msg_prefix,
+    ):
         """Handle assertions that use BeautifulSoup, with interface similar to assertContains and assertNotContains."""
         self.assertEqual(
             response.status_code,
@@ -168,15 +182,23 @@ class ExtendedTestCase(TestCase):
         num_results = self._get_soup_num_results(response, soup_method, soup_args, soup_kwargs)
 
         if count == 0:
-            self.assertEqual(num_results, 0, _msg_prefix_add(msg_prefix, f"Response should not contain {soup_query}"))
+            self.assertEqual(
+                num_results,
+                0,
+                _msg_prefix_add(msg_prefix, f"Response should not contain {soup_query}"),
+            )
         elif count is None:
-            self.assertTrue(num_results != 0, _msg_prefix_add(msg_prefix, f"Couldn't find {soup_query} in response"))
+            self.assertTrue(
+                num_results != 0,
+                _msg_prefix_add(msg_prefix, f"Couldn't find {soup_query} in response"),
+            )
         else:
             self.assertEqual(
                 num_results,
                 count,
                 _msg_prefix_add(
-                    msg_prefix, f"Found {num_results} instances of {soup_query} in response (expected {count})"
+                    msg_prefix,
+                    f"Found {num_results} instances of {soup_query} in response (expected {count})",
                 ),
             )
 
@@ -242,3 +264,11 @@ class ExtendedTestCase(TestCase):
             count=0,
             msg_prefix=msg_prefix,
         )
+
+    def assertHTMLEqual(self, html1, html2, msg=None, ignore_attrs=None):
+        """
+        Assert that the strings html1 and html2 are equal, except for certain attributes to ignore.
+
+        The comparison is based on HTML semantics.
+        """
+        return super().assertHTMLEqual(remove_attrs(html1, ignore_attrs), remove_attrs(html2, ignore_attrs), msg)
