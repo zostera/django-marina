@@ -1,5 +1,11 @@
 # Changelog
 
+## 24.1 (2024-04-16)
+
+- Remove support for Django 3.2 (EOL) (#439).
+- Fix Read the Docs (#438).
+- Remove setuptools_scm (#437).
+
 ## 23.7 (2023-12-28)
 
 - Use setuptools-scm to build package (#402).
