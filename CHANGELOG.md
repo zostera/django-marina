@@ -1,5 +1,9 @@
 # Changelog
 
+## 24.2 (2024-04-16)
+
+- Reinstate setuptools_scm for build (#441).
+
 ## 24.1 (2024-04-16)
 
 - Remove support for Django 3.2 (EOL) (#439).
