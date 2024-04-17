@@ -47,6 +47,7 @@ endif
 .PHONY: build
 build: docs
 	python -m build
+	check-manifest
 
 .PHONY: publish
 publish: porcelain branch build

@@ -1,0 +1,8 @@
+include LICENSE
+include MANIFEST.in
+include *.yml
+graft src
+graft tests
+graft docs
+global-exluce *.pyc
+prune docs/_build
