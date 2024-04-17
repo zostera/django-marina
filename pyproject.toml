@@ -30,6 +30,7 @@ dependencies = [
   "beautifulsoup4>=4.8.0",
 ]
 description = "Django extensions by Zostera"
+keywords = ["django", "utilities", "testing"]
 license = {file = "LICENSE"}
 name = "django-marina"
 readme = "README.md"

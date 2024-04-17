@@ -1,8 +1,14 @@
 include LICENSE
 include MANIFEST.in
-include *.yml
+include *.yaml
+include pyproject.toml
+include *.md
+include *.py
+include *.txt
+include Makefile
+include tox.ini
+include docs/*.rst docs/*.txt docs/*.py docs/Makefile
 graft src
 graft tests
-graft docs
-global-exluce *.pyc
+global-exclude *.pyc
 prune docs/_build
