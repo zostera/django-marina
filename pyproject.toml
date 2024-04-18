@@ -26,7 +26,7 @@ classifiers = [
 ]
 dependencies = [
   "Django>=4.2",
-  "beautifulsoup4>=4.8.0",
+  "beautifulsoup4>=4.10.0",
 ]
 description = "Django extensions by Zostera"
 keywords = ["django", "utilities", "testing"]
