@@ -2,7 +2,7 @@ VERSION := $(shell sed -n 's/^ *version.*=.*"\([^"]*\)".*/\1/p' pyproject.toml)
 
 .PHONY: test
 test:
-	PYTHONWARNINGS=all coverage run manage.py test
+	coverage run manage.py test
 	coverage report
 
 .PHONY: tests
@@ -12,11 +12,11 @@ tests:
 .PHONY: reformat
 reformat:
 	ruff format .
-	ruff --fix .
+	ruff check . --fix
 
 .PHONY: lint
 lint:
-	ruff .
+	ruff check .
 
 .PHONY: docs
 docs: clean
