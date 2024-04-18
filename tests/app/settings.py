@@ -1,7 +1,7 @@
 SECRET_KEY = "Thanks for using django-marina!"
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
-
+USE_TZ = True
 DATABASES = {"default": {"ENGINE": "django.db.backends.sqlite3", "NAME": ":memory:"}}
 
 INSTALLED_APPS = (
