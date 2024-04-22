@@ -32,7 +32,30 @@ def format(session):
     ],
 )
 def tests_with_coverage(session, django):
-    session.install(f"Django>={django}")
-    session.install("-e", ".")
+    session.install(f"Django~={django}.0", ".[tests]")
     python_binary = f"{session.bin}/python{session.python}"
-    session.run(python_binary, "manage.py", "test")
+    python_version = session.run(python_binary, "--version", silent=True).strip()
+    django_version = session.run(
+        python_binary,
+        "-Im",
+        "django",
+        "--version",
+        silent=True,
+    ).strip()
+    session.log(f"Running tests with {python_version}/Django {django_version}")
+    session.run(
+        python_binary,
+        "-Wonce::DeprecationWarning",
+        "-Im",
+        "coverage",
+        "run",
+        "manage.py",
+        "test",
+    )
+    session.run(
+        python_binary,
+        "-Im",
+        "coverage",
+        "report",
+        "--show-missing",
+    )
