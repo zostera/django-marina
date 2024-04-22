@@ -70,7 +70,7 @@ jobs:
             cache-dependency-path: docs/requirements.txt
       - name: Build documentation
         run: |
-          python -m pip install -e[docs]
+          python -m pip install -e .[docs]
           make docs
 
   build:
