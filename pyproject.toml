@@ -47,15 +47,12 @@ Source = "https://github.com/zostera/django-marina"
 docs = [
   "furo",
   "sphinx",
-  "sphinx-copybutton",
-  "sphinx-inline-tabs",
-  "sphinx-notfound-page",
-  "sphinxcontrib-django",
-  "sphinxext-opengraph",
+  "myst-parser",
 ]
 tests = [
   "coverage",
-  "tomli; python_full_version < '3.11.0a7'",
+  "ruff",
+  "tomli; python_version < '3.11'",
 ]
 
 [tool.ruff]
