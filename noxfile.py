@@ -23,7 +23,7 @@ def format(session):
     [
         (python, django)
         for python in ["3.8", "3.9", "3.10", "3.11", "3.12"]
-        for django in ["4.2", "5.0"]
+        for django in ["4.2", "5.0", "main"]
         if (python, django)
         not in [
             ("3.8", "5.0"),
@@ -32,7 +32,14 @@ def format(session):
     ],
 )
 def tests_with_coverage(session, django):
-    session.install(f"Django~={django}.0", ".[tests]")
+    session.install(
+        (
+            "https://github.com/django/django/archive/master.tar.gz"
+            if django == "main"
+            else f"Django~={django}.0"
+        ),
+        ".[tests]",
+    )
     python_binary = f"{session.bin}/python{session.python}"
     python_version = session.run(python_binary, "--version", silent=True).strip()
     django_version = session.run(
