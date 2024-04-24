@@ -1,13 +1,7 @@
 ---
   name: CI
 
-  on:
-    push:
-      branches: [trunk]
-      tags: ["*"]
-    pull_request:
-      branches: [trunk]
-    workflow_dispatch:
+  on: [push]
 
   env:
     FORCE_COLOR: "1"
