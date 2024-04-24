@@ -1,7 +1,7 @@
-import nox
-import os
 import pathlib
 import shutil
+
+import nox
 
 nox.options.default_venv_backend = "venv"
 nox.options.reuse_existing_virtualenvs = True
@@ -22,11 +22,7 @@ ARTIFACT_PATHS = (
 
 def clean(paths=ARTIFACT_PATHS):
     """Clean up after a test run."""
-    [
-        shutil.rmtree(path) if path.is_dir() else path.unlink()
-        for path in paths
-        if path.exists()
-    ]
+    [shutil.rmtree(path) if path.is_dir() else path.unlink() for path in paths if path.exists()]
 
 
 @nox.session
@@ -60,11 +56,7 @@ def format(session):
 )
 def tests_with_coverage(session, django):
     session.install(
-        (
-            "https://github.com/django/django/archive/master.tar.gz"
-            if django == "main"
-            else f"Django~={django}.0"
-        ),
+        ("https://github.com/django/django/archive/master.tar.gz" if django == "main" else f"Django~={django}.0"),
         ".[tests]",
     )
     python_binary = f"{session.bin}/python{session.python}"
@@ -111,5 +103,105 @@ def docs_build(session):
         f"{session.bin}/../tmp/doctrees",
         ".",
         f"{session.bin}/../tmp/html",
+    )
+    clean()
+
+
+@nox.session(python=["3.11"], tags=["linters"])
+def lint_ruff(session):
+    """Check code formatting with Ruff."""
+    session.install("ruff")
+    session.run(f"{session.bin}/python{session.python}", "-Im", "ruff", "--version")
+    session.run(
+        f"{session.bin}/python{session.python}",
+        "-Im",
+        "ruff",
+        "check",
+        ".",
+    )
+    clean()
+
+
+@nox.session(python=["3.11"], tags=["packaging"])
+def package_build(session: nox.Session) -> None:
+    """Check that the package builds."""
+    clean()
+    session.install("build")
+    session.run(f"{session.bin}/python{session.python}", "-Im", "build", "--version")
+    session.run(f"{session.bin}/python{session.python}", "-Im", "build")
+
+
+@nox.session(python=["3.11"], tags=["packaging"])
+def package_description(session: nox.Session) -> None:
+    """Check that the package description will render on the Python Package Index."""
+    package_dir = session.create_tmp()
+    session.install("build", "twine")
+    session.run(f"{session.bin}/python{session.python}", "-Im", "build", "--version")
+    session.run(f"{session.bin}/python{session.python}", "-Im", "twine", "--version")
+    session.run(
+        f"{session.bin}/python{session.python}",
+        "-Im",
+        "build",
+        "--wheel",
+        "--outdir",
+        f"{package_dir}/build",
+    )
+    session.run(
+        f"{session.bin}/python{session.python}",
+        "-Im",
+        "twine",
+        "check",
+        f"{package_dir}/build/*",
+    )
+    clean()
+
+
+@nox.session(python=["3.11"], tags=["packaging"])
+def package_manifest(session: nox.Session) -> None:
+    """Check that the set of files in the package matches the set under version control."""
+    session.install("check-manifest")
+    session.run(f"{session.bin}/python{session.python}", "-Im", "check_manifest", "--version")
+    session.run(f"{session.bin}/python{session.python}", "-Im", "check_manifest", "--verbose")
+    clean()
+
+
+@nox.session(python=["3.11"], tags=["packaging"])
+def package_pyroma(session: nox.Session) -> None:
+    """Check package quality with pyroma."""
+    session.install("pyroma")
+    session.run(
+        f"{session.bin}/python{session.python}",
+        "-c",
+        'from importlib.metadata import version; print(version("pyroma"))',
+    )
+    session.run(f"{session.bin}/python{session.python}", "-Im", "pyroma", ".")
+    clean()
+
+
+@nox.session(python=["3.11"], tags=["packaging"])
+def package_wheel(session: nox.Session) -> None:
+    """Check the built wheel package for common errors."""
+    package_dir = session.create_tmp()
+    session.install("build", "check-wheel-contents")
+    session.run(f"{session.bin}/python{session.python}", "-Im", "build", "--version")
+    session.run(
+        f"{session.bin}/python{session.python}",
+        "-Im",
+        "check_wheel_contents",
+        "--version",
+    )
+    session.run(
+        f"{session.bin}/python{session.python}",
+        "-Im",
+        "build",
+        "--wheel",
+        "--outdir",
+        f"{package_dir}/build",
+    )
+    session.run(
+        f"{session.bin}/python{session.python}",
+        "-Im",
+        "check_wheel_contents",
+        f"{package_dir}/build",
     )
     clean()
