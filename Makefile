@@ -2,7 +2,7 @@ VERSION := $(shell sed -n 's/^ *version.*=.*"\([^"]*\)".*/\1/p' pyproject.toml)
 
 .PHONY: test
 test:
-	coverage run manage.py test
+	python -Wa -Im coverage run manage.py test
 	coverage report
 
 .PHONY: tests

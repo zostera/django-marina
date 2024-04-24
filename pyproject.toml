@@ -43,6 +43,18 @@ Homepage = "https://github.com/zostera/django-marina"
 Issues = "https://github.com/zostera/django-marina/issues"
 Source = "https://github.com/zostera/django-marina"
 
+[project.optional-dependencies]
+docs = [
+  "furo",
+  "sphinx",
+  "myst-parser",
+]
+tests = [
+  "coverage",
+  "ruff",
+  "tomli; python_version < '3.11'",
+]
+
 [tool.ruff]
 fix = false
 line-length = 120
