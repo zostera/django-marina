@@ -1,7 +1,32 @@
 import nox
+import os
+import pathlib
+import shutil
 
 nox.options.default_venv_backend = "venv"
 nox.options.reuse_existing_virtualenvs = True
+
+PACKAGE_NAME = "django_registration"
+
+NOXFILE_PATH = pathlib.Path(__file__).parents[0]
+ARTIFACT_PATHS = (
+    NOXFILE_PATH / "src" / f"{PACKAGE_NAME}.egg-info",
+    NOXFILE_PATH / "build",
+    NOXFILE_PATH / "dist",
+    NOXFILE_PATH / "__pycache__",
+    NOXFILE_PATH / "src" / "__pycache__",
+    NOXFILE_PATH / "src" / PACKAGE_NAME / "__pycache__",
+    NOXFILE_PATH / "tests" / "__pycache__",
+)
+
+
+def clean(paths=ARTIFACT_PATHS):
+    """Clean up after a test run."""
+    [
+        shutil.rmtree(path) if path.is_dir() else path.unlink()
+        for path in paths
+        if path.exists()
+    ]
 
 
 @nox.session
@@ -68,3 +93,23 @@ def tests_with_coverage(session, django):
         "report",
         "--show-missing",
     )
+    clean()
+
+
+@nox.session(python=["3.11"], tags=["docs"])
+def docs_build(session):
+    """Build the package's documentation as HTML."""
+    session.install(".[docs]")
+    session.chdir("docs")
+    session.run(
+        f"{session.bin}/python{session.python}",
+        "-Im",
+        "sphinx",
+        "-b",
+        "html",
+        "-d",
+        f"{session.bin}/../tmp/doctrees",
+        ".",
+        f"{session.bin}/../tmp/html",
+    )
+    clean()
