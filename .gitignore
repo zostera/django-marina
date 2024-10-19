@@ -8,3 +8,5 @@ dist/
 .tox/
 build/
 build-check-description/
+.envrc
+.venv
