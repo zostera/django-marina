@@ -46,7 +46,7 @@ endif
 
 .PHONY: build
 build:
-	python -m build
+	uv build
 	twine check dist/*
 	check-manifest
 	pyroma .
