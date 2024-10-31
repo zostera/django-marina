@@ -86,7 +86,7 @@ jobs:
       - name: Install uv
         uses: astral-sh/setup-uv@v3
       - name: Build
-        run: uv build
+        run: make build
 
   tests:
     if: always()
