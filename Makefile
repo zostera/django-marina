@@ -47,10 +47,10 @@ endif
 .PHONY: build
 build:
 	uv build
-	twine check dist/*
-	check-manifest
-	pyroma .
-	check-wheel-contents dist
+	uvx twine check dist/*
+	uvx check-manifest
+	uvx pyroma .
+	uvx check-wheel-contents dist
 
 .PHONY: publish
 publish: porcelain branch docs build
