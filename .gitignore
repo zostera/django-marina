@@ -1,10 +1,35 @@
-*.pyc
-__pycache__
+
+# Editors
+.vscode/
+.idea/
+
+# Local development
+.python-version
+.envrc
+.venv
+uv.lock
+
+# Testing
+.coverage*
+.tox/
+
+# Vagrant
+.vagrant/
+
+# Mac/OSX
+.DS_Store
+
+# Windows
+Thumbs.db
+
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Distribution / packaging
 *.egg-info
 docs/_build/
-.coverage*
 dist/
-.python-version
-.tox/
 build/
 build-check-description/

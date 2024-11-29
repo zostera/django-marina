@@ -46,11 +46,11 @@ endif
 
 .PHONY: build
 build:
-	python -m build
-	twine check dist/*
-	check-manifest
-	pyroma .
-	check-wheel-contents dist
+	uv build
+	uvx twine check dist/*
+	uvx check-manifest
+	uvx pyroma .
+	uvx check-wheel-contents dist
 
 .PHONY: publish
 publish: porcelain branch docs build
