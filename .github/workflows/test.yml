@@ -48,7 +48,7 @@ jobs:
         with:
           python-version: ${{ matrix.python-version }}
       - run: uv python install
-      - run: uv sync--all-extras --dev
+      - run: uv sync --all-extras --dev
       - run: uv pip install -U "Django==${{ matrix.django-version }}""
         if: matrix.django-version != 'main'
       - run: uv pip install -U https://github.com/django/django/archive/master.tar.gz
