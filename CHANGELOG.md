@@ -1,5 +1,9 @@
 # Changelog
 
+## In development
+
+- Drop support for Python 3.8 (EOL) (#571).
+
 ## 24.2 (2024-04-16)
 
 - Reinstate setuptools_scm for build (#441).
