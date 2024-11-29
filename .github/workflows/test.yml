@@ -53,7 +53,7 @@ jobs:
         if: matrix.django-version != 'main'
       - run: uv pip install -U https://github.com/django/django/archive/master.tar.gz
         if: matrix.django-version == 'main'
-      - run: uvx coverage run manage.py test
+      - run: coverage run manage.py test
       - run: uv pip install -U coveralls
       - name: Upload coveralls (parallel)
         env:
