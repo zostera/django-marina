@@ -1,8 +1,11 @@
-# use with https://github.com/casey/just
+set export := true
+set dotenv-load := true
+
+VENV_DIRNAME := ".venv"
 
 # default recipe
 default:
-  just --list
+    just --list
 
 [private]
 @check_uv:
@@ -13,12 +16,17 @@ default:
 
 # Set up development environment
 @bootstrap: check_uv
-    if test ! -e .venv; then \
+    if test ! -e $VENV_DIRNAME; then \
         uv python install; \
     fi
-    uv sync
+    just update
+
+# Install and/or update all dependencies defined in pyproject.toml
+@update: check_uv
+    uv sync --all-extras --upgrade
 
 # Format
 @format: bootstrap
-	ruff format .
-	ruff check . --fix
+    ruff format .
+    ruff check . --fix
+
