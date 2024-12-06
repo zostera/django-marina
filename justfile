@@ -2,6 +2,7 @@ set export := true
 set dotenv-load := true
 
 VENV_DIRNAME := ".venv"
+VERSION := `sed -n 's/^ *version.*=.*"\([^"]*\)".*/\1/p' pyproject.toml`
 
 # default recipe
 default:
@@ -16,7 +17,7 @@ default:
 
 # Set up development environment
 @bootstrap: check_uv
-    if test ! -e $VENV_DIRNAME; then \
+    if test ! -e {{VENV_DIRNAME}}; then \
         uv python install; \
     fi
     just update
@@ -30,3 +31,14 @@ default:
     ruff format .
     ruff check . --fix
 
+# Build
+@build: bootstrap
+	uv build
+	uvx twine check dist/*
+	uvx check-manifest
+	uvx pyroma .
+	uvx check-wheel-contents dist
+
+# Version number
+@version:
+    echo "{{VERSION}}"
