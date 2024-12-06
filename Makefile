@@ -35,6 +35,7 @@ else
 	@exit 1;
 endif
 
+
 .PHONY: branch
 branch:
 ifeq ($(shell git rev-parse --abbrev-ref HEAD),main)
@@ -44,24 +45,8 @@ else
 	@exit 1;
 endif
 
-.PHONY: build
-build:
-	uv build
-	uvx twine check dist/*
-	uvx check-manifest
-	uvx pyroma .
-	uvx check-wheel-contents dist
-
 .PHONY: publish
 publish: porcelain branch docs build
 	twine upload dist/*
 	git tag -a v${VERSION} -m "Release ${VERSION}"
 	git push origin --tags
-
-.PHONY: clean
-clean:
-	rm -rf build dist src/*.egg-info .coverage*
-
-.PHONY: version
-version:
-	@echo ${VERSION}

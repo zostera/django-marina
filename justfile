@@ -39,6 +39,28 @@ default:
 	uvx pyroma .
 	uvx check-wheel-contents dist
 
+# Clean
+@clean:
+	rm -rf build dist src/*.egg-info .coverage*
+
+# Check if the current Git branch is 'main'
+@branch:
+    if [ "`git rev-parse --abbrev-ref HEAD`" = "main" ]; then \
+        echo "On branch main."; \
+    else \
+        echo "Error - Not on branch main."; \
+        exit 1; \
+    fi
+
+# Check if the working directory is clean
+@porcelain:
+    if [ -z "`git status --porcelain`" ]; then \
+        echo "Working directory is clean."; \
+    else \
+        echo "Error - working directory is dirty. Commit your changes."; \
+        exit 1; \
+    fi
+
 # Version number
 @version:
     echo "{{VERSION}}"
