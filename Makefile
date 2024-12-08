@@ -5,22 +5,7 @@ test:
 	coverage run manage.py test
 	coverage report
 
-.PHONY: tests
-tests:
-	tox
 
-.PHONY: reformat
-reformat:
-	ruff format .
-	ruff check . --fix
-
-.PHONY: lint
-lint:
-	ruff check .
-
-.PHONY: docs
-docs: clean
-	cd docs && sphinx-build -b html -d _build/doctrees . _build/html
 
 .PHONY: example
 example:

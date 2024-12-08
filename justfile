@@ -24,12 +24,17 @@ default:
 
 # Install and/or update all dependencies defined in pyproject.toml
 @update: check_uv
-    uv sync --all-extras --upgrade
+    uv sync --all-extras --all-groups --upgrade
 
 # Format
 @format: bootstrap
     ruff format .
     ruff check . --fix
+
+# Test
+@test: bootstrap
+    coverage run manage.py test
+    coverage report
 
 # Build
 @build: bootstrap
@@ -60,6 +65,17 @@ default:
         echo "Error - working directory is dirty. Commit your changes."; \
         exit 1; \
     fi
+
+@docs: bootstrap clean
+    uv run -m sphinx -T -b html -d docs/_build/doctrees -D language=en docs docs/_build/html
+
+@example:
+	cd example && python manage.py runserver
+
+@publish: porcelain branch docs build
+    uv publish
+    git tag -a v${VERSION} -m "Release {{VERSION}}"
+    git push origin --tags
 
 # Version number
 @version:
