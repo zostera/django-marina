@@ -26,24 +26,6 @@ docs: clean
 example:
 	cd example && python manage.py runserver
 
-.PHONY: porcelain
-porcelain:
-ifeq ($(shell git status --porcelain),)
-	@echo "Working directory is clean."
-else
-	@echo "Error - working directory is dirty. Commit your changes.";
-	@exit 1;
-endif
-
-
-.PHONY: branch
-branch:
-ifeq ($(shell git rev-parse --abbrev-ref HEAD),main)
-	@echo "On branch main."
-else
-	@echo "Error - Not on branch main."
-	@exit 1;
-endif
 
 .PHONY: publish
 publish: porcelain branch docs build
