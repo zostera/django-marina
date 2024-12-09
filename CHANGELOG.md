@@ -2,6 +2,8 @@
 
 ## In development
 
+- Switch to just and uv for package management (#572).
+- Add support for Python 3.13 (#572).
 - Drop support for Python 3.8 (EOL) (#571).
 
 ## 24.2 (2024-04-16)
