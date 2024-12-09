@@ -5,6 +5,7 @@
 - Switch to just and uv for package management (#572).
 - Add support for Python 3.13 (#572, #577).
 - Drop support for Python 3.8 (EOL) (#571, #577).
+- Add option to store test media in temp folder (#140).
 
 ## 24.2 (2024-04-16)
 
