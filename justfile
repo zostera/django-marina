@@ -37,6 +37,10 @@ default:
     coverage run manage.py test
     coverage report
 
+# Test
+@tests: bootstrap
+    tox
+
 # Build
 @build: bootstrap
     uv build
