@@ -29,8 +29,13 @@ default:
 
 # Format
 @format: bootstrap
-    ruff format .
-    ruff check . --fix
+    ruff format
+    ruff check --fix
+
+# Lint
+@lint: bootstrap
+    ruff format --check
+    ruff check
 
 # Test
 @test: bootstrap
