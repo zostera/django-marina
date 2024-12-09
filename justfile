@@ -11,7 +11,10 @@ default:
 
 [private]
 @uv:
-    uv --version
+    if ! command -v uv >/dev/null; then \
+        echo "Error: 'uv' command is not available"; \
+        exit 1; \
+    fi
 
 # Set up development environment
 @bootstrap: uv
