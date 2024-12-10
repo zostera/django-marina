@@ -1,6 +1,6 @@
 # Changelog
 
-## In development
+## 24.3 (2024-12-10)
 
 - Switch to just and uv for package management (#572).
 - Add support for Python 3.13 (#572, #577).
