@@ -7,7 +7,6 @@
 .python-version
 .envrc
 .venv
-uv.lock
 
 # Testing
 .coverage*
