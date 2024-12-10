@@ -87,7 +87,7 @@ default:
     fi
 
 @publish: porcelain branch docs build
-    uv publish
+    uvx uv-publish
     git tag -a v${VERSION} -m "Release {{ VERSION }}"
     git push origin --tags
 
