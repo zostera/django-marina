@@ -39,6 +39,9 @@ jobs:
     steps:
     - uses: actions/checkout@v4
 
+    - name: Update repositories
+      run: sudo apt-get update
+
     - name: Set up Python with uv
       uses: drivendataorg/setup-python-uv-action@main
       with:
