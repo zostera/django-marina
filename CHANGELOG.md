@@ -1,5 +1,10 @@
 # Changelog
 
+## 25,1 (2025-03-02)
+
+- Fix Python versions in matrix (#583).
+- Update .gitignore (#584).
+
 ## 24.3 (2024-12-10)
 
 - Switch to just and uv for package management (#572).
