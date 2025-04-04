@@ -1,6 +1,11 @@
 # Changelog
 
-## 25,1 (2025-03-02)
+## In development
+
+- Add support for Django 5.2 (#587, #588).
+- Drop support for Django 5.0 (#587, #588).
+
+## 25.1 (2025-03-02)
 
 - Fix Python versions in matrix (#583).
 - Update .gitignore (#584).
