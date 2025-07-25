@@ -124,4 +124,3 @@ source-include = [
   "docs/**",
   "uv.lock",
 ]
-just update
