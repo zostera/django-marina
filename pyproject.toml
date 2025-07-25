@@ -107,6 +107,7 @@ docs = [
 
 [tool.uv.build-backend]
 source-exclude = [
+  "**/.DS_Store",
   "docs/_build",
   "example/db.sqlite3",
 ]
@@ -123,3 +124,4 @@ source-include = [
   "docs/**",
   "uv.lock",
 ]
+just update
