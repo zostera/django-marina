@@ -1,6 +1,6 @@
 [build-system]
-build-backend = "hatchling.build"
-requires = ["hatchling"]
+build-backend = "uv_build"
+requires = ["uv_build>=0.8.3,<0.9.0"]
 
 [project]
 authors = [
@@ -103,4 +103,23 @@ docs = [
   "furo>=2024.8.6",
   "myst-parser>=3.0.1",
   "sphinx>=7.1.2",
+]
+
+[tool.uv.build-backend]
+source-exclude = [
+  "docs/_build",
+  "example/db.sqlite3",
+]
+source-include = [
+  ".editorconfig",
+  ".readthedocs.yaml",
+  "FUNDING.yml",
+  "manage.py",
+  "justfile",
+  "*.md",
+  "example/**",
+  "tests/**",
+  "tox.ini",
+  "docs/**",
+  "uv.lock",
 ]
