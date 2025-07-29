@@ -7,6 +7,7 @@
 - Drop support for the Python 3.13 / Django 4.2 combination (#590).
 - Use astral-sh/setup-uv in GitHub Actions (#593, #594).
 - Build with `uv build` (#595).
+- Use `uv.lock` in Github Actions (#596).
 
 ## 25.1 (2025-03-02)
 
