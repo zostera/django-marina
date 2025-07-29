@@ -1,6 +1,6 @@
 # Changelog
 
-## In development
+## 25.2 (2025-08-29)
 
 - Add support for Django 5.2 (#587, #588).
 - Drop support for Django 5.0 (#587, #588).
