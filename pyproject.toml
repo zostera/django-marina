@@ -126,3 +126,6 @@ source-include = [
   "tox.ini",
   "docs/**",
 ]
+
+[tool.check-manifest]
+ignore = ["uv.lock"]
