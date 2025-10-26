@@ -112,6 +112,7 @@ source-exclude = [
   "**/.DS_Store",
   "docs/_build",
   "example/db.sqlite3",
+  "uv.lock",
 ]
 source-include = [
   ".editorconfig",
@@ -124,5 +125,4 @@ source-include = [
   "tests/**",
   "tox.ini",
   "docs/**",
-  "uv.lock",
 ]
