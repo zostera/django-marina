@@ -18,4 +18,4 @@ See "Supported Versions" on https://www.djangoproject.com/download/.
 
 This pages uses [uv](https://github.com/astral-sh/uv) and [just](https://github.com/casey/just).
 
-After installing both, check out this repository and type `just bootstrap` to bootstrap a development environment.
+After installing both, check out this repository and type `just upgrade` to bootstrap a development environment.
