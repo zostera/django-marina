@@ -15,31 +15,31 @@ default:
         exit 1; \
     fi
 
-# Install and/or update all dependencies defined in pyproject.toml
-@update: uv
+# Install and/or upgrade all dependencies defined in pyproject.toml
+@upgrade: uv
     uv sync --all-extras --all-groups --upgrade
 
 # Format
-@format: update
+@format: upgrade
     ruff format
     ruff check --fix
 
 # Lint
-@lint: update
+@lint: upgrade
     ruff format --check
     ruff check
 
 # Test
-@test: update
+@test: upgrade
     coverage run manage.py test
     coverage report
 
 # Test
-@tests: update
+@tests: upgrade
     tox
 
 # Build
-@build: update
+@build: upgrade
     uv build
     uvx twine check dist/*
     uvx check-manifest
@@ -68,7 +68,7 @@ default:
         exit 1; \
     fi
 
-@docs: update clean
+@docs: upgrade clean
     uv run -m sphinx -T -b html -d docs/_build/doctrees -D language=en docs docs/_build/html
 
 @example:
