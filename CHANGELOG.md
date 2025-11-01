@@ -2,6 +2,7 @@
 
 ## In development
 
+- Remove support for Python 3.9 (EOL) (#608).
 - Simplify justfile (#609).
 - Exclude uv.lock from build (#605).
 - Add support for Python 3.14 (#603).
