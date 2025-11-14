@@ -36,7 +36,7 @@ license-files = ["LICENSE", "AUTHORS"]
 name = "django-marina"
 readme = "README.md"
 requires-python = ">=3.10"
-version = "25.2"
+version = "25.3"
 
 [project.urls]
 Changelog = "https://github.com/zostera/django-marina/blob/main/CHANGELOG.md"
