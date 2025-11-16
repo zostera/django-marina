@@ -67,9 +67,14 @@ VERSION := `sed -n 's/^ *version.*=.*"\([^"]*\)".*/\1/p' pyproject.toml`
     uvx ruff check
 
 # Run test on the current environment
-@test: sync
-    uv run coverage run manage.py test
+@test *ARGS: sync
+    uv run coverage run manage.py test {{ARGS}}
     uv run coverage report
+
+# Run test command (used within tox)
+[private]
+@test-for-tox *ARGS:
+    uv run manage.py test {{ARGS}}
 
 # Run all tests (invokes tox)
 @tests: sync
