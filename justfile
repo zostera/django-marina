@@ -61,24 +61,24 @@ VERSION := `sed -n 's/^ *version.*=.*"\([^"]*\)".*/\1/p' pyproject.toml`
     uvx ruff format
     uvx ruff check --fix
 
-# Lint (check formatting) of source code
+# Check formatting of source code
 @lint: uv
     uvx ruff format --check
     uvx ruff check
 
-# Run test on the current environment
+# Run test on the current environment with coverage and then report
 @test *ARGS: sync
-    just test-without-sync {{ARGS}}
-
-# Run test on the current environment without syncing first (also used within github-actions)
-[private]
-@test-without-sync *ARGS:
-    uv run coverage run manage.py test {{ARGS}}
+    just test-with-coverage-without-sync {{ARGS}}
     uv run coverage report
 
-# Run test command without coverage and sycning (used within tox)
+# Run test with coverage
 [private]
-@test-for-tox *ARGS:
+@test-with-coverage-without-sync *ARGS:
+    uv run coverage run manage.py test {{ARGS}}
+
+# Run test command without coverage and syncing
+[private]
+@test-without-coverage-without-sync *ARGS:
     uv run manage.py test {{ARGS}}
 
 # Run all tests (invokes tox)
