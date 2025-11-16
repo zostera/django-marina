@@ -86,7 +86,7 @@ jobs:
       if: matrix.django-version == 'main'
 
     - name: Run tests
-      run: just test-without-sync
+      run: just test-with-coverage-without-sync
 
     - name: Upload coveralls (parallel)
       env:
