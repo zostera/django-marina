@@ -72,7 +72,7 @@ VERSION := `sed -n 's/^ *version.*=.*"\([^"]*\)".*/\1/p' pyproject.toml`
 
 # Run test on the current environment without syncing first (also used within github-actions)
 [private]
-@test-without-sync *ARGS: sync
+@test-without-sync *ARGS:
     uv run coverage run manage.py test {{ARGS}}
     uv run coverage report
 
