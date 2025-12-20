@@ -75,13 +75,11 @@ VERSION := `sed -n 's/^ *version.*=.*"\([^"]*\)".*/\1/p' pyproject.toml`
 # Run test with coverage
 [private]
 @test-with-coverage-without-sync *ARGS:
-    uv run environment.py
     uv run coverage run manage.py test {{ARGS}}
 
 # Run test command without coverage and syncing
 [private]
 @test-without-coverage-without-sync *ARGS:
-    uv run environment.py
     uv run manage.py test {{ARGS}}
 
 # Run all tests (invokes tox)
