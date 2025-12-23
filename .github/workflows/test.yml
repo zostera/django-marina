@@ -55,7 +55,7 @@ jobs:
           uv pip install "tox>=4.2" "tox-uv>=1.13.1" "tox-gh-actions>=3.2"
 
       - name: Run tox (Django matrix selected by tox-gh-actions)
-        run: tox
+        run: tox -p auto
 
   coverage:
     runs-on: ubuntu-latest
