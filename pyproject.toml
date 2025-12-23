@@ -25,18 +25,20 @@ classifiers = [
   "Topic :: Software Development :: Libraries",
   "Topic :: Utilities",
 ]
+description = "Bootstrap 5 for Django"
+keywords = ["django", "bootstrap", "bootstrap5"]
 dependencies = [
   "Django>=4.2,<7.0",
-  "beautifulsoup4>=4.10.0",
 ]
-description = "Django extensions by Zostera"
-keywords = ["django", "utilities", "testing"]
 license = "BSD-3-Clause"
 license-files = ["LICENSE", "AUTHORS"]
 name = "django-marina"
 readme = "README.md"
 requires-python = ">=3.10"
 version = "25.3"
+
+[project.optional-dependencies]
+jinja = ["Jinja2>=3.0,<4"]
 
 [project.urls]
 Changelog = "https://github.com/zostera/django-marina/blob/main/CHANGELOG.md"
@@ -75,7 +77,7 @@ unfixable = [
 ]
 
 [tool.ruff.lint.isort]
-known-first-party = ["django_marina", "app"]
+known-first-party = ["django_bootstrap5", "app"]
 known-third-party = ["django"]
 
 [tool.coverage.run]
@@ -83,7 +85,7 @@ branch = true
 source = ["src", "tests"]
 
 [tool.coverage.paths]
-package = ["src/django_marina", "*/django_marina/src/django_marina"]
+package = ["src/django_bootstrap5", "*/django_bootstrap5/src/django_bootstrap5"]
 
 [tool.coverage.report]
 show_missing = true
@@ -91,9 +93,10 @@ skip_covered = true
 
 [dependency-groups]
 dev = [
-  "coverage[toml]>=7.6.1",
+  {include-group = "test"},
+  {include-group = "lint"},
+  {include-group = "docs"},
   "tox-gh-actions>=3.5.0",
-  "tox-uv>=1.13.1",
 ]
 docs = [
   "furo>=2024.8.6",
@@ -104,7 +107,11 @@ lint = [
   "ruff>=0.6",
 ]
 test = [
+  "beautifulsoup4>=4.12.3",
   "coverage[toml]>=7.6.1",
+  "jinja2>=3.1.4",
+  "pillow>=11.0.0",
+  "tox-uv>=1.13.1",
 ]
 
 [tool.uv.build-backend]
