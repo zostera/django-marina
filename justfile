@@ -57,7 +57,7 @@ install:
 
 # Build the documentation
 @docs: clean-docs install
-    uv run sphinx -T -b html -d docs/_build/doctrees -D language=en docs docs/_build/html
+    uv run -m sphinx -T -b html -d docs/_build/doctrees -D language=en docs docs/_build/html
 
 # Run the example project
 @example:
