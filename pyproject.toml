@@ -25,10 +25,11 @@ classifiers = [
   "Topic :: Software Development :: Libraries",
   "Topic :: Utilities",
 ]
-description = "Bootstrap 5 for Django"
-keywords = ["django", "bootstrap", "bootstrap5"]
+description = "Django extensions by Zostera"
+keywords = ["django", "utilities", "testing"]
 dependencies = [
   "Django>=4.2,<7.0",
+  "beautifulsoup4>=4.10.0",
 ]
 license = "BSD-3-Clause"
 license-files = ["LICENSE", "AUTHORS"]
@@ -36,9 +37,6 @@ name = "django-marina"
 readme = "README.md"
 requires-python = ">=3.10"
 version = "25.3"
-
-[project.optional-dependencies]
-jinja = ["Jinja2>=3.0,<4"]
 
 [project.urls]
 Changelog = "https://github.com/zostera/django-marina/blob/main/CHANGELOG.md"
@@ -77,7 +75,7 @@ unfixable = [
 ]
 
 [tool.ruff.lint.isort]
-known-first-party = ["django_bootstrap5", "app"]
+known-first-party = ["django_marina", "app"]
 known-third-party = ["django"]
 
 [tool.coverage.run]
@@ -85,7 +83,7 @@ branch = true
 source = ["src", "tests"]
 
 [tool.coverage.paths]
-package = ["src/django_bootstrap5", "*/django_bootstrap5/src/django_bootstrap5"]
+package = ["src/django_marina", "*/django_marina/src/django_marina"]
 
 [tool.coverage.report]
 show_missing = true
@@ -107,10 +105,7 @@ lint = [
   "ruff>=0.6",
 ]
 test = [
-  "beautifulsoup4>=4.12.3",
   "coverage[toml]>=7.6.1",
-  "jinja2>=3.1.4",
-  "pillow>=11.0.0",
   "tox-uv>=1.13.1",
 ]
 

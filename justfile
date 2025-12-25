@@ -77,8 +77,8 @@ install: uv
     uv run manage.py test {{ARGS}}
 
 # Run all tests (invokes tox)
-@tests:
-    tox -p auto
+@tests *ARGS:
+    tox {{ARGS}}
 
 # Build the package and test the build
 @build: clean-build install
