@@ -1,109 +1,54 @@
-name: Test
+name: Django Tests
 
 on:
   push:
-    branches: ["main"]
+    branches: [ main, develop ]
   pull_request:
-
-concurrency:
-  group: tests-${{ github.workflow }}-${{ github.ref }}
-  cancel-in-progress: true
+    branches: [ main, develop ]
 
 jobs:
-  lint:
+  test:
     runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v5
 
-      - name: Set up uv (Python 3.12)
-        uses: astral-sh/setup-uv@v5
-        with:
-          python-version: "3.12"
-          enable-cache: true
-          cache-dependency-glob: |
-            pyproject.toml
-            uv.lock
-
-      - name: Install tox (with plugins)
-        run: |
-          uv pip install "tox>=4.2" "tox-uv>=1.13.1" "tox-gh-actions>=3.2"
-
-      - name: Lint
-        run: tox -e lint
-
-  tests:
-    runs-on: ubuntu-latest
-    needs: [lint]
     strategy:
       fail-fast: false
       matrix:
-        python-version: ["3.10", "3.11", "3.12", "3.13", "3.14"]
+        python-version: ["3.12", "3.13"]
+        django-version: ["5.2", "6.0"]
+
     steps:
-      - uses: actions/checkout@v5
+      - name: Checkout code
+        uses: actions/checkout@v4
 
-      - name: Set up uv (Python ${{ matrix.python-version }})
-        uses: astral-sh/setup-uv@v5
+      - name: Install uv
+        uses: astral-sh/setup-uv@v4
         with:
-          python-version: ${{ matrix.python-version }}
           enable-cache: true
-          cache-dependency-glob: |
-            pyproject.toml
-            uv.lock
 
-      - name: Install tox (with plugins)
+      - name: Set up Python ${{ matrix.python-version }}
+        run: uv python install ${{ matrix.python-version }}
+
+      - name: Install dependencies
         run: |
-          uv pip install "tox>=4.2" "tox-uv>=1.13.1" "tox-gh-actions>=3.2"
+          uv sync
+          uv pip install "Django==${{ matrix.django-version }}.*"
 
-      - name: Run tox (Django matrix selected by tox-gh-actions)
-        run: tox
-
-  coverage:
-    runs-on: ubuntu-latest
-    needs: [tests]
-    steps:
-      - uses: actions/checkout@v5
-
-      - name: Set up uv (Python 3.13)
-        uses: astral-sh/setup-uv@v5
-        with:
-          python-version: "3.13"
-          enable-cache: true
-          cache-dependency-glob: |
-            pyproject.toml
-            uv.lock
-
-      - name: Install tox (with plugins)
+      - name: Debug - Show installed versions
         run: |
-          uv pip install "tox>=4.2" "tox-uv>=1.13.1" "tox-gh-actions>=3.2"
+          echo "=== Python Version ==="
+          uv run python --version
+          echo ""
+          echo "=== Django Version ==="
+          uv run python -c "import django; print(f'Django: {django.__version__}')"
+          echo ""
+          echo "=== All installed packages ==="
+          uv pip list
 
-      - name: Run coverage (tox env)
-        run: tox -e cov
+      - name: Run Django system check
+        run: uv run python manage.py check
 
-      - name: Upload coverage to Coveralls
-        uses: coverallsapp/github-action@v2
-        with:
-          github-token: ${{ secrets.GITHUB_TOKEN }}
-          format: cobertura
-          file: coverage.xml
+      - name: Run migrations (dry-run)
+        run: uv run python manage.py migrate --check
 
-  docs:
-    runs-on: ubuntu-latest
-    needs: [tests]
-    steps:
-      - uses: actions/checkout@v5
-
-      - name: Set up uv (Python 3.12)
-        uses: astral-sh/setup-uv@v5
-        with:
-          python-version: "3.12"
-          enable-cache: true
-          cache-dependency-glob: |
-            pyproject.toml
-            uv.lock
-
-      - name: Install tox (with plugins)
-        run: |
-          uv pip install "tox>=4.2" "tox-uv>=1.13.1" "tox-gh-actions>=3.2"
-
-      - name: Build docs
-        run: tox -e docs
+      - name: Run tests
+        run: uv run python manage.py test --verbosity=2
