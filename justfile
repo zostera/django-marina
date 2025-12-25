@@ -59,34 +59,34 @@ install: uv
 
 # Format source code
 @format: uv
-    uvx ruff format
-    uvx ruff check --fix
+    ruff format
+    ruff check --fix
 
 # Check formatting of source code
 @lint: uv
-    uvx ruff format --check
-    uvx ruff check
+    ruff format --check
+    ruff check
 
 # Run test with coverage
 @test-cov *ARGS: uv
-    uv run coverage run manage.py test {{ARGS}}
-    uv run coverage report
+    coverage run manage.py test {{ARGS}}
+    coverage report
 
 # Run test
 @test *ARGS: uv
     uv run manage.py test {{ARGS}}
 
 # Run all tests (invokes tox)
-@tests:
-    uv run tox
+@tests *ARGS:
+    tox {{ARGS}}
 
 # Build the package and test the build
 @build: clean-build install
     uv build
-    uvx twine check dist/*
-    uvx check-manifest
-    uvx pyroma .
-    uvx check-wheel-contents dist
+    twine check dist/*
+    check-manifest
+    pyroma .
+    check-wheel-contents dist
 
 # Build the documentation
 @docs: clean-docs install
