@@ -45,7 +45,7 @@ install:
 
 # Run all tests (invokes tox)
 @tests *ARGS:
-    uvx tox {{ARGS}}
+    uvx --with tox-uv tox {{ARGS}}
 
 # Build the package and test the build
 @build: clean-build install
