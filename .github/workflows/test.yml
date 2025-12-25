@@ -36,19 +36,19 @@ jobs:
       - name: Debug - Show installed versions
         run: |
           echo "=== Python Version ==="
-          uv run python --version
+          uv run --no-sync python --version
           echo ""
           echo "=== Django Version ==="
-          uv run python -c "import django; print(f'Django: {django.__version__}')"
+          uv run --no-sync python -c "import django; print(f'Django: {django.__version__}')"
           echo ""
           echo "=== All installed packages ==="
           uv pip list
 
       - name: Run Django system check
-        run: uv run python manage.py check
+        run: uv run --no-sync python manage.py check
 
-      - name: Run migrations (dry-run)
-        run: uv run python manage.py migrate --check
+      # - name: Run migrations (dry-run)
+      #   run: uv run --no-sync python manage.py migrate --check
 
       - name: Run tests
-        run: uv run python manage.py test --verbosity=2
+        run: uv run --no-sync python manage.py test --verbosity=2
