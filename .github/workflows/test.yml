@@ -1,10 +1,14 @@
-name: Django Tests
+name: CI Tests
 
 on:
   push:
     branches: [ main, develop ]
   pull_request:
     branches: [ main, develop ]
+
+concurrency:
+  group: test-${{ github.workflow }}-${{ github.head_ref || github.ref }}
+  cancel-in-progress: true
 
 jobs:
   test:
