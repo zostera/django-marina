@@ -24,12 +24,12 @@ classifiers = [
   "Topic :: Software Development :: Libraries",
   "Topic :: Utilities",
 ]
-description = "Django extensions by Zostera"
-keywords = ["django", "utilities", "testing"]
 dependencies = [
   "Django>=4.2,<7.0",
   "beautifulsoup4>=4.10.0",
 ]
+description = "Django extensions by Zostera"
+keywords = ["django", "utilities", "testing"]
 license = "BSD-3-Clause"
 license-files = ["LICENSE", "AUTHORS"]
 name = "django-marina"
@@ -91,9 +91,7 @@ skip_covered = true
 [dependency-groups]
 dev = [
   {include-group = "test"},
-  {include-group = "lint"},
   {include-group = "docs"},
-  "tox-gh-actions>=3.5.0",
 ]
 docs = [
   "furo>=2024.8.6",
@@ -105,7 +103,6 @@ lint = [
 ]
 test = [
   "coverage[toml]>=7.6.1",
-  "tox-uv>=1.13.1",
 ]
 
 [tool.uv.build-backend]
