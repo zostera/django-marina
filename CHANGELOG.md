@@ -2,7 +2,7 @@
 
 ## In development
 
-- Remove support for Django 5.1 (EOL) (#TODO).
+- Remove support for Django 5.1 (EOL) (#623).
 
 ## 25.3 (2025-11-14)
 
