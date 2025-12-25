@@ -26,18 +26,18 @@ install:
 
 # Format source code
 @format:
-    ruff format
-    ruff check --fix
+    uvx ruff format
+    uvx ruff check --fix
 
 # Check formatting of source code
 @lint:
-    ruff format --check
-    ruff check
+    uvx ruff format --check
+    uvx ruff check
 
 # Run test with coverage
 @test-cov *ARGS:
-    coverage run manage.py test {{ARGS}}
-    coverage report
+    uv run --no-sync coverage run manage.py test {{ARGS}}
+    uv run --no-sync coverage report
 
 # Run test
 @test *ARGS:
@@ -45,7 +45,7 @@ install:
 
 # Run all tests (invokes tox)
 @tests *ARGS:
-    tox {{ARGS}}
+    uvx tox {{ARGS}}
 
 # Build the package and test the build
 @build: clean-build install
