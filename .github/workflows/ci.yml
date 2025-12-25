@@ -129,7 +129,7 @@ jobs:
       - name: Build documentation
         run: just docs
 
-  ci_complete:
+  tests:
     if: always()
     runs-on: ubuntu-latest
     needs: [django_python_matrix, lint, docs, build]
