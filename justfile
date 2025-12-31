@@ -71,7 +71,7 @@ install:
 
 # Create and push a release tag (publishing happens in GitHub Actions)
 @release-tag: porcelain branch build
-    git tag -a v{{ VERSION }} -m "Release v{{ VERSION }}"
+    git tag -a v{{ VERSION }} -m "Release {{ VERSION }}"
     git push origin v{{ VERSION }}
 
 # Backwards-compatible alias (kept so muscle memory doesn't publish locally)
