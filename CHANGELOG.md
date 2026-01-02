@@ -1,7 +1,8 @@
 # Changelog
 
-## Unreleased
+## 26.1 (2026-01-02)
 
+- Add tests (#634).
 - Remove tests folder from coverage source (#631).
 - Refactor release workflow to tag-based publishing via GitHub Actions (#629).
 - Remove support for Django 5.1 (EOL) (#623).
