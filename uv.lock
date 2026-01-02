@@ -310,7 +310,7 @@ wheels = [
 
 [[package]]
 name = "django-marina"
-version = "26.1.dev0"
+version = "26.1"
 source = { editable = "." }
 dependencies = [
     { name = "beautifulsoup4" },
