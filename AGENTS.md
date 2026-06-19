@@ -27,6 +27,8 @@ just upgrade    # upgrade all deps
 
 Never invoke `python`, `pip`, or `ruff` directly. All commands go through `just`, which delegates to `uv run` (venv) or `uvx` (ephemeral tools like ruff, twine, check-manifest).
 
+`uv.lock` is fully generated — never manually resolve merge conflicts in it. On conflict: accept either side, then run `just upgrade` to regenerate.
+
 ## Key commands
 
 ```
