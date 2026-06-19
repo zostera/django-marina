@@ -6,6 +6,7 @@
 - Replace `USER_IGNORE = -1` magic sentinel with `object()` in `ExtendedClient` (#652).
 - Support PUT, PATCH and DELETE in `ExtendedTestCase._response()` (#652).
 - Expand test coverage for `remove_attrs` (#652).
+- Replace deprecated `DEFAULT_FILE_STORAGE` with `STORAGES` for Django 6.0 compatibility (#653).
 
 ## 26.1 (2026-01-02)
 
