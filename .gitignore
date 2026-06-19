@@ -42,3 +42,6 @@ build-check-description/
 
 # Example database
 example/db.sqlite3
+
+# Claude Code
+.claude/
