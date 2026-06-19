@@ -25,6 +25,8 @@ just install    # install deps from uv.lock
 just upgrade    # upgrade all deps
 ```
 
+Never invoke `python`, `pip`, or `ruff` directly. All commands go through `just`, which delegates to `uv run` (venv) or `uvx` (ephemeral tools like ruff, twine, check-manifest).
+
 ## Key commands
 
 ```
