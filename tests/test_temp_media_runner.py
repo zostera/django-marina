@@ -33,14 +33,12 @@ class TempMediaDiscoverRunnerTestCase(SimpleTestCase):
                 settings.DEFAULT_FILE_STORAGE,
                 "django.core.files.storage.FileSystemStorage",
             )
-            self.assertTrue(hasattr(settings, "_original_media_root"))
-            self.assertTrue(hasattr(settings, "_original_file_storage"))
+            self.assertEqual(runner._original_media_root, original_media_root)
+            self.assertEqual(runner._original_file_storage, original_storage)
         finally:
             temp_media_root = runner._temp_media
             runner.teardown_test_environment()
 
         self.assertEqual(settings.MEDIA_ROOT, original_media_root)
         self.assertEqual(settings.DEFAULT_FILE_STORAGE, original_storage)
-        self.assertFalse(hasattr(settings, "_original_media_root"))
-        self.assertFalse(hasattr(settings, "_original_file_storage"))
         self.assertFalse(os.path.exists(temp_media_root))

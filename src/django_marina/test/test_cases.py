@@ -31,12 +31,10 @@ class ExtendedTestCase(TestCase):
         """Return response on a separate client instance, so without any side effects."""
         client = self.client_class()
         method = kwargs.pop("method", "get").lower()
-        if method == "get":
-            response = client.get(path, user=user, **kwargs)
-        elif method == "post":
-            response = client.post(path, user=user, **kwargs)
+        if method in ("get", "post", "put", "patch", "delete"):
+            response = getattr(client, method)(path, user=user, **kwargs)
         else:
-            raise AssertionError(f"Invalid method {method} (expected GET or POST).")
+            raise AssertionError(f"Invalid method {method} (expected GET, POST, PUT, PATCH or DELETE).")
         return response
 
     def assertResponseStatusCode(self, response, status_code, msg_prefix=None):

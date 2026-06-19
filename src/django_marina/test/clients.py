@@ -13,7 +13,7 @@ def _get_soup(response):
 class ExtendedClient(Client):
     """Client with added features."""
 
-    USER_IGNORE = -1
+    USER_IGNORE = object()
 
     def request(self, **request):
         """Request a response from the server."""
@@ -30,7 +30,7 @@ class ExtendedClient(Client):
         When `user` is `None`, this will force a logout.
         In all other cases, `user` will be logged in.
         """
-        if user != self.USER_IGNORE:
+        if user is not self.USER_IGNORE:
             if user is None:
                 self.logout()
             else:
