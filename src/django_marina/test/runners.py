@@ -16,17 +16,20 @@ class TempMediaMixin:
         """Create temp directory and update MEDIA_ROOT and default storage."""
         super().setup_test_environment()
         self._original_media_root = settings.MEDIA_ROOT
-        self._original_file_storage = settings.DEFAULT_FILE_STORAGE
+        self._original_storages = settings.STORAGES.copy()
         self._temp_media = tempfile.mkdtemp()
         settings.MEDIA_ROOT = self._temp_media
-        settings.DEFAULT_FILE_STORAGE = "django.core.files.storage.FileSystemStorage"
+        settings.STORAGES = {
+            **settings.STORAGES,
+            "default": {"BACKEND": "django.core.files.storage.FileSystemStorage"},
+        }
 
     def teardown_test_environment(self):
         """Delete temp storage."""
         super().teardown_test_environment()
         shutil.rmtree(self._temp_media, ignore_errors=True)
         settings.MEDIA_ROOT = self._original_media_root
-        settings.DEFAULT_FILE_STORAGE = self._original_file_storage
+        settings.STORAGES = self._original_storages
 
 
 class TempMediaDiscoverRunner(TempMediaMixin, DiscoverRunner):
