@@ -1,5 +1,12 @@
 # Changelog
 
+## Unreleased
+
+- Store original media settings on runner instance instead of settings object (#652).
+- Replace `USER_IGNORE = -1` magic sentinel with `object()` in `ExtendedClient` (#652).
+- Support PUT, PATCH and DELETE in `ExtendedTestCase._response()` (#652).
+- Expand test coverage for `remove_attrs` (#652).
+
 ## 26.1 (2026-01-02)
 
 - Add tests (#634).
