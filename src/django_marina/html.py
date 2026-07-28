@@ -2,7 +2,7 @@ from bs4 import BeautifulSoup
 
 
 def remove_attrs(html, attrs=None):
-    """Return html string without the specified tags."""
+    """Return html string without the specified attributes."""
     if html and attrs:
         soup = BeautifulSoup(html, "html.parser")
         soup = _remove_attrs(soup, attrs)
