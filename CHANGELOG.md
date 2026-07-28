@@ -2,6 +2,8 @@
 
 ## Unreleased
 
+- Add support for Django 6.1.
+- Drop support for Django 4.2 (EOL).
 - Add MAINTAINING.md (version-support policy, release process); add scope statement and PR-review checklist to CONTRIBUTING.md.
 - Store original media settings on runner instance instead of settings object (#652).
 - Replace `USER_IGNORE = -1` magic sentinel with `object()` in `ExtendedClient` (#652).
