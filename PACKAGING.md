@@ -50,11 +50,32 @@ notes (e.g. a Bootstrap CDN version).
 Don't "fix" bootstrap3/4 to match the current convention — it's a public import path;
 renaming it would be a breaking change with no upstream justification.
 
+## README structure (canonical)
+
+django-bootstrap3 and django-bootstrap5 are the canonical reference for `README.md`
+structure. Section order:
+
+1. Title (`# django-<name>`, no stray spaces) + CI/Coveralls/PyPI badges + one-line tagline
+2. `## Goal`
+3. `## Maintenance Mode` (EOL/legacy packages) or `## Status` (actively developed packages)
+4. `## Requirements`
+5. `## Documentation`
+6. `## Installation`
+7. `## Example template` — only for packages that ship Django template tags
+8. `## Example app` — only for packages that ship an `example/` project
+9. `## Bugs and suggestions`
+10. `## License`
+11. `## Author`
+
+Package-specific content (e.g. django-icons' "Origin" history section) can follow after
+`## Author` — the skeleton above just needs to be present, in order. Skip sections 7-8
+entirely for packages with no templates or example project (e.g. django-marina) rather
+than leaving them empty.
+
 ## Not synced
 
 - `AGENTS.md` — each package has its own; only the "Related packages" list and general tone
   are meant to match.
-- `README.md` — structure varies per package on purpose.
 - `CHANGELOG.md`, package source, tests, docs content.
 
 ## Propagation process
