@@ -6,7 +6,14 @@
 
 Django extensions by Zostera.
 
-Documentation is available at <https://django-marina.readthedocs.io/>.
+## Goal
+
+The goal of this project is to bundle small, reusable extensions for Django projects: database
+utilities, HTML helpers, and test infrastructure shared across Zostera's Django packages.
+
+## Status
+
+Ready for production. Issues and pull requests welcome, see [CONTRIBUTING.md](CONTRIBUTING.md).
 
 ## Requirements
 
@@ -14,8 +21,46 @@ This package requires a combination of Python and Django that is currently suppo
 
 See "Supported Versions" on https://www.djangoproject.com/download/.
 
-## Development
+This package uses [uv](https://github.com/astral-sh/uv) and [just](https://github.com/casey/just) for local development.
 
-This pages uses [uv](https://github.com/astral-sh/uv) and [just](https://github.com/casey/just).
+## Documentation
 
-After installing both, check out this repository and type `just upgrade` to bootstrap a development environment.
+The full documentation is at https://django-marina.readthedocs.io/
+
+## Installation
+
+1. Install using pip:
+
+    ```console
+    pip install django-marina
+    ```
+
+2. Add to `INSTALLED_APPS` in your `settings.py`:
+
+   ```python
+   INSTALLED_APPS = (
+       # ...
+       "django_marina",
+       # ...
+   )
+   ```
+
+## Bugs and suggestions
+
+If you have found a bug or if you have a request for additional functionality, please use the issue tracker on GitHub.
+
+https://github.com/zostera/django-marina/issues
+
+## License
+
+You can use this under BSD-3-Clause. See [LICENSE](LICENSE) file for details.
+
+## Author
+
+Developed and maintained by [Zostera](https://zostera.nl).
+
+Original author: [Dylan Verheul](https://github.com/dyve).
+
+Thanks to everybody that has contributed pull requests, ideas, issues, comments and kind words.
+
+Please see [AUTHORS](AUTHORS) for a list of contributors.
