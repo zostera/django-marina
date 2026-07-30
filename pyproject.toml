@@ -123,4 +123,4 @@ source-include = [
 ]
 
 [tool.check-manifest]
-ignore = ["uv.lock"]
+ignore = ["uv.lock", "pyproject.toml.orig"]
