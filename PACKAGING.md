@@ -37,6 +37,11 @@ as a PR in that sibling's own repo — never push straight to `main`.
 process) everywhere; substitute package name and any package-specific pinned-dependency
 notes (e.g. a Bootstrap CDN version).
 
+The release process's step 1 (version bump) must go through a release branch + PR, not a
+direct commit to `main` — `main` is protected in every one of these repos, so "commit and
+push to main" either fails or requires bypassing branch protection. Only `just release-tag`
+(step 4) pushes directly, and that's a tag, not a commit to `main`.
+
 ## Naming convention (intentional split, not drift)
 
 - **Legacy** (django-bootstrap3, django-bootstrap4): import name has no `django_` prefix —
