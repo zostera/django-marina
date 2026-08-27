@@ -2,6 +2,7 @@
 
 ## Unreleased
 
+- Add `typos` spell checking to `just lint`.
 - Add support for Django 6.1.
 - Drop support for Django 4.2 (EOL).
 - Add MAINTAINING.md (version-support policy, release process); add scope statement and PR-review checklist to CONTRIBUTING.md.
