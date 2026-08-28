@@ -1,5 +1,9 @@
 # Changelog
 
+## Unreleased
+
+- Add `just release-check` to list `src/` changes against changelog entries before a release.
+
 ## 26.2 (2026-08-28)
 
 - Drop support for Django 4.2 (EOL).
