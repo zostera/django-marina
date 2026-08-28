@@ -2,6 +2,7 @@
 
 ## Unreleased
 
+- Add a maintenance-round section to MAINTAINING.md: check endoflife.date, reconcile the matrix, order release notes.
 - Note in PACKAGING.md that django-bootstrap4/5 add GDAL steps to `ci.yml`.
 - Add a 15-minute `timeout-minutes` to every CI job.
 - Add `typos` spell checking to `just lint`.

@@ -49,9 +49,11 @@ that backup behind, which lands in the sdist it builds and then trips its own VC
 Omitting it breaks `just build` in a way `git status` won't show, because the file is gone by
 the time the command exits. bootstrap5 and icons were missing it until 2026-08.
 
-`MAINTAINING.md` shares the same two-section shape (version-support policy + release
-process) everywhere; substitute package name and any package-specific pinned-dependency
-notes (e.g. a Bootstrap CDN version).
+`MAINTAINING.md` shares the same shape everywhere — version-support policy, maintenance
+round, release process — except django-bootstrap3 and django-bootstrap4, which add a
+`## Maintenance mode` section first. Substitute package name and any package-specific
+pinned-dependency notes (e.g. a Bootstrap CDN version). The maintenance-round steps and the
+release-note ordering convention take no substitution; copy them verbatim.
 
 The release process's step 1 (version bump) must go through a release branch + PR, not a
 direct commit to `main` — `main` is protected in every one of these repos, so "commit and
