@@ -24,7 +24,7 @@ as a PR in that sibling's own repo — never push straight to `main`.
 
 `pyproject.toml` sections `[build-system]`, `[tool.uv.build-backend]`, `[tool.check-manifest]`,
 `[dependency-groups]`, `[tool.ruff]` / `[tool.ruff.lint]` / `[tool.ruff.lint.isort]`,
-`[tool.coverage.*]` share the same shape everywhere. Substitute per package:
+`[tool.coverage.*]`, `[tool.typos.default]` share the same shape everywhere. Substitute per package:
 
 - distribution name / description / keywords / Django dependency floor (`[project]`)
 - import module name in `known-first-party`, `[tool.coverage.paths] package`,
@@ -32,6 +32,11 @@ as a PR in that sibling's own repo — never push straight to `main`.
 - `module-name` key in `[tool.uv.build-backend]` — only needed for django-bootstrap3/4 (see
   naming convention below); omit it for bootstrap5/icons/marina, where it's correctly
   derived from the distribution name by default.
+
+`[tool.typos.default]` takes no substitution — copy it verbatim. Its `extend-ignore-re` skips
+Subresource Integrity hashes, whose base64 mints letter runs the checker reads as misspellings.
+Every repo needs it: bootstrap5 and icons hit it today, and any CDN version bump mints fresh ones. Don't replace it
+with `extend-words` entries — that blesses a word globally to silence one hash.
 
 `MAINTAINING.md` shares the same two-section shape (version-support policy + release
 process) everywhere; substitute package name and any package-specific pinned-dependency
