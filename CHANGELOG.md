@@ -1,20 +1,20 @@
 # Changelog
 
-## Unreleased
+## 26.2 (2026-08-28)
 
+- Drop support for Django 4.2 (EOL).
+- Add support for Django 6.1.
+- Store original media settings on runner instance instead of settings object (#652).
+- Replace deprecated `DEFAULT_FILE_STORAGE` with `STORAGES` for Django 6.0 compatibility (#653).
+- Support PUT, PATCH and DELETE in `ExtendedTestCase._response()` (#652).
 - Add a maintenance-round section to MAINTAINING.md: check endoflife.date, reconcile the matrix, order release notes.
 - Note in PACKAGING.md that django-bootstrap4/5 add GDAL steps to `ci.yml`.
 - Add a 15-minute `timeout-minutes` to every CI job.
 - Add `typos` spell checking to `just lint`.
 - Note in PACKAGING.md that `[tool.check-manifest] ignore` is copied verbatim, and why.
-- Add support for Django 6.1.
-- Drop support for Django 4.2 (EOL).
 - Add MAINTAINING.md (version-support policy, release process); add scope statement and PR-review checklist to CONTRIBUTING.md.
-- Store original media settings on runner instance instead of settings object (#652).
-- Replace `USER_IGNORE = -1` magic sentinel with `object()` in `ExtendedClient` (#652).
-- Support PUT, PATCH and DELETE in `ExtendedTestCase._response()` (#652).
 - Expand test coverage for `remove_attrs` (#652).
-- Replace deprecated `DEFAULT_FILE_STORAGE` with `STORAGES` for Django 6.0 compatibility (#653).
+- Replace `USER_IGNORE = -1` magic sentinel with `object()` in `ExtendedClient` (#652).
 
 ## 26.1 (2026-01-02)
 
