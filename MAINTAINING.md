@@ -53,6 +53,23 @@ version bump through a PR like any other change.
 
 `just release-tag` requires a clean working directory and the current branch to be `main`. It will fail otherwise.
 
-Order the release notes so the support-matrix changes lead: dropped Python/Django first, then
-added Python/Django, then everything else. Those are the entries a user upgrading needs to see,
-and they are easy to lose in a long list.
+Order the release notes by category, in this order:
+
+1. Security fixes
+2. Dropped Python/Django cycles
+3. Added Python/Django cycles
+4. Bug fixes
+5. Features
+6. Tooling and internal changes
+7. Everything else
+
+The audience for these notes is someone upgrading, not someone shopping — so what might break
+them comes before what is new for them. That is why fixes sort above features, unlike Keep a
+Changelog, which lists Added first.
+
+Security goes above even the support matrix: a user scanning the notes must not have to read
+past a Django version line to find out they were vulnerable.
+
+If an entry is a breaking behavior change rather than a plain fix — rendered output changes,
+a default changes — prefix it with `**Breaking:**`. It sorts under bug fixes, where it would
+otherwise read as routine.
