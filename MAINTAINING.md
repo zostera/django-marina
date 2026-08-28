@@ -23,6 +23,24 @@ copy always drifts out of sync with the files that actually enforce it.
   it's cut, so the interpreter itself is rarely the blocker. Only make the job blocking once
   test dependencies with C extensions publish wheels for it, if any are in use.
 
+## Maintenance round
+
+Start every maintenance round — and every release — by reconciling the support matrix with
+reality, not from memory:
+
+1. Check [endoflife.date/python](https://endoflife.date/python) and
+   [endoflife.date/django](https://endoflife.date/django) for what is currently supported.
+   The JSON endpoints (`https://endoflife.date/api/python.json`, `.../django.json`) are easier
+   to diff against the matrix than the pages.
+2. Drop every cycle that has gone EOL, and add every new one, per the policy above.
+3. Reconcile all three sources of truth together — `tox.ini` (`envlist`),
+   `.github/workflows/ci.yml` (`python_django_matrix`), and `pyproject.toml` (classifiers and
+   the `Django` dependency). They drift independently, so check all three even when only one
+   looks wrong.
+4. Record any change as a `CHANGELOG.md` entry — dropping a cycle raises the dependency floor
+   and is a breaking change for anyone on it. Under the `YY.N` version scheme the number
+   carries no such signal, so the note is the only warning those users get.
+
 ## Release process
 
 1. On a release branch, update `CHANGELOG.md` and bump `version` in `pyproject.toml`; open a PR and merge it
@@ -34,3 +52,7 @@ copy always drifts out of sync with the files that actually enforce it.
 version bump through a PR like any other change.
 
 `just release-tag` requires a clean working directory and the current branch to be `main`. It will fail otherwise.
+
+Order the release notes so the support-matrix changes lead: dropped Python/Django first, then
+added Python/Django, then everything else. Those are the entries a user upgrading needs to see,
+and they are easy to lose in a long list.
