@@ -2,6 +2,7 @@
 
 ## Unreleased
 
+- Note in PACKAGING.md that django-bootstrap4/5 add GDAL steps to `ci.yml`.
 - Add a 15-minute `timeout-minutes` to every CI job.
 - Add `typos` spell checking to `just lint`.
 - Note in PACKAGING.md that `[tool.check-manifest] ignore` is copied verbatim, and why.

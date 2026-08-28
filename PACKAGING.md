@@ -13,12 +13,17 @@ as a PR in that sibling's own repo — never push straight to `main`.
 ## Synced identically (copy verbatim)
 
 - `justfile`
-- `.github/workflows/ci.yml`
 - `.github/workflows/release.yml`
 - `.github/workflows/dependabot-auto-approve-and-merge.yml`
 - `.editorconfig`, `.readthedocs.yaml`
 - `tox.ini` — except django-bootstrap5 adds `extras = jinja` under `[testenv]` for its
   Jinja2 integration tests. Keep that line when propagating there; don't add it elsewhere.
+- `.github/workflows/ci.yml` — except django-bootstrap4 and django-bootstrap5 add two steps
+  to `python_django_matrix` (`sudo apt-get update`, then `sudo apt-get install binutils
+  libproj-dev gdal-bin`). Both test `django.contrib.gis` form fields, which need GDAL at
+  import. Keep those steps when propagating there; don't add them elsewhere. Note the
+  `apt-get update` is a known hang risk — it once stalled on an unreachable Ubuntu mirror
+  and burned six hours before GitHub's cap; `timeout-minutes` on every job bounds it.
 
 ## Synced with per-package substitution
 
