@@ -2,6 +2,7 @@
 
 ## Unreleased
 
+- Note in PACKAGING.md that django-bootstrap4/5 add GDAL steps to `ci.yml`.
 - Add `typos` spell checking to `just lint`.
 - Note in PACKAGING.md that `[tool.check-manifest] ignore` is copied verbatim, and why.
 - Add support for Django 6.1.
