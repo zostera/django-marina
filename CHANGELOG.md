@@ -2,6 +2,7 @@
 
 ## Unreleased
 
+- Remove the `<7.0` upper bound on the `Django` dependency.
 - Add `just release-check` to list `src/` changes against changelog entries before a release.
 
 ## 26.2 (2026-08-28)
