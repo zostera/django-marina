@@ -16,6 +16,10 @@ These packages share tooling and conventions. Changes in one often mirror to oth
 Config files (justfile, tox.ini, pyproject.toml, etc.) are kept in sync across packages.
 AGENTS.md is **not** synced, each package has its own.
 
+This package is the canonical source for that shared tooling. See
+[PACKAGING.md](PACKAGING.md) for exactly which files sync, which need
+per-package substitution, and the propagation process.
+
 ## Setup
 
 Requires [uv](https://github.com/astral-sh/uv) and [just](https://github.com/casey/just). Run `just` for the command list.
