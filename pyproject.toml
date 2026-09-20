@@ -105,6 +105,7 @@ test = [
 [tool.uv.build-backend]
 source-exclude = [
   "**/.DS_Store",
+  "PACKAGING.md",
   "docs/_build",
   "example/db.sqlite3",
   "uv.lock",
@@ -123,7 +124,7 @@ source-include = [
 ]
 
 [tool.check-manifest]
-ignore = ["uv.lock", "pyproject.toml.orig"]
+ignore = ["uv.lock", "pyproject.toml.orig", "PACKAGING.md"]
 
 [tool.typos.default]
 # Subresource Integrity hashes are base64; they mint words that look like typos.
