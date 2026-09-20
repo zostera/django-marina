@@ -49,6 +49,11 @@ that backup behind, which lands in the sdist it builds and then trips its own VC
 Omitting it breaks `just build` in a way `git status` won't show, because the file is gone by
 the time the command exits. bootstrap5 and icons were missing it until 2026-08.
 
+`CONTRIBUTING.md` shares the same shape everywhere. Substitute per package: the `## Scope`
+paragraph, which describes what that package is for, and any package-specific entries in the
+Pull Request Guidelines list (django-bootstrap5 adds one on setting and kwarg naming). The
+`## Using AI assistants` section takes no substitution; copy it verbatim.
+
 `MAINTAINING.md` shares the same shape everywhere — version-support policy, maintenance
 round, release process — except django-bootstrap3 and django-bootstrap4, which add a
 `## Maintenance mode` section first. Substitute package name and any package-specific
