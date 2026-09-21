@@ -11,6 +11,7 @@ permissions:
 jobs:
   dependabot:
     runs-on: ubuntu-latest
+    timeout-minutes: 15
     # Check the actor, only run for Dependabot PRs, prevent failing on non-Dependabot PRs.
     if: ${{ github.actor == 'dependabot[bot]' }}
     steps:
