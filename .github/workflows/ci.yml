@@ -148,23 +148,24 @@ jobs:
           github-token: ${{ secrets.GITHUB_TOKEN }}
 
       # This job is the only required status check on main, so it has to fail
-      # whenever any job it needs fails. Checking the matrix alone left docs and
-      # build ungated: neither feeds the matrix, so a failure in either kept the
-      # matrix green and this job with it. Lint was already covered, since the
-      # matrix needs it and a skipped matrix is not a success. Checking every
-      # need directly means the gate no longer depends on the graph's shape. No
-      # job here is conditional, so a skipped need also means something failed.
+      # whenever any job it needs fails. It cannot leave that to needs alone. A
+      # job skipped because one of its needs failed reports success to branch
+      # protection, so without always() this gate would go green on a failure
+      # and the pull request would merge. GitHub documents always() with needs
+      # as the way round that, which is why the condition is spelled out here:
+      # https://docs.github.com/en/pull-requests/collaborating-with-pull-requests/collaborating-on-repositories-with-code-quality-features/troubleshooting-required-status-checks
+      #
+      # Checking the matrix alone left docs and build ungated: neither feeds the
+      # matrix, so a failure in either kept the matrix green and this job with
+      # it. Lint was already covered, since the matrix needs it and a skipped
+      # matrix is not a success. Reading every need means the gate no longer
+      # depends on the shape of the graph. No job here is conditional, so a
+      # skipped need also means something failed.
       - name: Check that every job succeeded
         if: contains(needs.*.result, 'failure') || contains(needs.*.result, 'cancelled') || contains(needs.*.result, 'skipped')
         env:
-          MATRIX: ${{ needs.python_django_matrix.result }}
-          LINT: ${{ needs.lint.result }}
-          DOCS: ${{ needs.docs.result }}
-          BUILD: ${{ needs.build.result }}
+          NEEDS: ${{ toJSON(needs) }}
         run: |
-          echo "python_django_matrix: $MATRIX"
-          echo "lint:                 $LINT"
-          echo "docs:                 $DOCS"
-          echo "build:                $BUILD"
+          echo "$NEEDS"
           echo "::error::A job this gate depends on did not succeed."
           exit 1
