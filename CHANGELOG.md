@@ -2,6 +2,7 @@
 
 ## Unreleased
 
+- Add `timeout-minutes` to the `release.yml` and Dependabot workflow jobs, which were left unbounded when the CI jobs got theirs.
 - Test on Python 3.15 (release candidate) against Django 6.1 and `main`. The job is
   non-blocking and 3.15 is not yet advertised as supported.
 - Remove the `<7.0` upper bound on the `Django` dependency.
