@@ -141,12 +141,27 @@ jobs:
     timeout-minutes: 15
     needs: [python_django_matrix, lint, docs, build]
     steps:
-      - name: Check tests matrix status
-        if: needs.python_django_matrix.result != 'success'
-        run: exit 1
-
       - name: Finish Coveralls parallel build
         uses: coverallsapp/github-action@v2
         with:
           parallel-finished: true
           github-token: ${{ secrets.GITHUB_TOKEN }}
+
+      # This job is the only required status check on main, so it has to fail
+      # whenever any job it needs fails. Checking the matrix alone meant a
+      # failing lint, docs or build could still be merged. No job here is
+      # conditional, so a skipped need also means something went wrong.
+      - name: Check that every job succeeded
+        if: contains(needs.*.result, 'failure') || contains(needs.*.result, 'cancelled') || contains(needs.*.result, 'skipped')
+        env:
+          MATRIX: ${{ needs.python_django_matrix.result }}
+          LINT: ${{ needs.lint.result }}
+          DOCS: ${{ needs.docs.result }}
+          BUILD: ${{ needs.build.result }}
+        run: |
+          echo "python_django_matrix: $MATRIX"
+          echo "lint:                 $LINT"
+          echo "docs:                 $DOCS"
+          echo "build:                $BUILD"
+          echo "::error::A job this gate depends on did not succeed."
+          exit 1
