@@ -43,11 +43,16 @@ Subresource Integrity hashes, whose base64 mints letter runs the checker reads a
 Every repo needs it: bootstrap5 and icons hit it today, and any CDN version bump mints fresh ones. Don't replace it
 with `extend-words` entries — that blesses a word globally to silence one hash.
 
-`[tool.check-manifest] ignore` takes no substitution either — copy it verbatim. It must list
-`pyproject.toml.orig`: check-manifest rewrites `pyproject.toml` during its own run and leaves
-that backup behind, which lands in the sdist it builds and then trips its own VCS comparison.
-Omitting it breaks `just build` in a way `git status` won't show, because the file is gone by
-the time the command exits. bootstrap5 and icons were missing it until 2026-08.
+`[tool.check-manifest] ignore` takes no substitution either, with one exception: drop the
+`PACKAGING.md` entry, which only django-marina needs because the file only exists here. The
+same goes for `PACKAGING.md` in `[tool.uv.build-backend] source-exclude`. Nothing else in
+either list changes per package.
+
+The `ignore` list must keep `pyproject.toml.orig`: check-manifest rewrites `pyproject.toml`
+during its own run and leaves that backup behind, which lands in the sdist it builds and then
+trips its own VCS comparison. Omitting it breaks `just build` in a way `git status` won't
+show, because the file is gone by the time the command exits. bootstrap5 and icons were
+missing it until 2026-08.
 
 `CONTRIBUTING.md` shares the same shape everywhere. Substitute per package: the `## Scope`
 paragraph, which describes what that package is for, and any package-specific entries in the
