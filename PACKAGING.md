@@ -25,6 +25,12 @@ as a PR in that sibling's own repo — never push straight to `main`.
   `apt-get update` is a known hang risk — it once stalled on an unreachable Ubuntu mirror
   and burned six hours before GitHub's cap; `timeout-minutes` on every job bounds it.
 
+Every job in every workflow carries `timeout-minutes`. Without it a job falls back to
+GitHub's 6 hour default, and a job that hangs rather than fails burns the whole allowance
+before anyone notices. 15 minutes is the default here, 20 where a job builds and publishes
+(`release.yml`). This was once read as "every job in `ci.yml`", which left `release.yml` and
+the Dependabot workflow unbounded in all five repos until 2026-09.
+
 ## Synced with per-package substitution
 
 `pyproject.toml` sections `[build-system]`, `[tool.uv.build-backend]`, `[tool.check-manifest]`,
