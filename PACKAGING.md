@@ -42,8 +42,8 @@ the Dependabot workflow unbounded in all five repos until 2026-09.
   `[tool.coverage.run] source`
 - `[tool.coverage.report] fail_under`, set to the level that package actually holds. The
   `coverage report` step in `ci.yml` is the same everywhere; what differs is whether a
-  package has a floor for it to enforce. django-marina and django-bootstrap5 are at 100 and
-  carry `fail_under = 100`. django-icons, django-bootstrap4 and django-bootstrap3 leave it
+  package has a floor for it to enforce. django-marina, django-bootstrap5 and django-icons
+  are at 100 and carry `fail_under = 100`. django-bootstrap4 and django-bootstrap3 leave it
   unset until their coverage is raised, so the step prints a report there without being able
   to fail.
 - `module-name` key in `[tool.uv.build-backend]` — only needed for django-bootstrap3/4 (see
