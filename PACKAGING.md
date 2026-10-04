@@ -40,6 +40,12 @@ the Dependabot workflow unbounded in all five repos until 2026-09.
 - distribution name / description / keywords / Django dependency floor (`[project]`)
 - import module name in `known-first-party`, `[tool.coverage.paths] package`,
   `[tool.coverage.run] source`
+- `[tool.coverage.report] fail_under`, set to the level that package actually holds. The
+  `coverage report` step in `ci.yml` is the same everywhere; what differs is whether a
+  package has a floor for it to enforce. django-marina and django-bootstrap5 are at 100 and
+  carry `fail_under = 100`. django-icons, django-bootstrap4 and django-bootstrap3 leave it
+  unset until their coverage is raised, so the step prints a report there without being able
+  to fail.
 - `module-name` key in `[tool.uv.build-backend]` — only needed for django-bootstrap3/4 (see
   naming convention below); omit it for bootstrap5/icons/marina, where it's correctly
   derived from the distribution name by default.
