@@ -42,6 +42,8 @@ The current Python × Django matrix is not a full grid. See `tox.ini`'s `envlist
 
 Target the matrix when adding features; avoid Django-version-specific code paths where possible.
 
+`just test-cov` must report 100%. `fail_under = 100` makes a drop fail the build, in CI and locally. Cover the new code, or mark it `# pragma: no cover` with a comment saying why it cannot be reached in a test. Don't lower the floor. All five sibling packages hold the same line; see [PACKAGING.md](PACKAGING.md).
+
 ## CI
 
 `just lint` must pass before committing, CI enforces it and will fail the PR.

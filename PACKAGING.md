@@ -40,15 +40,34 @@ the Dependabot workflow unbounded in all five repos until 2026-09.
 - distribution name / description / keywords / Django dependency floor (`[project]`)
 - import module name in `known-first-party`, `[tool.coverage.paths] package`,
   `[tool.coverage.run] source`
-- `[tool.coverage.report] fail_under`, set to the level that package actually holds. The
-  `coverage report` step in `ci.yml` is the same everywhere; what differs is whether a
-  package has a floor for it to enforce. django-marina, django-bootstrap5 and django-icons
-  are at 100 and carry `fail_under = 100`. django-bootstrap4 and django-bootstrap3 leave it
-  unset until their coverage is raised, so the step prints a report there without being able
-  to fail.
 - `module-name` key in `[tool.uv.build-backend]` — only needed for django-bootstrap3/4 (see
   naming convention below); omit it for bootstrap5/icons/marina, where it's correctly
   derived from the distribution name by default.
+
+`[tool.coverage.report]` takes no substitution any more. As of 2026-10 all five packages are
+at 100% statement and branch coverage and carry the identical block, comment included:
+
+```toml
+[tool.coverage.report]
+# The suite covers every statement and branch. A drop is a gap in the tests, not a
+# reason to lower the bar: cover the new code, or mark it `# pragma: no cover` with a
+# comment saying why it cannot be reached in a test.
+fail_under = 100
+show_missing = true
+skip_covered = true
+```
+
+It used to vary. marina and bootstrap5 had a floor; icons, bootstrap3 and bootstrap4 left
+`fail_under` unset, so the `coverage report` step in `ci.yml` printed a report there without
+being able to fail. icons was raised in zostera/django-icons#662, bootstrap3 in
+zostera/django-bootstrap3#1158, bootstrap4 in zostera/django-bootstrap4#907. When new code
+cannot be reached from a test, mark it `# pragma: no cover` with a comment saying why,
+rather than lowering `fail_under`.
+
+Check that a floor can actually fail before trusting it. Disabling one test method should
+make `just test-cov` exit non-zero with `Coverage failure: total of NN is less than
+fail-under=100`. Rename the `test_` method, not the `TestCase` class: unittest collects by
+method name, so renaming the class proves nothing.
 
 `[tool.typos.default]` takes no substitution — copy it verbatim. Its `extend-ignore-re` skips
 Subresource Integrity hashes, whose base64 mints letter runs the checker reads as misspellings.
