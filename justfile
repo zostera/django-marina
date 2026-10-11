@@ -20,6 +20,10 @@ VERSION := `sed -n 's/^ *version.*=.*"\([^"]*\)".*/\1/p' pyproject.toml`
 @upgrade:
     uv sync --all-groups --upgrade
 
+# Regenerate uv.lock without upgrading anything (use after bumping version)
+@relock:
+    uv lock
+
 # Install for development (uses uv.lock)
 install:
     uv sync --frozen --all-groups
@@ -60,8 +64,20 @@ install:
 @tests *ARGS:
     uvx --with tox-uv tox {{ARGS}}
 
+# Fail if uv.lock does not name the version in pyproject.toml.
+# `uv sync --frozen` does not check the project's own version, so without this a build
+# passes with a stale lock: django-bootstrap4 shipped a bump with the previous version
+# still in the lock, and `just build` reported everything green. Fix with `just relock`.
+[private]
+@_lockfile-matches-version:
+    LOCKED=`awk -F'"' '/^version = /{v=$2} /editable = "\."/{print v; exit}' uv.lock`; \
+    if [ "$LOCKED" != "{{ VERSION }}" ]; then \
+        echo "Error - pyproject.toml says {{ VERSION }}, uv.lock says $LOCKED. Run 'just relock'."; \
+        exit 1; \
+    fi
+
 # Build artefacts + packaging checks (local preflight)
-@build: clean-build install
+@build: clean-build install _lockfile-matches-version
     uv build
     uvx twine check dist/*
     uvx check-manifest
@@ -93,6 +109,8 @@ install:
     echo ""; \
     echo "Entries in the Unreleased section of CHANGELOG.md:"; \
     awk '/^## Unreleased/{f=1;next} /^## /{f=0} f' CHANGELOG.md | grep '^- ' || echo "  (none)"; \
+    echo ""; \
+    echo "Version: pyproject.toml {{ VERSION }}, uv.lock `awk -F'\"' '/^version = /{v=$2} /editable = \"\\.\"/{print v; exit}' uv.lock`"; \
     echo ""; \
     echo "A commit touching src/ and other paths appears in both lists."
 
