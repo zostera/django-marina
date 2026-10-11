@@ -82,16 +82,19 @@ install:
         echo "Example not found."; \
     fi
 
-# Show src changes and changelog entries since the last tag (release preflight)
+# Show changes and changelog entries since the last tag (release preflight)
 @release-check:
     TAG=$(git describe --tags --abbrev=0); \
-    echo "Commits touching src/ since $TAG:"; \
+    echo "Commits touching src/ since $TAG. Each needs an entry, or is a no-op for users:"; \
     git log --format='  %h %s' "$TAG"..HEAD -- src/ | grep . || echo "  (none)"; \
+    echo ""; \
+    echo "Commits touching nothing in src/. Tooling, CI and docs still ship, so read these too:"; \
+    git log --format='  %h %s' "$TAG"..HEAD -- . ':(exclude)src/' | grep . || echo "  (none)"; \
     echo ""; \
     echo "Entries in the Unreleased section of CHANGELOG.md:"; \
     awk '/^## Unreleased/{f=1;next} /^## /{f=0} f' CHANGELOG.md | grep '^- ' || echo "  (none)"; \
     echo ""; \
-    echo "Every commit above must be covered by an entry, or be a no-op for users."
+    echo "A commit touching src/ and other paths appears in both lists."
 
 # Create and push a release tag (publishing happens in GitHub Actions)
 @release-tag: porcelain branch build

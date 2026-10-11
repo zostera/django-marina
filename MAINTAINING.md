@@ -89,9 +89,14 @@ it half-updated. Dependabot reopens it on the next run.
 
 ## Release process
 
-1. `just release-check` — lists the commits touching `src/` since the last tag next to the current
-   `Unreleased` entries. Every one of those commits must be covered by an entry, or be a no-op for
-   users (a docstring typo, say). A code change that reaches users without an entry ships invisible.
+1. `just release-check` — lists the commits since the last tag next to the current `Unreleased`
+   entries, in two groups. Every commit touching `src/` must be covered by an entry, or be a
+   no-op for users (a docstring typo, say). A code change that reaches users without an entry
+   ships invisible. The second group is everything else, and it needs reading rather than a rule:
+   a Dependabot bump of a dev dependency is genuinely nothing to a user, while a lint rule, a CI
+   gate or a contributor policy belongs in the notes under tooling. django-marina 26.3 and
+   django-bootstrap4 26.3 were both cut after fourteen such changes between them had gone
+   unrecorded, because the recipe only showed the first group.
 2. On a release branch, update `CHANGELOG.md` and bump `version` in `pyproject.toml`; open a PR and merge it
 3. Check out and pull `main`
 4. `just build` — builds wheel + tarball, runs packaging checks, and smoke-tests both against an isolated env
