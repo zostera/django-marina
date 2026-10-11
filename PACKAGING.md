@@ -162,3 +162,9 @@ If a release PR is open in a sibling, land it or close it before propagating the
 propagation lands first and `## Unreleased` has meanwhile become a dated heading, add a fresh
 `## Unreleased` for the entry. Don't let git merge it into the released section, which it will
 do without a conflict, because the two sides touch different lines.
+
+That rule only helps if whoever propagates remembers to apply it, and the failure it prevents
+is quiet enough to miss. django-bootstrap4 watched it happen while cutting 26.3: rebasing the
+release branch onto a propagation PR filed that PR's two changelog entries at the foot of the
+dated section, no conflict raised. They belonged in that release, so the result was correct by
+luck. Git chose it, not a person, and nobody would have caught it had it been wrong.
