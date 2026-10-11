@@ -12,6 +12,7 @@
 - Fail `just build` when `uv.lock` does not name the version in `pyproject.toml`, and add `just relock` to fix it. `uv sync --frozen` does not check the project's own version, so a stale lock passed every packaging check.
 - Say in PACKAGING.md that a propagation branch starts from `main`, never from an open release branch, which is how two siblings cut a version that was never published.
 - Fail `just lint` on trailing whitespace, and strip it in `just format`. `.editorconfig` asked for it and nothing enforced it, so it depended on each person's editor. Markdown hard line breaks, which are exactly two trailing spaces, are preserved.
+- Fail `just lint` if `CHANGELOG.md` has more than one `## Unreleased` heading, or has it below a released section. Branches that each add the heading merge without a conflict, and this repository reached four.
 
 ## 26.3 (2026-10-11)
 

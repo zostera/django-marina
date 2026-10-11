@@ -41,6 +41,7 @@ install:
     uvx typos
     just _no-invisible-characters
     just _no-trailing-whitespace
+    just _one-unreleased-section
 
 # Fail if any tracked file holds an invisible or bidirectional control character.
 # They do not show up in review, which is what makes them useful for hiding code
@@ -78,6 +79,26 @@ install:
 @_no-trailing-whitespace:
     if git grep -nIP ' +$' -- . ':(exclude)*.md'; then \
         echo "Error - trailing whitespace on the lines above. Run 'just format'."; \
+        exit 1; \
+    fi
+
+# Fail if CHANGELOG.md has more than one `## Unreleased`, or has it out of place.
+# Branches that each add the heading instead of appending to the existing one merge
+# without a conflict, because the two sides touch different lines. django-marina
+# reached four before anyone noticed. Cutting a release then stamps the first and
+# orphans the rest, which is how a release ships without its own notes.
+# None is correct and expected: a cut removes the heading until the next change.
+[private]
+@_one-unreleased-section:
+    N=`grep -c '^## Unreleased' CHANGELOG.md || true`; \
+    if [ "$N" -gt 1 ]; then \
+        grep -n '^## Unreleased' CHANGELOG.md; \
+        echo "Error - $N '## Unreleased' headings above, expected at most one."; \
+        echo "Move every entry under a single heading."; \
+        exit 1; \
+    fi; \
+    if [ "$N" -eq 1 ] && [ "`grep -m1 '^## ' CHANGELOG.md`" != "## Unreleased" ]; then \
+        echo "Error - '## Unreleased' is not the first section in CHANGELOG.md."; \
         exit 1; \
     fi
 
