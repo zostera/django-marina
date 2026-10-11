@@ -1,5 +1,9 @@
 # Changelog
 
+## Unreleased
+
+- Say in PACKAGING.md that a propagation branch starts from `main`, never from an open release branch, which is how two siblings cut a version that was never published.
+
 ## 26.3 (2026-10-11)
 
 - **Breaking:** Drop support for Python 3.10, end of life since 2026-10-01. The floor is now Python 3.11.
