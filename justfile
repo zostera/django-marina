@@ -32,7 +32,7 @@ install:
 @format:
     uvx ruff format
     uvx ruff check --fix
-    git ls-files -z | xargs -0 uvx --from pre-commit-hooks trailing-whitespace-fixer || true
+    just _strip-trailing-whitespace
 
 # Check formatting of source code
 @lint:
@@ -51,6 +51,17 @@ install:
     if git grep -nIP '[\x{00AD}\x{200B}\x{200C}\x{200D}\x{2060}\x{202A}-\x{202E}\x{2066}-\x{2069}\x{FEFF}]' -- .; then \
         echo "Error - invisible or bidi control characters found in the lines above."; \
         exit 1; \
+    fi
+
+# Strip trailing whitespace from the text files that have it.
+# Scoped by the same `git grep -I` that the check uses, so it only opens files that
+# are text and that actually need changing, rather than handing every tracked file
+# to a fixer and asking it to decide.
+[private]
+@_strip-trailing-whitespace:
+    FILES=`git grep -lIP ' +$' -- . || true`; \
+    if [ -n "$FILES" ]; then \
+        echo "$FILES" | xargs uvx --from pre-commit-hooks trailing-whitespace-fixer || true; \
     fi
 
 # Fail if any tracked file has a line ending in whitespace.
