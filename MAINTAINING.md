@@ -115,9 +115,9 @@ Order the release notes by category, in this order:
 
 1. Security fixes
 2. Dropped Python/Django cycles
-4. Added Python/Django cycles
-5. Bug fixes
-6. Features
+3. Added Python/Django cycles
+4. Bug fixes
+5. Features
 6. Tooling and internal changes
 7. Everything else
 
