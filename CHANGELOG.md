@@ -2,6 +2,11 @@
 
 ## Unreleased
 
+- Add `.gitattributes` with `* text=auto`, so the repository stores text files with LF whatever the committing machine used. `.editorconfig` asked for this and could not enforce it.
+- Drop `max_line_length` for Python from `.editorconfig`. It said 88 while ruff enforces 120, so an editor honouring it flagged code that passes lint.
+
+## Unreleased
+
 - List `.github/dependabot.yml` in PACKAGING.md as synced identically. All five packages already carried the same file; nothing said so.
 
 ## Unreleased

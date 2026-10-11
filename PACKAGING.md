@@ -17,7 +17,7 @@ as a PR in that sibling's own repo — never push straight to `main`.
 - `.github/workflows/dependabot-auto-approve-and-merge.yml`
 - `.github/dependabot.yml` — the two ecosystems, `github-actions` and `pip`, are the same
   everywhere and neither takes a per-package value
-- `.editorconfig`, `.readthedocs.yaml`
+- `.editorconfig`, `.gitattributes`, `.readthedocs.yaml`
 - `tox.ini` — except django-bootstrap5 adds `extras = jinja` under `[testenv]` for its
   Jinja2 integration tests. Keep that line when propagating there; don't add it elsewhere.
 - `.github/workflows/ci.yml` — except django-bootstrap4 and django-bootstrap5 add two steps
