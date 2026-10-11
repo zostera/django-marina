@@ -146,6 +146,19 @@ than leaving them empty.
 
 1. Make the change here (django-marina) first. Verify with `just build` / `just lint` /
    `just tests`.
-2. For each sibling, create a branch, apply the equivalent change substituting the
-   per-package variables above, and verify with that repo's own `just build` / `just lint`.
+2. For each sibling, create a branch **off `main`**, apply the equivalent change substituting
+   the per-package variables above, and verify with that repo's own `just build` / `just lint`.
 3. Open a PR per repo — never push straight to `main` in any of these repos.
+
+Never branch a propagation PR off an open release branch, however tidy it makes the changelog
+look. Both django-bootstrap4 and django-bootstrap5 published a version number that never
+existed that way: the propagation PR carried the release commit with it, so the dated heading
+and the version bump landed on `main` while the release PR itself was closed as redundant.
+`main` then claimed a version with no tag and no artefacts, and in bootstrap4 `uv.lock` still
+said the old one. Cleaning that up took a PR of its own in each repo
+(zostera/django-bootstrap4#901, zostera/django-bootstrap5#885).
+
+If a release PR is open in a sibling, land it or close it before propagating there. If the
+propagation lands first and `## Unreleased` has meanwhile become a dated heading, add a fresh
+`## Unreleased` for the entry. Don't let git merge it into the released section, which it will
+do without a conflict, because the two sides touch different lines.
