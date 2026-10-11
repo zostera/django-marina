@@ -32,6 +32,7 @@ install:
 @format:
     uvx ruff format
     uvx ruff check --fix
+    git ls-files -z | xargs -0 uvx --from pre-commit-hooks trailing-whitespace-fixer || true
 
 # Check formatting of source code
 @lint:
@@ -39,6 +40,7 @@ install:
     uvx ruff check
     uvx typos
     just _no-invisible-characters
+    just _no-trailing-whitespace
 
 # Fail if any tracked file holds an invisible or bidirectional control character.
 # They do not show up in review, which is what makes them useful for hiding code
@@ -48,6 +50,19 @@ install:
 @_no-invisible-characters:
     if git grep -nIP '[\x{00AD}\x{200B}\x{200C}\x{200D}\x{2060}\x{202A}-\x{202E}\x{2066}-\x{2069}\x{FEFF}]' -- .; then \
         echo "Error - invisible or bidi control characters found in the lines above."; \
+        exit 1; \
+    fi
+
+# Fail if any tracked file has a line ending in whitespace.
+# `.editorconfig` sets trim_trailing_whitespace, but nothing enforced it: ruff only
+# sees Python, and the invisible-character check looks for specific code points, not
+# a plain space. Two had slipped in across the five packages before this existed.
+# Checks rather than fixes, because these packages render HTML: trailing space in a
+# template is output, so it is a change a person should look at. `just format` fixes.
+[private]
+@_no-trailing-whitespace:
+    if git grep -nIP ' +$' -- .; then \
+        echo "Error - trailing whitespace on the lines above. Run 'just format'."; \
         exit 1; \
     fi
 
