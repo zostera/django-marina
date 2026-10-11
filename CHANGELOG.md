@@ -2,6 +2,10 @@
 
 ## Unreleased
 
+- List `.github/dependabot.yml` in PACKAGING.md as synced identically. All five packages already carried the same file; nothing said so.
+
+## Unreleased
+
 - Say in MAINTAINING.md that `just release-check` reporting no `Unreleased` entries straight after a cut means nothing is pending, not that the changelog was lost.
 - Say in PACKAGING.md that git files a propagation's changelog entry under a freshly dated heading silently, so the fresh-`Unreleased` rule only helps if it is remembered.
 
