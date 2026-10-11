@@ -57,11 +57,13 @@ install:
 # Scoped by the same `git grep -I` that the check uses, so it only opens files that
 # are text and that actually need changing, rather than handing every tracked file
 # to a fixer and asking it to decide.
+# --markdown-linebreak-ext=md keeps exactly two trailing spaces in Markdown, which
+# is a hard line break and not an accident. One space or three still go.
 [private]
 @_strip-trailing-whitespace:
     FILES=`git grep -lIP ' +$' -- . || true`; \
     if [ -n "$FILES" ]; then \
-        echo "$FILES" | xargs uvx --from pre-commit-hooks trailing-whitespace-fixer || true; \
+        echo "$FILES" | xargs uvx --from pre-commit-hooks trailing-whitespace-fixer --markdown-linebreak-ext=md || true; \
     fi
 
 # Fail if any tracked file has a line ending in whitespace.
@@ -70,9 +72,11 @@ install:
 # a plain space. Two had slipped in across the five packages before this existed.
 # Checks rather than fixes, because these packages render HTML: trailing space in a
 # template is output, so it is a change a person should look at. `just format` fixes.
+# Markdown is excluded: two trailing spaces there are a hard line break, which the
+# fixer keeps, so checking them would fail on something `just format` will not fix.
 [private]
 @_no-trailing-whitespace:
-    if git grep -nIP ' +$' -- .; then \
+    if git grep -nIP ' +$' -- . ':(exclude)*.md'; then \
         echo "Error - trailing whitespace on the lines above. Run 'just format'."; \
         exit 1; \
     fi
