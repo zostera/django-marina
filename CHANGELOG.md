@@ -4,22 +4,15 @@
 
 - Add `.gitattributes` with `* text=auto`, so the repository stores text files with LF whatever the committing machine used. `.editorconfig` asked for this and could not enforce it.
 - Drop `max_line_length` for Python from `.editorconfig`. It said 88 while ruff enforces 120, so an editor honouring it flagged code that passes lint.
-
-## Unreleased
-
 - List `.github/dependabot.yml` in PACKAGING.md as synced identically. All five packages already carried the same file; nothing said so.
-
-## Unreleased
-
 - Say in MAINTAINING.md that `just release-check` reporting no `Unreleased` entries straight after a cut means nothing is pending, not that the changelog was lost.
 - Say in PACKAGING.md that git files a propagation's changelog entry under a freshly dated heading silently, so the fresh-`Unreleased` rule only helps if it is remembered.
-
-## Unreleased
-
 - Fix the numbering of the release-note ordering list in MAINTAINING.md, broken while renumbering the release process in the previous change.
 - Show commits that touch nothing in `src/` in `just release-check` as a second group, instead of hiding them. Tooling, CI and documentation changes belong in the release notes too, and the old output read as a complete list while being a filtered one.
 - Fail `just build` when `uv.lock` does not name the version in `pyproject.toml`, and add `just relock` to fix it. `uv sync --frozen` does not check the project's own version, so a stale lock passed every packaging check.
 - Say in PACKAGING.md that a propagation branch starts from `main`, never from an open release branch, which is how two siblings cut a version that was never published.
+- Fail `just lint` on trailing whitespace, and strip it in `just format`. `.editorconfig` asked for it and nothing enforced it, so it depended on each person's editor. Markdown hard line breaks, which are exactly two trailing spaces, are preserved.
+- Fail `just lint` if `CHANGELOG.md` has more than one `## Unreleased` heading, or has it below a released section. Branches that each add the heading merge without a conflict, and this repository reached four.
 
 ## 26.3 (2026-10-11)
 
