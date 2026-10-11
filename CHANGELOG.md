@@ -2,9 +2,10 @@
 
 ## Unreleased
 
+- **Breaking:** Drop support for Python 3.10, end of life since 2026-10-01. The floor is now Python 3.11.
 - Add `timeout-minutes` to the `release.yml` and Dependabot workflow jobs, which were left unbounded when the CI jobs got theirs.
-- Test on Python 3.15 (release candidate) against Django 6.1 and `main`. The job is
-  non-blocking and 3.15 is not yet advertised as supported.
+- Test on Python 3.15 against Django 6.1 and `main`. The job is non-blocking and 3.15 is
+  not advertised as supported, because no Django release claims it yet.
 - Remove the `<7.0` upper bound on the `Django` dependency.
 - Add `just release-check` to list `src/` changes against changelog entries before a release.
 
