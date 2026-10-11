@@ -1,13 +1,20 @@
 # Changelog
 
-## Unreleased
+## 26.3 (2026-10-11)
 
 - **Breaking:** Drop support for Python 3.10, end of life since 2026-10-01. The floor is now Python 3.11.
-- Add `timeout-minutes` to the `release.yml` and Dependabot workflow jobs, which were left unbounded when the CI jobs got theirs.
 - Test on Python 3.15 against Django 6.1 and `main`. The job is non-blocking and 3.15 is
   not advertised as supported, because no Django release claims it yet.
 - Remove the `<7.0` upper bound on the `Django` dependency.
+- Hold coverage at 100%. `fail_under = 100` fails the build, in CI and locally, on a drop.
+- Harden the workflows after a `zizmor` audit: the Dependabot job decides from the pull request author rather than `github.actor`, which a `pull_request_target` workflow cannot trust; `ci.yml` runs with `contents: read` instead of the repository default; and the job that publishes to PyPI no longer restores a shared cache. MAINTAINING.md gains a dependency update policy saying what auto-merges and what waits for a person.
+- Fail the CI gate when any job fails, not only the test matrix. A failing docs or packaging build could previously be merged, because `docs` and `build` fed nothing the gate read.
+- Fail `just lint` on invisible and bidirectional control characters, which do not show up in review (Trojan Source, CVE-2021-42574).
+- Add `timeout-minutes` to the `release.yml` and Dependabot workflow jobs, which were left unbounded when the CI jobs got theirs.
 - Add `just release-check` to list `src/` changes against changelog entries before a release.
+- Note in PACKAGING.md which `pyproject.toml` entries are django-marina only, so they are not synced into the siblings.
+- Add an AI assistance policy to CONTRIBUTING.md, and say what this repo is for.
+- Add a `CLAUDE.md` shim so Claude Code loads `AGENTS.md`, and trim `AGENTS.md`.
 
 ## 26.2 (2026-08-28)
 
