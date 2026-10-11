@@ -2,6 +2,11 @@
 
 ## Unreleased
 
+- Say in MAINTAINING.md that `just release-check` reporting no `Unreleased` entries straight after a cut means nothing is pending, not that the changelog was lost.
+- Say in PACKAGING.md that git files a propagation's changelog entry under a freshly dated heading silently, so the fresh-`Unreleased` rule only helps if it is remembered.
+
+## Unreleased
+
 - Fix the numbering of the release-note ordering list in MAINTAINING.md, broken while renumbering the release process in the previous change.
 - Show commits that touch nothing in `src/` in `just release-check` as a second group, instead of hiding them. Tooling, CI and documentation changes belong in the release notes too, and the old output read as a complete list while being a filtered one.
 - Fail `just build` when `uv.lock` does not name the version in `pyproject.toml`, and add `just relock` to fix it. `uv sync --frozen` does not check the project's own version, so a stale lock passed every packaging check.
