@@ -2,6 +2,8 @@
 
 ## Unreleased
 
+- Show commits that touch nothing in `src/` in `just release-check` as a second group, instead of hiding them. Tooling, CI and documentation changes belong in the release notes too, and the old output read as a complete list while being a filtered one.
+- Fail `just build` when `uv.lock` does not name the version in `pyproject.toml`, and add `just relock` to fix it. `uv sync --frozen` does not check the project's own version, so a stale lock passed every packaging check.
 - Say in PACKAGING.md that a propagation branch starts from `main`, never from an open release branch, which is how two siblings cut a version that was never published.
 
 ## 26.3 (2026-10-11)
