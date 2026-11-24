@@ -2,6 +2,7 @@
 
 ## Unreleased
 
+- Make the Python 3.15 CI jobs blocking and add the 3.15 classifier. Django 6.1 now lists Python 3.15, so the combination our tests cover is one Django supports, which is what the classifier promises.
 - Add `.gitattributes` with `* text=auto`, so the repository stores text files with LF whatever the committing machine used. `.editorconfig` asked for this and could not enforce it.
 - Drop `max_line_length` for Python from `.editorconfig`. It said 88 while ruff enforces 120, so an editor honouring it flagged code that passes lint.
 - List `.github/dependabot.yml` in PACKAGING.md as synced identically. All five packages already carried the same file; nothing said so.

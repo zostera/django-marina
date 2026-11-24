@@ -36,11 +36,6 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 15
     needs: [lint]
-    # Python 3.15 is released, but no Django release claims it yet, so its legs are
-    # non-blocking: they run and report, but a failure does not fail the build. Drop
-    # this once a Django release supports 3.15, and add the classifier in the same
-    # change.
-    continue-on-error: ${{ matrix.python-version == '3.15' }}
     strategy:
       fail-fast: false
       matrix:
@@ -56,8 +51,8 @@ jobs:
           # Django main
           - python-version: "3.11"
             django-version: "main"
-          # Python 3.15: no Django release claims it yet, so test only the series
-          # that will get it first rather than collecting known failures.
+          # Python 3.15: Django 5.2 and 6.0 do not claim it, only 6.1 and main do.
+          # Excluding them keeps known-unsupported combinations out of the matrix.
           - python-version: "3.15"
             django-version: "5.2"
           - python-version: "3.15"
@@ -75,8 +70,8 @@ jobs:
         run: uv python install ${{ matrix.python-version }}
 
       - name: Install dependencies
-        # Pin the interpreter explicitly: uv does not pick up a pre-release Python
-        # by discovery, so the 3.15 leg would otherwise resolve to another version.
+        # Pin the interpreter explicitly rather than trusting discovery, so each leg
+        # runs on the version the matrix names and not whatever uv finds first.
         run: uv sync --python ${{ matrix.python-version }}
 
       - name: Install Django ${{ matrix.django-version }}
